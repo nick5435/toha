@@ -1,0 +1,19 @@
+<div class="col-md-12 col-lg-6 p-2">
+  <div class="card mt-3">
+    <div class="card-header">
+      <h3 class="card-title h5 mb-0">{{ .studentName |markdownify}}</h3>
+      <div class="sub-title">
+        <span><a href="{{ .organization.url }}" title="{{ .organization.name }}" target="_blank" rel="noopener">{{ .organization.name | markdownify }}</a></span>
+        <span class="ms-2">{{.timeline | markdownify}}</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>{{ .overview | markdownify }}</p>
+    </div>
+    {{/*  <div class="card-footer">
+      {{ if .url }}
+        <a class="btn btn-outline-info ms-1 ps-2 mb-2" href="{{ .url }}" target="_blank" rel="noopener" role="button">{{ i18n "project_details"}}</a>
+      {{ end }}
+    </div>  */}}
+  </div>
+</div>

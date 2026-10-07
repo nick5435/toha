@@ -1,0 +1,18 @@
+{{ $sectionID := replace (lower .section.name) " " "-"  }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="container-fluid anchor pb-5 service-section" id="{{ $sectionID }}">
+  {{ if not (.section.hideTitle) }}
+    <h2 class="text-center">{{ .section.name | markdownify}}</h2>
+  {{ else }}
+    <h2 class="text-center" style="display: none">{{ .section.name | markdownify }}</h2>
+  {{ end }}
+
+  <div class="container">
+    <div class="row" id="calendar-holder">
+      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&mode=WEEK&title=Nick%20Meyer's%20Calendar&showPrint=0&showCalendars=0&showTitle=0&src=NGY1MmZiMmU5dHZqNDFwamMzY3M0MzZzbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%238e24aa" title="Nick Meyer's Calendar" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>

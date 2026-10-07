@@ -75,13 +75,13 @@
 <nav class="navbar navbar-expand-xl top-navbar shadow {{ if .IsHome}}transparent-navbar homepage{{end}}" id="top-navbar">
   <div class="container">
     {{ if not .IsHome }}
-    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" aria-label="Toggle sidebar">
       <i data-feather="sidebar"></i>
     </button>
     {{ end }}
     <a class="navbar-brand" href="{{ site.BaseURL | relLangURL }}">
       {{ if $logo }}
-        <img src="{{ $logo }}" id="logo" alt="Logo">
+        <img src="{{ $logo }}" id="logo" alt="{{ $navBarTitle }}" width="42" height="42">
       {{ end }}
       {{- $navBarTitle -}}
     </a>
@@ -91,7 +91,7 @@
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#top-nav-items"
-      aria-label="menu"
+      aria-label="Toggle navigation"
     >
       <i data-feather="menu"></i>
     </button>
@@ -162,12 +162,12 @@
   </div>
   <!-- Store the logo information in a hidden img for the JS -->
   {{ if $mainLogo }}
-    <img src="{{ $mainLogo }}" class="d-none" id="main-logo" alt="Logo">
+    <img src="{{ $mainLogo }}" class="d-none" id="main-logo" alt="" aria-hidden="true">
   {{ end }}
   {{ if $invertedLogo }}
-    <img src="{{ $invertedLogo }}" class="d-none" id="inverted-logo" alt="Inverted Logo">
+    <img src="{{ $invertedLogo }}" class="d-none" id="inverted-logo" alt="" aria-hidden="true">
   {{ end }}
   {{ if $darkLogo }}
-    <img src="{{ $darkLogo }}" class="d-none" id="dark-logo" alt="Dark Logo">
+    <img src="{{ $darkLogo }}" class="d-none" id="dark-logo" alt="" aria-hidden="true">
   {{ end }}
 </nav>

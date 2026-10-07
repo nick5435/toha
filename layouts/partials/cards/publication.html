@@ -9,13 +9,13 @@
 >
   <div class="card mt-3">
     <div class="card-header">
-      <h5 class="card-title mb-0">{{ .title }}</h5>
+      <h3 class="card-title h5 mb-0">{{ .title }}</h3>
       <div class="sub-title">
         <span>
           {{ if .publishedIn.url }}
-          <a class="" href="{{.publishedIn.url}}">{{ .publishedIn.name }}</a>
+          <a class="" href="{{.publishedIn.url}}" target="_blank" rel="noopener">{{ .publishedIn.name }}</a>
           {{ else }}
-          <a class="">{{ .publishedIn.name }}</a>
+          <span>{{ .publishedIn.name }}</span>
           {{ end }}
         </span>
         <span class="ms-2">{{ .publishedIn.date }}</span>
@@ -23,7 +23,7 @@
       <div class="authors">
         {{ range $index,$author:= .authors }}
         {{if .url}}
-          <span class="me-2"><a class="" href="{{.url}}">{{ .name }}</a></span>
+          <span class="me-2"><a class="" href="{{.url}}" target="_blank" rel="noopener">{{ .name }}</a></span>
         {{ else }}
         <span class="me-2 author-name">{{ .name }}</span>
         {{ end }}

@@ -107,8 +107,36 @@
 }
 
 html[data-theme="dark"] {
+    --bs-body-color: #{get-dark-color("text-color")};
+    --bs-card-color: #{get-dark-color("text-color")};
+    --bs-card-title-color: #{get-dark-color("heading-color")};
+    --bs-card-subtitle-color: #{get-dark-color("muted-text-color")};
+    --bs-card-cap-bg: transparent;
+
     .card {
         background: get-dark-color("bg-card");
+        color: get-dark-color("text-color");
+
+        .card-title {
+            color: get-dark-color("heading-color");
+        }
+
+        .card-header {
+            background: none;
+            color: get-dark-color("text-color");
+
+            .sub-title {
+                color: get-dark-color("muted-text-color");
+            }
+        }
+
+        .card-body {
+            color: get-dark-color("text-color");
+
+            p {
+                color: get-dark-color("text-color");
+            }
+        }
 
         &:hover,
         &:focus {

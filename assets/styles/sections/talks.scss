@@ -1,0 +1,162 @@
+@use "../core" as *;
+
+.talks-section {
+    @include section-title-adjustment();
+
+    .card {
+        background: get-light-color("bg-card");
+        border-top: 2px solid get-light-color("accent-color");
+
+        &:hover,
+        &:focus {
+            border-top: 2px solid get-light-color("accent-color");
+        }
+
+        .card-header {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+
+            .card-title {
+                color: get-light-color("heading-color");
+            }
+
+            .sub-title {
+                color: get-light-color("muted-text-color");
+                margin-top: 0.4rem;
+
+                span:nth-child(2) {
+                    float: right !important;
+                }
+            }
+
+            a[href] {
+                text-decoration: underline;
+            }
+        }
+
+        .card-body {
+            padding: 0 1rem;
+            color: get-light-color("text-color");
+
+            .abstract {
+                color: get-light-color("text-color");
+
+                p {
+                    color: inherit;
+                }
+
+                a {
+                    color: get-light-color("accent-color");
+                    text-decoration: underline;
+
+                    &:hover {
+                        color: get-light-color("hover-over-accent-color");
+                    }
+                }
+            }
+        }
+
+        .card-footer {
+            background: get-light-color("bg-card");
+            border: none;
+            padding: 0 1rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+    }
+
+    .filtr-talk {
+        padding: 1rem !important;
+    }
+
+    .btn-group {
+        justify-content: center;
+    }
+
+    @include media("<=large") {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+
+        .container {
+            max-width: 100%;
+        }
+
+        .filtr-talk {
+            padding: 0;
+        }
+
+        .talk-filtr-item {
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+        }
+    }
+
+    @include media("<=medium") {
+        .talk-filtr-item {
+            flex: 100%;
+        }
+    }
+
+    @include media("<=small") {
+        .talk-filtr-item {
+            flex: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+html[data-theme="dark"] {
+    .talks-section {
+        .card {
+            background: get-dark-color("bg-card");
+            border-top: 2px solid get-dark-color("accent-color");
+
+            &:hover,
+            &:focus {
+                border-top: 2px solid get-dark-color("accent-color");
+            }
+
+            .card-header {
+                background: none;
+                border: none;
+
+                .card-title {
+                    color: get-dark-color("heading-color");
+                }
+
+                .sub-title {
+                    color: get-dark-color("muted-text-color");
+                }
+            }
+
+            .card-body {
+                color: get-dark-color("text-color");
+
+                .abstract {
+                    color: get-dark-color("text-color");
+
+                    p {
+                        color: get-dark-color("text-color");
+                    }
+
+                    a {
+                        color: get-dark-color("hover-over-accent-color");
+                        text-decoration: underline;
+
+                        &:hover {
+                            color: #22d3ee;
+                        }
+                    }
+                }
+            }
+
+            .card-footer {
+                background: get-dark-color("bg-card");
+            }
+        }
+    }
+}

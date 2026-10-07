@@ -124,3 +124,9 @@ html[data-theme="dark"] {
         background-color: get-dark-color("highlight-color");
     }
 }
+
+html[data-theme="dark"] {
+    mjx-container {
+        color: get-dark-color("text-color") !important;
+    }
+}

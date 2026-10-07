@@ -13,14 +13,14 @@
     <!-- summary -->
     <!-- takes up full section width if no badges/soft skills are specified -->
     {{ if or (.softSkills) (.badges) }} <div class="col-sm-6"> {{ else }} <div class="col-sm-12"> {{ end }}
-      <h3 class="p-1">{{ $author.name }}</h3>
+      <h2 class="p-1 h3">{{ $author.name }}</h2>
       {{ if .designation }}
-      <h5 class="p-1">
+      <h3 class="p-1 h5 text-muted">
         {{ .designation }}
         {{ if .company }}
         {{ i18n "at"}} <a href="{{ .company.url }}" title="{{ .company.name }}" target="_blank" rel="noopener">{{ .company.name }}</a>
         {{ end }}
-      </h5>
+      </h3>
       {{ end }}
       <p class="p-1 text-justify">
         {{ .summary | markdownify }}
@@ -30,25 +30,21 @@
           {{ range .socialLinks }}
           <li>
             {{ if eq .name "Email" }}
-              <a href="mailto:{{ .url }}" title="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
+              <a href="mailto:{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
             {{ else if eq .name (i18n "phone") }}
-              <a href="tel:{{ .url }}" title="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
+              <a href="tel:{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
             {{ else }}
-              <a href="{{ .url }}" title="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
+              <a href="{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
             {{ end }}
           </li>
           {{ end }}
         </ul>
       </div>
       {{ if .resume }}
-      <a href="{{ .resume | relURL }}" title="{{ i18n "resume"}}" target="#"
-        ><button class="btn btn-dark">{{ i18n "resume"}}</button></a
-      >
+      <a href="{{ .resume | relURL }}" title="{{ i18n "resume"}}" class="btn btn-dark" role="button">{{ i18n "resume"}}</a>
       {{ end }}
       {{ range .resourceLinks }}
-      <a href="{{ .url | relURL }}" title="{{ .title }}" target="#"
-        ><button class="btn btn-dark">{{ .title }}</button></a
-      >
+      <a href="{{ .url | relURL }}" title="{{ .title }}" class="btn btn-dark" role="button">{{ .title }}</a>
       {{ end }}
     </div>
     <!-- soft skills circular-progressbar -->

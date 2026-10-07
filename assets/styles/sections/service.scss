@@ -1,0 +1,91 @@
+@use "../core" as *;
+
+.service-section {
+    @include section-title-adjustment();
+
+    .card {
+        background: get-light-color("bg-card");
+        border-top: 2px solid get-light-color("accent-color");
+
+        &:hover,
+        &:focus {
+            border-top: 2px solid get-light-color("accent-color");
+        }
+
+        .card-header {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+
+            .card-title {
+                color: get-light-color("heading-color");
+            }
+
+            .sub-title {
+                color: get-light-color("muted-text-color");
+                margin-top: 0.4rem;
+
+                a {
+                    color: get-light-color("accent-color");
+                    text-decoration: underline;
+
+                    &:hover {
+                        color: get-light-color("hover-over-accent-color");
+                    }
+                }
+            }
+        }
+
+        .card-body {
+            color: get-light-color("text-color");
+
+            p {
+                color: inherit;
+            }
+        }
+    }
+}
+
+html[data-theme="dark"] {
+    .service-section {
+        .card {
+            background: get-dark-color("bg-card");
+            border-top: 2px solid get-dark-color("accent-color");
+
+            &:hover,
+            &:focus {
+                border-top: 2px solid get-dark-color("accent-color");
+            }
+
+            .card-header {
+                background: none;
+                border: none;
+
+                .card-title {
+                    color: get-dark-color("heading-color");
+                }
+
+                .sub-title {
+                    color: get-dark-color("muted-text-color");
+
+                    a {
+                        color: get-dark-color("hover-over-accent-color");
+
+                        &:hover {
+                            color: #22d3ee;
+                        }
+                    }
+                }
+            }
+
+            .card-body {
+                color: get-dark-color("text-color");
+
+                p {
+                    color: get-dark-color("text-color");
+                }
+            }
+        }
+    }
+}

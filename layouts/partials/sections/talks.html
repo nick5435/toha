@@ -3,25 +3,25 @@
   {{ $sectionID = .section.id }}
 {{ end }}
 
-<div class="container-fluid anchor pb-5 publications-section" id="{{ $sectionID }}">
+<div class="container-fluid anchor pb-5 talks-section" id="{{ $sectionID }}">
   {{ if not (.section.hideTitle) }}
     <h2 class="text-center">{{ .section.name }}</h2>
   {{ else }}
     <h2 class="text-center" style="display: none">{{ .section.name }}</h2>
   {{ end }}
   <div class="container ms-auto text-center">
-    <div class="btn-group flex-wrap" role="group" aria-label="Filter publications by category" id="publication-filter-buttons">
+    <div class="btn-group flex-wrap" role="group" aria-label="Filter talks by category" id="talk-filter-buttons">
       {{ range .buttons }}
-      <button type="button" class="btn btn-dark pub-filtr-control" data-filter="pub-{{ .filter }}">
+      <button type="button" class="btn btn-dark pub-filtr-control" data-filter="talk-{{ .filter }}">
         {{ .name }}
       </button>
       {{ end }}
     </div>
   </div>
-  <div class="container filtr-publications">
-    <div class="row" id="publication-card-holder">
-      {{ range .publications }}
-        {{ partial "cards/publication" . }}
+  <div class="container filtr-talk">
+    <div class="row" id="talk-card-holder">
+      {{ range .talks }}
+        {{ partial "cards/talk" . }}
       {{ end }}
     </div>
   </div>
