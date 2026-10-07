@@ -21,5 +21,5 @@ module:
     target: static/flags
   - source: ../../node_modules/@fontsource/mulish/files
     target: static/files
-  - source: ../../node_modules/katex/dist/fonts
-    target: static/fonts
+  - source: ../../node_modules/mathjax/es5/output/chtml/fonts/woff-v2
+    target: static/fonts/mathjax

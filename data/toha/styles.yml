@@ -16,9 +16,8 @@ syntaxhighlight:
 
 math:
   services:
-    katex:
-      styles:
-      - katex/dist/katex
+    mathjax:
+      styles: []
 
 embedpdf:
   styles:
