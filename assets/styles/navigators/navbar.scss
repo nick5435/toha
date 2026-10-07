@@ -124,16 +124,16 @@
     &.transparent-navbar {
         background-color: transparent !important;
         .navbar-brand {
-            color: get-light-color("inverse-text-color");
+            color: get-light-color("hero-text-color");
             font-weight: 600;
         }
         li {
             a {
-                color: get-light-color("inverse-text-color");
+                color: get-light-color("hero-text-color");
             }
         }
         .feather-menu {
-            stroke: get-light-color("inverse-text-color");
+            stroke: get-light-color("hero-text-color");
         }
     }
 
@@ -264,15 +264,15 @@ html[data-theme="dark"] {
 
         &.transparent-navbar {
             .navbar-brand {
-                color: get-dark-color("text-color");
+                color: get-dark-color("hero-text-color");
             }
             li {
                 a {
-                    color: get-dark-color("text-color");
+                    color: get-dark-color("hero-text-color");
                 }
             }
             .feather-menu {
-                stroke: get-dark-color("text-color");
+                stroke: get-dark-color("hero-text-color");
             }
         }
     }
