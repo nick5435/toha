@@ -19,7 +19,18 @@ module:
     target: archetypes
   - source: ../../node_modules/flag-icons/flags
     target: static/flags
-  - source: ../../node_modules/@fontsource/mulish/files
+  - source: ./node_modules/flag-icons/flags
+    target: static/flags
+  - source: ../../node_modules/@fontsource/poppins/files
+    target: static/files
+  - source: ./node_modules/@fontsource/poppins/files
     target: static/files
   - source: ../../node_modules/mathjax/es5/output/chtml/fonts/woff-v2
     target: static/fonts/mathjax
+  - source: ./node_modules/mathjax/es5/output/chtml/fonts/woff-v2
+    target: static/fonts/mathjax
+  - source: ../../node_modules/@awesome.me/kit-f6f8bfcfbd/icons/webfonts
+    target: static/webfonts
+  - source: ./node_modules/@awesome.me/kit-f6f8bfcfbd/icons/webfonts
+    target: static/webfonts
+

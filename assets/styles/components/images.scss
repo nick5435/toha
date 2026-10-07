@@ -1,76 +1,78 @@
+@use "../core" as *;
+
 img {
-  display: block;
-  max-width: 100%;
+    display: block;
+    max-width: 100%;
 
-  &.center {
-    margin-left: auto;
-    margin-right: auto;
-  }
+    &.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-  &.left {
-    margin-right: auto;
-  }
+    &.left {
+        margin-right: auto;
+    }
 
-  &.right {
-    margin-left: auto;
-  }
+    &.right {
+        margin-left: auto;
+    }
 }
 
 figure {
-  border: 1px solid rgba(get-light-color('accent-color'), 0.1);
-  height: -moz-fit-content;
-  height: fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  align-self: center;
-  margin: auto;
+    border: 1px solid rgba(get-light-color("accent-color"), 0.1);
+    height: -moz-fit-content;
+    height: fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    align-self: center;
+    margin: auto;
 }
 
 caption,
 figcaption {
-  caption-side: bottom;
-  text-align: center;
-  color: get-light-color('muted-text-color');
+    caption-side: bottom;
+    text-align: center;
+    color: get-light-color("muted-text-color");
 }
 
-html[data-theme='dark'] {
-  figure {
-    border: 1px solid rgba(get-dark-color('accent-color'), 0.1);
-  }
-  caption,
-  figcaption {
-    color: get-dark-color('muted-text-color');
-  }
+html[data-theme="dark"] {
+    figure {
+        border: 1px solid rgba(get-dark-color("accent-color"), 0.1);
+    }
+    caption,
+    figcaption {
+        color: get-dark-color("muted-text-color");
+    }
 }
 
 .svg-inverted {
-  filter: invert(1);
+    filter: invert(1);
 }
 
 .logo-holder {
-  height: 64px;
-  margin-bottom: 1em;
+    height: 64px;
+    margin-bottom: 1em;
 }
 
 .company-logo {
-  max-height: 100%;
-  width: auto;
+    max-height: 100%;
+    width: auto;
 }
 
 .light-logo {
-  display: inline;
+    display: inline;
 }
 
 .dark-logo {
-  display: none;
+    display: none;
 }
 
-html[data-theme='dark'] {
-  .light-logo {
-    display: none;
-  }
+html[data-theme="dark"] {
+    .light-logo {
+        display: none;
+    }
 
-  .dark-logo {
-    display: inline;
-  }
+    .dark-logo {
+        display: inline;
+    }
 }

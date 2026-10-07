@@ -1,57 +1,67 @@
 // loading bootstrap
-// TODO: Refactor to use bootstrap sass variable for theming.
-@import 'bootstrap/scss/bootstrap';
+@use 'bootstrap/scss/bootstrap';
+@use './reset';
 
-@import 'include-media/dist/_include-media';
+// Fonts (Poppins)
+@use '@fontsource/poppins/300.css' as *;
+@use '@fontsource/poppins/index.css' as *;
+@use '@fontsource/poppins/500.css' as *;
+@use '@fontsource/poppins/600.css' as *;
+@use '@fontsource/poppins/700.css' as *;
 
-// The Mulish font, we use font-weight 300 - 700
-@import '@fontsource/mulish/300';
-@import '@fontsource/mulish/index'; // 400
-@import '@fontsource/mulish/500';
-@import '@fontsource/mulish/600';
-@import '@fontsource/mulish/700';
+// Font Awesome Kit (@awesome.me/kit-f6f8bfcfbd)
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/variables' with (
+    $font-path: "./webfonts",
+);
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/fontawesome';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/solid';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/brands';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/regular';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/duotone';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/sharp-solid';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/sharp-regular';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/sharp-duotone-solid';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/sharp-duotone-regular';
+@use '@awesome.me/kit-f6f8bfcfbd/icons/scss/v4-shims';
 
-@import './variables';
-@import './mixins';
+// Core design tokens, mixins, and responsive breakpoints
+@use './core' as *;
 
 // components
-@import './components/cards';
-@import './components/buttons';
-@import './components/links';
-@import './components/texts';
-@import './components/images';
-@import './components/tables';
-@import './components/misc';
+@use './components/cards';
+@use './components/buttons';
+@use './components/links';
+@use './components/texts';
+@use './components/images';
+@use './components/tables';
+@use './components/misc';
 
 // layouts
-@import './layouts/main';
-@import './layouts/list';
-@import './layouts/single';
-@import './layouts/notes';
-@import './layouts/404';
+@use './layouts/main';
+@use './layouts/list';
+@use './layouts/single';
+@use './layouts/notes';
+@use './layouts/404' as notfound;
 
 // navigators
-@import './navigators/navbar';
-@import './navigators/sidebar';
-
+@use './navigators/navbar';
+@use './navigators/sidebar';
 
 // sections
-@import './sections/home';
-@import './sections/about';
-@import './sections/skills';
-@import './sections/experiences';
-@import './sections/education';
-@import './sections/projects';
-@import './sections/recent-posts';
-@import './sections/achievements';
-@import './sections/accomplishments';
-@import './sections/publications';
-@import './sections/footer';
-
-
+@use './sections/home';
+@use './sections/about';
+@use './sections/skills';
+@use './sections/experiences';
+@use './sections/education';
+@use './sections/projects';
+@use './sections/recent-posts';
+@use './sections/achievements';
+@use './sections/accomplishments';
+@use './sections/publications';
+@use './sections/footer';
 
 // override
-@import './override';
+@use './override';
 
 // features and services, only imported if enabled.
 {{ range $feature, $featureDef := site.Params.features }}
@@ -60,7 +70,7 @@
     {{ if $featureEnabled }}
       {{ with (index hugo.Data.toha.styles $feature) }}
         {{ range .styles }}
-        @import '{{.}}';
+        @use '{{.}}';
         {{ end }}
       {{ end }}
 
@@ -69,7 +79,7 @@
           {{ with .services }}
             {{ with (index . $service) }}
               {{ range .styles }}
-              @import '{{ . }}';
+              @use '{{ . }}';
               {{ end }}
             {{ end }}
           {{ end }}

@@ -1,14 +1,13 @@
 {
-  "author": "Emruz Hossain",
+  "author": "Nick Meyer",
   "bugs": {
     "url": "https://github.com/nick5435/toha/issues"
   },
   "description": "A [Hugo](https://gohugo.io/) theme for a personal portfolio with minimalist design and responsiveness.",
   "devDependencies": {
     "@awesome.me/kit-f6f8bfcfbd": "^1.0.2",
-    "@fontsource/mulish": "4.5.13",
-    "@fortawesome/fontawesome-free": "^6.6.0",
-    "bootstrap": "^5.3.3",
+    "@fontsource/poppins": "^5.3.0",
+    "bootstrap": "^5.3.8",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard": "^17.0.0",
@@ -28,6 +27,8 @@
     "mermaid": "^11.17.2",
     "plyr": "^3.7.2",
     "popper.js": "^1.16.1",
+    "prettier": "^3.9.9",
+    "sanitize.css": "^13.0.0",
     "typeit": "^8.8.7"
   },
   "homepage": "https://github.com/nick5435/toha#readme",
@@ -40,7 +41,9 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "lint:scss": "prettier --check \"assets/styles/**/*.scss\"",
+    "format:scss": "prettier --write \"assets/styles/**/*.scss\""
   },
   "version": "1.0.0",
   "allowScripts": {

@@ -1,5 +1,7 @@
 {{ return (dict
+    "transpiler" "dartsass"
+    "silenceDeprecations" (slice "import" "if-function" "global-builtin" "color-functions" "slash-div")
     "outputStyle" "compressed"
     "enableSourceMap" (not hugo.IsProduction)
-    "includePaths" "node_modules"
+    "includePaths" (slice "node_modules")
 ) }}
