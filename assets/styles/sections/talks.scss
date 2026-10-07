@@ -25,9 +25,12 @@
             .sub-title {
                 color: get-light-color("muted-text-color");
                 margin-top: 0.4rem;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
 
                 span:nth-child(2) {
-                    float: right !important;
+                    margin-left: auto;
                 }
             }
 
@@ -112,7 +115,9 @@
 html[data-theme="dark"] {
     .talks-section {
         .card {
-            background: get-dark-color("bg-card");
+            --bs-card-bg: #{get-dark-color("bg-card")};
+            background-color: get-dark-color("bg-card") !important;
+            background: get-dark-color("bg-card") !important;
             border-top: 2px solid get-dark-color("accent-color");
 
             &:hover,

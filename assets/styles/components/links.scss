@@ -17,6 +17,17 @@ a {
     }
 }
 
+p a:not(.btn),
+.card-body a:not(.btn),
+article a:not(.btn),
+.text-justify a:not(.btn),
+.degree-info a:not(.btn),
+.about-section a:not(.btn),
+.text-muted a:not(.btn) {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 .list-link,
 .taxonomy-term {
     text-decoration: none !important;

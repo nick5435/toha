@@ -17,7 +17,7 @@
     
     <!--================= add analytics if enabled =========================-->
     {{- partial "analytics.html" . -}}
-    {{ with resources.Get "scripts/core/theme-scheme.js" | fingerprint }}
+    {{ with resources.Get "scripts/core/theme-scheme.js" | minify | fingerprint }}
     <script integrity="{{.Data.Integrity}}">
      {{ .Content | safeJS }}
     </script>
@@ -28,35 +28,37 @@
     <!--- NAVBAR ------------------------->
     {{- partial "navigators/navbar.html" . -}}
 
-    <!--- ADD HOME SECTION ---------------->
-    {{- partial "sections/home.html" . -}}
+    <main id="main-content">
+      <!--- ADD HOME SECTION ---------------->
+      {{- partial "sections/home.html" . -}}
 
-    <!--- ADD OPTIONAL SECTIONS ----------->
-    {{ $sections:= hugo.Data.sections }}
-    {{ if (index hugo.Data site.Language.Lang).sections }}
-      {{ $sections = (index hugo.Data site.Language.Lang).sections }}
-    {{ end }}
+      <!--- ADD OPTIONAL SECTIONS ----------->
+      {{ $sections:= hugo.Data.sections }}
+      {{ if (index hugo.Data site.Language.Lang).sections }}
+        {{ $sections = (index hugo.Data site.Language.Lang).sections }}
+      {{ end }}
 
-    {{ if $sections }}
-      {{ $background:= "bg-primary"}}
-      {{ range sort $sections "section.weight" }}
-        {{ if .section.enable }}
-          <div class="container-fluid section-holder d-flex {{ $background }}">
-            {{ if .section.template }}
-              {{- partial .section.template . -}}
+      {{ if $sections }}
+        {{ $background:= "bg-primary"}}
+        {{ range sort $sections "section.weight" }}
+          {{ if .section.enable }}
+            <div class="container-fluid section-holder d-flex {{ $background }}">
+              {{ if .section.template }}
+                {{- partial .section.template . -}}
+              {{ else }}
+                {{- partial (printf "sections/%s.html" (replace (lower .section.id) " " "-")) . -}}
+              {{ end }}
+            </div>
+            <!--- alter background color for next section --->
+            {{ if eq $background "bg-primary" }}
+              {{ $background = "bg-secondary" }}
             {{ else }}
-              {{- partial (printf "sections/%s.html" (replace (lower .section.id) " " "-")) . -}}
-            {{ end }}
-          </div>
-          <!--- alter background color for next section --->
-          {{ if eq $background "bg-primary" }}
-            {{ $background = "bg-secondary" }}
-          {{ else }}
-            {{ $background = "bg-primary" }}
-          {{end}}
+              {{ $background = "bg-primary" }}
+            {{end}}
+          {{ end }}
         {{ end }}
       {{ end }}
-    {{ end }}
+    </main>
 
     <!--- ADD FOOTER ----------------------->
     {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}

@@ -108,13 +108,17 @@
 
 html[data-theme="dark"] {
     --bs-body-color: #{get-dark-color("text-color")};
+    --bs-body-bg: #{get-dark-color("bg-primary")};
     --bs-card-color: #{get-dark-color("text-color")};
     --bs-card-title-color: #{get-dark-color("heading-color")};
     --bs-card-subtitle-color: #{get-dark-color("muted-text-color")};
     --bs-card-cap-bg: transparent;
+    --bs-card-bg: #{get-dark-color("bg-card")};
 
     .card {
-        background: get-dark-color("bg-card");
+        --bs-card-bg: #{get-dark-color("bg-card")};
+        background-color: get-dark-color("bg-card") !important;
+        background: get-dark-color("bg-card") !important;
         color: get-dark-color("text-color");
 
         .card-title {

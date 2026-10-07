@@ -81,7 +81,7 @@
     {{ end }}
     <a class="navbar-brand" href="{{ site.BaseURL | relLangURL }}">
       {{ if $logo }}
-        <img src="{{ $logo }}" id="logo" alt="{{ $navBarTitle }}" width="42" height="42">
+        <img src="{{ $logo }}" id="logo" alt="{{ if not $navBarTitle }}{{ site.Title }}{{ end }}" width="42" height="42">
       {{ end }}
       {{- $navBarTitle -}}
     </a>

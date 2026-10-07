@@ -35,7 +35,7 @@ description = "Start the development server with live reload"
 depends = ["install-example-deps"]
 dir = "../website2"
 # Some AI cloud envs (like GitHub Codespaces or IDX) need this to expose the port.
-run = "hugo server -w --bind=0.0.0.0"
+run = "hugo server -w --bind=0.0.0.0 --minify"
 
 [tasks.fix-security]
 description = "Auto-fix npm security vulnerabilities"

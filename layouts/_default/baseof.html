@@ -11,7 +11,7 @@
 
     <!--================= add analytics if enabled =========================-->
     {{- partial "analytics.html" . -}}
-    {{ with resources.Get "scripts/core/theme-scheme.js" | fingerprint }}
+    {{ with resources.Get "scripts/core/theme-scheme.js" | minify | fingerprint }}
     <script integrity="{{.Data.Integrity}}">
      {{ .Content | safeJS }}
     </script>
@@ -26,8 +26,10 @@
       <!----- ADD SIDEBAR --------------->
       {{ block "sidebar" . }} {{ end }}
 
-      <!----- ADD PAGE CONTENT --------->
-      {{ block "content" . }} {{ end }}
+      <main id="main-content">
+        <!----- ADD PAGE CONTENT --------->
+        {{ block "content" . }} {{ end }}
+      </main>
 
       <!----- ADD TABLE OF CONTENTS ----------->
       {{ block "toc" . }} {{ end }}

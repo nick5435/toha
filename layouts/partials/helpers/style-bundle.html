@@ -7,5 +7,5 @@
 {{- $scss := $template | resources.ExecuteAsTemplate "styles/application.scss" . -}}
 
 {{/*  Bundle application.scss  */}}
-{{- $bundle := $scss | css.Sass $options | fingerprint -}}
+{{- $bundle := $scss | css.Sass $options | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}" />
