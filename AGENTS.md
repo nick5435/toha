@@ -1,30 +1,31 @@
 # Toha Hugo Theme - AI Agent Context
 
-### Project Overview
+## Project Overview
 
-This is **Toha**, a personal portfolio theme for the [Hugo](https://gohugo.io/) static site generator.
+This is **Toha**, a personal portfolio and academic theme for the [Hugo](https://gohugo.io/) static site generator.
 
-- **Goal:** Showcase skills, experience, academic output, and thoughts (blog) with elegance, accessibility, and simplicity.
-- **Core Philosophy:** Configuration over Code. Users should control the site via `data/` and `hugo.yaml` without touching HTML/CSS.
-- **Tech Stack:** Hugo (Extended), Dart Sass, Vanilla JavaScript, Hugo Pipes.
-- **Default Typography:** Poppins (`@fontsource/poppins`), fallback to system fonts.
-- **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`) via SCSS and webfonts (see `.font-awesome.md`).
+- **Goal:** Showcase skills, experience, academic research, publications, talks, and thoughts (blog) with elegance, high accessibility, and simplicity.
+- **Core Philosophy:** Configuration over Code. Users control the site via `data/` and `hugo.yaml` without editing HTML/CSS.
+- **Tech Stack:** Hugo (Extended), Dart Sass, Vanilla JavaScript, Hugo Pipes (DartSass + ESBuild).
+- **Default Typography:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) self-hosted with fallback to modern system fonts.
+- **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro) via SCSS and webfonts (see `.font-awesome.md`), plus Feather icons and Flag icons.
 - **Math Rendering:** MathJax v3 (`mathjax@^3.2.2`).
+- **Diagrams & Media:** Mermaid (`mermaid@^10.8.0`), Plyr (`plyr@^3.7.2`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
 
 ## Development Environment
 
-We use `mise` for deterministic tooling and task management. Use `brew install mise` to install `mise`.
+We use `mise` for deterministic tooling and task management. Install with `brew install mise` or see [mise.jdx.dev](https://mise.jdx.dev).
 Dart Sass (`brew install dart-sass`) is used for modern Sass module compilation.
 
 ### Tooling Tasks (`mise`)
 
-- `mise run install`: Setup theme root tools and npm dependencies.
+- `mise run install`: Setup theme root tools and install npm dependencies.
 - `mise run example-site`: Install dependencies (root & `website2`) and start Hugo dev server at `http://localhost:1313` with `--minify` and live reload.
 - `mise run check`: Single-truth verification running linters (`npm run lint` + `npm run lint:scss`) and production build against `website2`.
 - `mise run lint`: Run ESLint and Prettier SCSS check.
 - `mise run build`: Execute a clean production build (`hugo --gc --minify --cleanDestinationDir`) against `website2`.
 - `mise run update`: Update dependencies and rebuild `package.hugo.json`.
-- `mise run fix-security`: Run npm security audit fix.
+- `mise run fix-security`: Run npm security audit fix (`npm audit fix --force`).
 
 ## Project Structure
 
@@ -32,28 +33,28 @@ Dart Sass (`brew install dart-sass`) is used for modern Sass module compilation.
 
 Toha differs from standard Hugo themes. The structure of the homepage and sidebar is primarily driven by JSON/YAML files in the `data/` directory, not just the `content/` directory.
 
-- **`data/`**: The source of truth for the site's layout configuration. Example data can be found in the integration site (`~/Desktop/website2/data`).
-- **`layouts/partials/`**: Contains the reusable UI components.
-  - `sections/`: Homepage sections (`about`, `skills`, `experiences`, `education`, `projects`, `publications`, `talks`, `service`, `students`, `accomplishments`, `achievements`, `recent-posts`, `calendar`).
+- **`data/`**: The source of truth for the site's layout configuration. Example data can be found in the integration site (`~/Desktop/website2/data` or `exampleSite/data`).
+- **`layouts/partials/`**: Contains reusable UI components.
+  - `sections/`: Homepage sections (`about`, `skills`, `experiences`, `education`, `projects`, `publications`, `talks`, `service`, `students`, `calendar`, `accomplishments`, `achievements`, `recent-posts`, `featured-posts`).
   - `navigators/`: Navigation headers (`navbar`, `sidebar`).
-  - `helpers/`: Asset bundling templates (`style-bundle.html`, `script-bundle.html`).
+  - `helpers/`: Asset bundling templates (`style-bundle.html`, `script-bundle.html`, `get-esbuild-options.html`, `get-sass-options.html`).
 - **`assets/styles/`**: Styling using modern Dart Sass.
 
 ### 2. Directory Map
 
 - `assets/`
   - `images/`: Theme-specific static images.
-  - `scripts/`: Vanilla JS files. **Must be processed via Hugo Pipes (`js.Build | minify | fingerprint`).**
+  - `scripts/`: Vanilla JS files. **Must be processed via Hugo Pipes (`js.Build (dict "minify" true) | fingerprint`).**
   - `styles/`: Stylesheets organized according to components, layouts, sections, etc.
     - `_core.scss`: Forwards responsive breakpoints, variables, and mixins.
-    - `variables.scss`: Central color palettes and theme token maps (`$themes`).
+    - `variables.scss`: Central color palettes, typography, and theme token maps (`$themes`).
     - `application.template.scss`: Main SCSS entry point processed by Hugo template engine.
 - `layouts/`
   - `_default/`: Where base structures of pages are defined (`baseof.html`, `list.html`, `single.html`).
   - `partials/`: Core reusable partials.
-  - `shortcodes/`: Custom markdown components for users.
+  - `shortcodes/`: Custom markdown components for users (`alert`, `embed-pdf`, `gist`, `img`, `rimg`, `mastodon`, `mermaid`, `note`, `split`, `video`, `vs`).
 - `i18n/`: Localization files (`i18n/en.toml`). **All user-facing text must be tokenized here.**
-- `website2/` (`~/Desktop/website2` / `github.com/nick5435/website2`): The integration test bed and example site.
+- `website2/` (`~/Desktop/website2` / `github.com/nick5435/website2`): The integration test bed and live reference site.
   - `hugo.yaml`: Main configuration.
   - `data/`: Defines layout configurations.
   - `content/`: Blog posts and markdown content.
@@ -63,12 +64,12 @@ Toha differs from standard Hugo themes. The structure of the homepage and sideba
 ### HTML & Accessibility (WCAG 2.1 AA)
 
 - **Semantics:** Use semantic HTML5 (`<main id="main-content">`, `<section>`, `<article>`, `<nav>`).
-- **Skip Links:** Include a screen-reader and keyboard accessible skip link to `#main-content` at the top of the body.
+- **Landmarks & Skip Link:** Include a screen-reader and keyboard accessible skip link to `#main-content` at the top of the body (`<a class="skip-to-content" href="#main-content">`).
 - **Partials:** If a block of code is used more than once, extract it to `layouts/partials`.
 - **IDs/Classes:** Use meaningful kebab-case class names.
 - **Safe HTML:** Use `safeHTML` only when absolutely necessary and verified safe.
 - **Icons:** Use standard `<i>` tags for Font Awesome icons (e.g., `<i class="fa-solid fa-house"></i>`, `<i class="fa-brands fa-github"></i>`).
-- **Image Alt Attributes:** Decorative and brand logos should use `alt=""` or appropriate accessible descriptions rather than generic redundant terms like "logo".
+- **Image Alt Attributes:** Purely decorative and brand logo icons should use `alt=""` or appropriate accessible descriptions rather than generic redundant terms like "logo".
 
 ### SCSS & CSS
 
@@ -111,13 +112,14 @@ Toha differs from standard Hugo themes. The structure of the homepage and sideba
 
 ## Common Workflows
 
-### How to add a new Section
+### How to Add a New Section
 
-1. Create the partial in `layouts/partials/sections/`.
-2. Add the styling in `assets/styles/sections/`.
-3. Add the entry logic in `layouts/partials/<section-name>.html` (or relevant parent).
-4. Define the data schema in `website2/data/<language code>/sections/<section-name>.yaml`.
-5. Wrap the rendering in a conditional check (e.g., `if .Site.Params.features.newSection.enable`).
+1. Create the partial in `layouts/partials/sections/<section-name>.html`.
+2. Add the styling in `assets/styles/sections/<section-name>.scss`.
+3. Forward the section stylesheet in `assets/styles/application.template.scss`.
+4. Add the entry logic in `layouts/index.html` (or relevant parent).
+5. Define the data schema in `website2/data/<language code>/sections/<section-name>.yaml`.
+6. Wrap the rendering in a conditional check (e.g., `if .Site.Params.features.newSection.enable`).
 
 ### How to Fix a Bug
 

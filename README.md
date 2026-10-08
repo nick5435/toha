@@ -1,289 +1,193 @@
 # Toha
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b1b93b02-f278-440b-ae1b-304e9f4c4ab5/deploy-status)](https://app.netlify.com/sites/toha/deploys)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fhugo-themes%2Ftoha%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/hugo-themes/toha/goto?ref=main)
-![Repository Size](https://img.shields.io/github/repo-size/hugo-themes/toha)
-![Lines of Codes](https://img.shields.io/tokei/lines/github.com/hugo-themes/toha)
-![Contributor](https://img.shields.io/github/contributors/hugo-themes/toha)
-![Latest Release](https://img.shields.io/github/v/release/hugo-themes/toha?include_prereleases)
-![Last Commit](https://img.shields.io/github/last-commit/hugo-themes/toha)
-![Open Issues](https://img.shields.io/github/issues/hugo-themes/toha?color=important)
-![Open Pull Requests](https://img.shields.io/github/issues-pr/hugo-themes/toha?color=yellowgreen)
-![License](https://img.shields.io/github/license/hugo-themes/toha)
-![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fhugo-themes.github.io%2F)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fhugo-themes%2Ftoha%2Fbadge%3Fref%3Dmain&style=flat)](https://github.com/nick5435/toha)
+![Repository Size](https://img.shields.io/github/repo-size/nick5435/toha)
+![Contributor](https://img.shields.io/github/contributors/nick5435/toha)
+![License](https://img.shields.io/github/license/nick5435/toha)
 
-A [Hugo](https://gohugo.io/) theme for a personal portfolio with minimalist design and responsiveness.
+A personal portfolio and academic theme for [Hugo](https://gohugo.io/) featuring minimalist elegance, high accessibility (WCAG 2.1 AA), rich data-driven sections, and high performance.
 
 ![Thumbnail](https://raw.githubusercontent.com/hugo-themes/toha/main/images/screenshot.png)
 
 - **Example Site:** [toha-example-site](https://toha-example-site.netlify.app)
 - **Documentation:** [toha-docs.netlify.app](https://toha-docs.netlify.app/posts)
 
+---
+
+## Key Highlights
+
+- **Configuration over Code:** Structure your portfolio entirely via `hugo.yaml` and YAML/JSON data files in `data/` without writing custom HTML or CSS.
+- **Academic & Professional Sections:** Complete support for Academic Publications, Invited Talks & Presentations, Academic Service, Student Mentorship & Advising, Calendar events, Experience timelines, Projects, Skills, and Achievements.
+- **Accessibility by Design (WCAG 2.1 AA):** Built-in semantic HTML5 landmarks (`<main id="main-content">`), accessible keyboard skip-to-content links, contextual link underlines, high-contrast dark/light color tokens, and accessible image attributes.
+- **Modern Asset Pipeline:** Dart Sass module architecture, ESBuild bundling, automated minification, and cache-busting fingerprints via Hugo Pipes.
+- **Typography & Math:** Self-hosted Poppins font (`@fontsource/poppins`), MathJax v3 formula rendering (`mathjax@^3.2.2`), Font Awesome Pro Kit icons (`@awesome.me/kit-f6f8bfcfbd`), Feather icons, and Flag icons.
+- **Dynamic Themes:** Dark mode, light mode, and automatic system detection (`prefers-color-scheme`) with WCAG-compliant contrast tokens.
+- **Rich Diagrams & Media:** Native Mermaid diagram shortcodes, responsive Plyr media player, and TypeIt hero animations.
+
+---
+
 ## Features
 
-- Minimalist Design
-- Fully Responsive
-- Multiple Language Support
-- Carefully Designed Cards
-- Experience Timeline
-- Achievement Gallery
-- Sidebar to Categorize the Posts
-- Short Codes
-- Analytics Support
-  - GoatCounter
-  - counter.dev
-  - Google Analytics
-  - Matomo/Piwik
-  - [Umami](https://umami.is/)
-- Comment Support
-  - [Disqus](https://disqus.com/)
-  - [Valine](https://valine.js.org/)
-  - [Utterances](https://utteranc.es/)
-  - [Giscus](https://giscus.app/)
+### Comprehensive Homepage Sections
 
-For more details about the features please visit [here](https://toha-docs.netlify.app/posts/features/).
+Toha supports modular, data-driven homepage sections that can be individually enabled, ordered, and customized:
+
+- **About:** Personal bio, avatar portrait, and contact details.
+- **Skills:** Categorized skills with percentage bars or competency indicators.
+- **Experiences:** Interactive chronological career and education timeline.
+- **Education:** Degrees, thesis titles, and honors (with optional alternate layout).
+- **Projects:** Filterable showcase with tags, GitHub links, and demo URLs.
+- **Publications:** Academic papers, peer-reviewed articles, citations, DOI links, and BibTeX modals.
+- **Talks:** Invited talks, conference presentations, slides, abstracts, and video recordings.
+- **Academic Service:** Peer review, conference organization, committee roles, and journal editorial duties.
+- **Student Mentorship:** Supervised PhD, Master's, and undergraduate students with research topics and current positions.
+- **Calendar:** Upcoming talks, seminars, workshops, and schedule availability.
+- **Achievements & Accomplishments:** Awards, honors, certificates, and recognitions.
+- **Recent & Featured Posts:** Blog post previews right on the landing page.
+
+### Blog & Notes
+
+- Categorized posts with tags and hierarchical table of contents.
+- Reading time estimate and word count.
+- Math formula rendering with MathJax v3.
+- Code syntax highlighting with Highlight.js.
+- Client-side full-text search powered by Fuse.js and Mark.js.
+- Standalone multi-topic Notes section.
+
+### Analytics & Comments
+
+- **Analytics:** Google Analytics, [Umami](https://umami.is/), [GoatCounter](https://www.goatcounter.com/), [counter.dev](https://counter.dev/), [Matomo](https://matomo.org/).
+- **Comments:** [Giscus](https://giscus.app/), [Disqus](https://disqus.com/), [Utterances](https://utteranc.es/), [Valine](https://valine.js.org/).
+
+---
 
 ## Available Translations
 
-- English
-- বাংলা
-- Français
-- Indonesian
-- Deutsch
-- Español
-- 简体中文
-- 繁體中文
-- हिन्दी
-- Italiano
-- 日本語
-- 한국어
-- русский
-- suomi
-- Tiếng Việt
-- Azerbaijan
-- Turkish
-- Arabic (العربية)
-- Português Europeu
-- Català
-- Português Brasileiro
-- Nederlands
-- Hebrew
+Toha supports multilingual sites out-of-the-box with translations in 23+ languages:
 
-To know more about how to translate your site, please visit [here](https://toha-docs.netlify.app/posts/translation/). Follow, the data and post format from this [example site](https://github.com/hugo-themes/toha-example-site).
+| Language | Language | Language |
+| :--- | :--- | :--- |
+| English | Français | Deutsch |
+| Español | বাংলা (Bengali) | हिन्दी (Hindi) |
+| 简体中文 (Simplified Chinese) | 繁體中文 (Traditional Chinese) | 日本語 (Japanese) |
+| 한국어 (Korean) | Italiano | Português Europeu |
+| Português Brasileiro | Nederlands | русский (Russian) |
+| suomi (Finnish) | Tiếng Việt (Vietnamese) | Türkçe (Turkish) |
+| Azerbaijan | Català | Hebrew (עברית) |
+| Arabic (العربية) | Indonesian | |
 
-## Screenshots
+To learn how to configure multilingual sites, visit the [Translation Guide](https://toha-docs.netlify.app/posts/translation/).
 
-Here are few screenshots from the [example site](https://toha-example-site.netlify.app).
-
-##### Home Page Sections
-
-![Home Page Sections](https://raw.githubusercontent.com/hugo-themes/toha/main/images/about.png)
-
-##### List Page
-
-![List Page](https://raw.githubusercontent.com/hugo-themes/toha/main/images/list.png)
-
-##### Reading Page
-
-![Reading Page](https://raw.githubusercontent.com/hugo-themes/toha/main/images/single.png)
+---
 
 ## Requirements
 
-- Hugo Version 0.163.0 (extended) or higher
-- Go language 1.19 or higher (require for hugo modules)
-- Node version v18.x or later and npm 8.x or later.
+- **Hugo:** Version `0.163.0` (extended) or higher (tested with `0.167.0+ extended`).
+- **Go:** Version `1.20` or higher (required for Hugo Modules).
+- **Node.js & npm:** Node `v18.x` or later (Node 20+ recommended) and npm `8.x` or later.
+- **Dart Sass:** Recommended for Sass compilation (`brew install dart-sass`).
+- **Mise (Optional but Recommended):** For deterministic tool versions (`brew install mise`).
+
+---
 
 ## Usage
 
-The easiest way to use this theme is to fork [toha-example-site](https://github.com/hugo-themes/toha-example-site) sample repo.Then change the configurations according to your need.
+### Option 1: Quickstart via Hugo Modules (Recommended)
 
-If you want to start from scratch, then follow these steps:
+1. **Initialize Hugo module in your site repository:**
 
-##### 1. Initialize Hugo module on you repo
+   ```bash
+   hugo mod init github.com/<your-username>/<your-repo-name>
+   ```
 
-At first, initialize [Hugo modules](https://gohugo.io/hugo-modules/) in your repo. This will create a `go.mod` file.
+2. **Add Toha as a module dependency in `hugo.yaml`:**
 
-```bash
-hugo mod init github.com/<your username>/<your repo name>
-```
+   ```yaml
+   module:
+     imports:
+       - path: github.com/nick5435/toha
+   ```
 
-##### 2. Add this theme as your module dependency
+3. **Install dependencies:**
 
-Now, in your `hugo.yaml` file, add a `module` section.
+   ```bash
+   hugo mod tidy
+   hugo mod npm pack
+   npm install
+   ```
 
-```yaml
-# Use Hugo modules to add theme
-module:
-  imports:
-    - path: github.com/hugo-toha/toha/v4
-```
+4. **Run local server:**
 
-Check this sample [hugo.yaml](https://github.com/hugo-toha/hugo-toha.github.io/blob/main/hugo.yaml) for further reference.
+   ```bash
+   hugo server -w
+   ```
 
-##### 3. Update your module
+### Option 2: Starter Template
 
-Now, run this command to load this theme as your module.
+Fork the [toha-example-site](https://github.com/hugo-themes/toha-example-site) sample repository and configure the `data/` and `hugo.yaml` settings to match your profile.
 
-```bash
-hugo mod tidy
-```
-
-#### Running Locally
-
-Now, you can run your hugo site locally with the following steps:
-
-##### 1. Generate node dependency configuration
-
-Now run the following command to generate node dependency configuration. This will create the a `package.json` file in you repo.
-
-```bash
-hugo mod npm pack
-```
-
-##### 2. Install dependencies
-
-Install the node dependencies using following command:
-
-```bash
-npm install
-```
-
-##### 3. Run your site
-
-Now, run you site locally using following command.
-
-```bash
-hugo server -w
-```
-
-When you run your site for first time, it will start with the default parameters. It should look similar to the [example site](https://toha-example-site.netlify.app). However, it will not have any sections in the homepage as we haven't configured them yet. You can configure your site by following the guides from [here](https://toha-docs.netlify.app/posts/configuration/).
+---
 
 ## Shortcodes
 
-Here, are some handy shortcodes you can use with this theme.
+Enhance your Markdown content with built-in shortcodes:
 
-- [Alert](https://toha-docs.netlify.app/posts/shortcodes/#alert)
-- [Image](https://toha-docs.netlify.app/posts/shortcodes/#image)
-- [Split](https://toha-docs.netlify.app/posts/shortcodes/#split)
-- [Vertical Space](https://toha-docs.netlify.app/posts/shortcodes/#vertical-space)
-- [Video](https://toha-docs.netlify.app/posts/shortcodes/#video)
-- [Mermaid](https://toha-example-site.netlify.app/posts/shortcodes/#mermaid)
+| Shortcode | Description |
+| :--- | :--- |
+| `{{< alert type="info" >}}` | Styled alerts (`success`, `info`, `warning`, `danger`) |
+| `{{< embed-pdf url="..." >}}` | Embed interactive PDF documents directly in pages |
+| `{{< mermaid >}}` | Render diagrams, flowcharts, and sequence charts |
+| `{{< split >}}` | Multi-column side-by-side content layouts |
+| `{{< video src="..." >}}` | Responsive HTML5 video player with Plyr |
+| `{{< img src="..." >}}` | Styled static image container |
+| `{{< rimg src="..." >}}` | Responsive auto-resizing image using Hugo image processing |
+| `{{< note >}}` | Callout note blocks for articles |
+| `{{< vs size="2" >}}` | Vertical spacing between blocks |
+| `{{< gist ... >}}` | Embed GitHub Gists |
+| `{{< mastodon ... >}}` | Embed federated Mastodon posts |
 
-## Contributing
+---
 
-You can contribute to this theme in various ways. You can report a [bug](https://github.com/hugo-themes/toha/issues/new?template=bug.md), file an [feature request](https://github.com/hugo-themes/toha/issues/new?template=feature_request.md), send a PR, [share your thoughts](https://github.com/hugo-themes/toha/issues/new?template=question.md) etc.
+## Local Development & Contributing
 
-Pull requests are most welcome and I will be happy to review. Just follow the following principles:
+We use [mise](https://mise.jdx.dev) for deterministic tooling and task management.
 
-- Keep it simple.
-- Keep it consistent with the design.
-- Use as few dependencies as possible.
-- Have patience.
+### Development Workflow
 
-> I am not a web developer. I have created this theme for my personal needs. So, it is reasonable to have some flaws in the codes. Feel free to open issues and PRs acknowledging the problems.
+1. **Install tools and dependencies:**
 
-## Local Development
+   ```bash
+   mise run install
+   ```
 
-For local development, you can make changes in the theme submodule and test the changes against your own site or this [example site](https://github.com/hugo-toha/toha-example-site) locally.
+2. **Start the local dev server:**
 
-### 1. Fork
+   ```bash
+   mise run example-site
+   ```
 
-At first, fork [this repo](https://github.com/hugo-themes/toha). Then, follow the following steps to use the forked theme for local developments,
+   Starts the development server with live reload and asset minification at `http://localhost:1313`.
 
-We have an example configuration under `exampleSite` folder that will let you run the theme locally. Follow below steps to run the example site.
+3. **Verify all linters and production build:**
 
-### 2. Install Mise
+   ```bash
+   mise run check
+   ```
 
-We use [jdx/mise](https://github.com/jdx/mise) to simplify managing dependencies and running locally. Please, install it following the instruction from [here](https://mise.jdx.dev/getting-started.html).
+   Executes ESLint, Prettier SCSS checks, and a full production build (`hugo --gc --minify --cleanDestinationDir`).
 
-### 3. Install dependencies
+### Coding Guidelines
 
-Install the all the necessary tools by running:
+- **Configuration over Code:** New visual features must be configurable via `hugo.yaml` or `data/` and **disabled by default**.
+- **Modern Sass:** Use Dart Sass `@use` and `@forward` syntax. `@import` is deprecated and strictly forbidden.
+- **Accessibility:** Ensure all color combinations pass WCAG 2.1 AA. Maintain `<main id="main-content">` semantic landmarks and link underline accessibility.
+- **Internationalization:** Never hardcode English strings in templates; use `{{ i18n "string_id" }}`.
+- **AI Agent Context:** Review [`AGENTS.md`](AGENTS.md) for detailed architecture, token conventions (`text-over-accent-color` vs `hero-text-color`), and coding patterns.
 
-```bash
-mise install
-```
+---
 
-This will install `hugo`, `go`, `node` and other tools that are necessary to run this project to appropriate versions.
+## Attribution & Thanks
 
-### 4. Run example site
-
-Now, run the site locally using following command.
-
-```bash
-mise run example-site
-```
-
-Now, you can make change in the theme and they will be reflected immediately on the running site. If you need to change any configuration, you can do that in the `hugo.yaml` file inside `exampleSite` folder. If you need to add any content or data, you can create the respective folder inside `exampleSite` directory and add your desired content or data there.
-
-### Running the forked theme against your own site
-
-If you want to run your local development against your own site, follow the following steps:
-
-**Replace the theme module:**
-
-Open your site's `go.mod` file and replace the `github.com/hugo-toha/toha/v4` with your forked repo's path. For example, if your forked repo is `github.com/<your-github-user>/toha`, then replace the `github.com/hugo-toha/toha/v4` with `github.com/<your-github-user>/toha/v4`.
-
-```go
-module github.com/hugo-toha/hugo-toha.github.io
-
-go 1.19
-
-require github.com/hugo-toha/toha/v4 v4.0.1-0.20231229170427-d3968ca711ef // indirect
-
-replace(
-    github.com/hugo-toha/toha/v4 => github.com/<your-github-user>/toha/v4 <git branch>
-)
-```
-
-For interactive development, you can replace the theme with your locally cloned fork. For example, if you have cloned your fork in `/home/my-projects/toha`, then replace the `github.com/hugo-toha/toha/v4` with `/home/my-projects/toha`.
-
-```go
-module github.com/hugo-toha/hugo-toha.github.io
-
-go 1.19
-
-require github.com/hugo-toha/toha/v4 v4.0.1-0.20231229170427-d3968ca711ef // indirect
-
-replace(
-    github.com/hugo-toha/toha/v4 => /home/my-projects/toha
-)
-```
-
-**Update dependencies:**
-
-```bash
-# update hugo modules
-$ hugo mod tidy
-# install dependencies
-$ hugo mod npm pack
-$ npm install
-```
-
-**Run your site locally:**
-
-```bash
-hugo server -w
-```
-
-From there you can make changes to the source code of the theme while testing with your running Hugo site or the example site.
-
-### Open a PR
-
-When the changes look good, commit and push them to your fork.
-
-```bash
-# stage all the changes
-$ git add .
-# commit the changes with a meaning full commit message
-$ git commit -m "A meaningful commit message"
-# push the commit to your fork
-$ git push my-fork my-feature-branch
-```
-
-Then, open a PR against `main` branch of [hugo-themes/toha](https://github.com/hugo-themes/toha) from the `my-feature-branch` branch of your own fork.
-
-## Attribution
-
-- Thanks [Anup Deb](https://dribbble.com/anupdeb) for his design guidance.
-- Many of the illustrations have been taken from [iconscout](http://iconscout.com/).
+- Original theme created by [Emruz Hossain](https://github.com/hossainemruz) and the [Toha Community](https://github.com/hugo-themes/toha).
+- Design guidance inspired by [Anup Deb](https://dribbble.com/anupdeb).
+- Illustrations courtesy of [IconScout](https://iconscout.com/).
