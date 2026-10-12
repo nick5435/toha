@@ -14,9 +14,6 @@ if (process.env.FEATURE_THEME === '1') {
   import('./theme')
 }
 
-if (process.env.FEATURE_FLOWCHART === '1') {
-  import('./flowchart')
-}
 
 if (process.env.FEATURE_SYNTAXHIGHLIGHT === '1') {
   import('./syntaxhighlight')

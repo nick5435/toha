@@ -10,7 +10,7 @@ This is **Toha**, a personal portfolio and academic theme for the [Hugo](https:/
 - **Default Typography:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) self-hosted with fallback to modern system fonts.
 - **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro) via SCSS and webfonts (see `.font-awesome.md`), plus Feather icons and Flag icons.
 - **Math Rendering:** MathJax v3 (`mathjax@^3.2.2`).
-- **Diagrams & Media:** Mermaid (`mermaid@^10.8.0`), Plyr (`plyr@^3.7.2`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
+- **Media & Interactive Components:** Plyr (`plyr@^3.7.2`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
 
 ## Development Environment
 
@@ -52,7 +52,7 @@ Toha differs from standard Hugo themes. The structure of the homepage and sideba
 - `layouts/`
   - `_default/`: Where base structures of pages are defined (`baseof.html`, `list.html`, `single.html`).
   - `partials/`: Core reusable partials.
-  - `shortcodes/`: Custom markdown components for users (`alert`, `embed-pdf`, `gist`, `img`, `rimg`, `mastodon`, `mermaid`, `note`, `split`, `video`, `vs`).
+  - `shortcodes/`: Custom markdown components for users (`alert`, `embed-pdf`, `gist`, `img`, `rimg`, `mastodon`, `note`, `split`, `video`, `vs`).
 - `i18n/`: Localization files (`i18n/en.toml`). **All user-facing text must be tokenized here.**
 - `website2/` (`~/Desktop/website2` / `github.com/nick5435/website2`): The integration test bed and live reference site.
   - `hugo.yaml`: Main configuration.

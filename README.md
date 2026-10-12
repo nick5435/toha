@@ -22,7 +22,7 @@ A personal portfolio and academic theme for [Hugo](https://gohugo.io/) featuring
 - **Modern Asset Pipeline:** Dart Sass module architecture, ESBuild bundling, automated minification, and cache-busting fingerprints via Hugo Pipes.
 - **Typography & Math:** Self-hosted Poppins font (`@fontsource/poppins`), MathJax v3 formula rendering (`mathjax@^3.2.2`), Font Awesome Pro Kit icons (`@awesome.me/kit-f6f8bfcfbd`), Feather icons, and Flag icons.
 - **Dynamic Themes:** Dark mode, light mode, and automatic system detection (`prefers-color-scheme`) with WCAG-compliant contrast tokens.
-- **Rich Diagrams & Media:** Native Mermaid diagram shortcodes, responsive Plyr media player, and TypeIt hero animations.
+- **Interactive Media:** Responsive Plyr media player and TypeIt hero animations.
 
 ---
 
@@ -136,7 +136,6 @@ Enhance your Markdown content with built-in shortcodes:
 | :--- | :--- |
 | `{{< alert type="info" >}}` | Styled alerts (`success`, `info`, `warning`, `danger`) |
 | `{{< embed-pdf url="..." >}}` | Embed interactive PDF documents directly in pages |
-| `{{< mermaid >}}` | Render diagrams, flowcharts, and sequence charts |
 | `{{< split >}}` | Multi-column side-by-side content layouts |
 | `{{< video src="..." >}}` | Responsive HTML5 video player with Plyr |
 | `{{< img src="..." >}}` | Styled static image container |
