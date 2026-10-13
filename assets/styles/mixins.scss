@@ -41,8 +41,8 @@
     }
 }
 
-@mixin transition() {
-    transition: all $transition-type $transition-duration;
+@mixin transition($property: all, $duration: $transition-duration, $timing: $transition-type) {
+    transition: $property $timing $duration;
 }
 
 @mixin selection-color($theme: "light") {
