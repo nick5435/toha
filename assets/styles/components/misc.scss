@@ -78,4 +78,14 @@ html[data-theme="dark"] {
             }
         }
     }
+    video-player {
+        --media-accent-color: #{get-dark-color("accent-color")};
+    }
+}
+
+video-player {
+    display: block;
+    width: 100%;
+    margin: 1.5rem 0;
+    --media-accent-color: #{get-light-color("accent-color")};
 }

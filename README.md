@@ -219,7 +219,7 @@ Enhance your Markdown content with built-in shortcodes:
 | `{{< alert type="info" >}}` | Styled alerts (`success`, `info`, `warning`, `danger`) |
 | `{{< embed-pdf url="..." >}}` | Embed interactive PDF documents directly in pages |
 | `{{< split >}}` | Multi-column side-by-side content layouts |
-| `{{< video src="..." >}}` | Responsive HTML5 video player with Plyr |
+| `{{< video src="..." >}}` | Responsive HTML5 video player with Video.js v10 |
 | `{{< img src="..." >}}` | Styled static image container |
 | `{{< rimg src="..." >}}` | Responsive auto-resizing image using Hugo image processing |
 | `{{< note >}}` | Callout note blocks for articles |

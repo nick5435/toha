@@ -4,10 +4,10 @@ licenselink = "https://github.com/hugo-themes/toha/blob/main/LICENSE"
 description = "A modern, academic and professional portfolio theme for Hugo with high accessibility and privacy-first design"
 
 # The home page of the theme, where the source can be found.
-homepage = "https://github.com/hugo-themes/toha"
+homepage = "https://github.com/nick5435/toha"
 
 # If you have a running demo of the theme.
-demosite = "https://toha-preview.hugo-themes.com/"
+demosite = "https://nickmeyer.phd/"
 
 tags = [
   "Portfolio",
@@ -38,8 +38,8 @@ features = [
 ]
 
 [author]
-  homepage = "https://hossainemruz.github.io"
-  name = "Emruz Hossain"
+  homepage = "https://nickmeyer.phd"
+  name = "Nick Meyer"
 
 [module]
   [module.hugoVersion]

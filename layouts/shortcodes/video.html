@@ -1,13 +1,26 @@
 {{ $src := .Get "src" }}
 {{ $type := .Get "type" }}
-{{/*
-  A page can have multiple videos. We need to generate unique id for them.
-  Here, we are generating a sequence from 1 to 200 and taking the first element after a shuffle.
-  This will give a random number in most cases. However, if the page has many videos, we might have a collision.
-  We should find a better approach for doing this.
-*/}}
-{{ $randNumber :=  index (seq 200 | shuffle) 0 }}
+{{ $poster := .Get "poster" }}
+{{ $aspectRatio := .Get "aspectRatio" | default "16 / 9" }}
+{{ $id := .Get "id" | default (printf "video-%d" (index (seq 200 | shuffle) 0)) }}
 
-<video class="video-player" id="video-{{ $randNumber }}" playsinline controls>
-  <source src="{{ $src }}" type="{{ $type | default "video/mp4" }}" />
-</video>
+{{/* If videoplayer feature is not enabled in Hugo site params (or site has no build step), load CDN bundle */}}
+{{- $featureEnabled := false -}}
+{{- with site.Params.features.videoplayer -}}
+  {{- $featureEnabled = or (not (isset . "enable")) .enable -}}
+{{- end -}}
+
+{{- if not $featureEnabled -}}
+  {{- if not (.Page.Scratch.Get "videojs_cdn_loaded") -}}
+    {{- .Page.Scratch.Set "videojs_cdn_loaded" true -}}
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@videojs/cdn@10.0.1/video-neutral.js"></script>
+  {{- end -}}
+{{- end -}}
+
+<video-player class="video-player" id="{{ $id }}"{{ with $poster }} poster="{{ . }}"{{ end }}>
+  <video-neutral-skin style="display: block; width: 100%; aspect-ratio: {{ $aspectRatio | safeCSS }};">
+    <video playsinline>
+      <source src="{{ $src }}" type="{{ $type | default "video/mp4" }}" />
+    </video>
+  </video-neutral-skin>
+</video-player>

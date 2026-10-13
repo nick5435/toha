@@ -12,7 +12,7 @@ This is **Toha Professional Modern** (`toha-professional-modern`), a personal po
 - **Default Typography:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) self-hosted with fallback to modern system fonts.
 - **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro) via SCSS and webfonts (see `.font-awesome.md`), plus Feather icons and Flag icons.
 - **Math Rendering:** MathJax v3 (`mathjax@^3.2.2`).
-- **Media & Interactive Components:** Plyr (`plyr@^3.7.2`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
+- **Media & Interactive Components:** Video.js (`@videojs/html@^10.0.1`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
 
 ---
 

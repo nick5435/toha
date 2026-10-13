@@ -4,9 +4,10 @@ flags:
 
 videoplayer:
   services:
+    videojs:
+      styles: []
     plyr:
-      styles:
-      - plyr/dist/plyr
+      styles: []
 
 syntaxhighlight:
   services:
