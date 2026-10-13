@@ -171,6 +171,25 @@ tags:
   - `students.html`: Uses 2-column cards (`col-md-12 col-lg-6`) via `layouts/partials/cards/students.html`.
   - `footer.html`: Responsive multi-column contact footer (`layouts/partials/footer.html`, `assets/styles/sections/footer.scss`) configured via site parameters (`footer.contact.columns`). Dynamically distributes email, phone, office location, and professional links in clean vertical stacks across desktop and mobile.
 
+### Active Homepage Section Configuration Reference (`website2/data/en/sections/`)
+
+All sections in the integration reference site follow the standardized centered visual hierarchy (`Title` $\rightarrow$ `Subtitle` $\rightarrow$ `Topical Badge Pills`):
+
+| Section File | Purpose & Conventions | Key Fields & Badges |
+| :--- | :--- | :--- |
+| `about.yaml` | Biography, avatar portrait, contact details, and formatted academic summary paragraphs. | Academic bio paragraphs formatted with 1.75rem indentation (`.about-summary p`). Includes "Email Me" button and Google Scholar profile link. |
+| `technology.yaml` | Condensed 3x2 card grid highlighting computational environments, programming languages, and typesetting tools. | 6 cards (`col-12 col-md-6 col-lg-4`): Python & SageMath, Interactive Topology (JupyterLite/Pyodide), LaTeX & TikZ, macOS & Linux, Git, High-Performance Compute. |
+| `activities.yaml` | "Outside the Classroom" cards highlighting personal pursuits, athletics, and hobbies. | Cards with 48px rounded icon wrappers, elevation hover effects, and category pills. |
+| `talks.yaml` | Selected presentations, colloquia, and seminar talks. | Interactive category filtering (`filter: true`), abstract expansion, slides/video links, venue details, and dates. |
+| `publications.yaml` | Academic papers, preprints, citations, and DOI links. | Filter buttons, DOI links, arXiv links, and collapsible abstracts. |
+| `students.yaml` | Graduate and undergraduate student mentorship. | 2-column cards (`col-md-12 col-lg-6`) detailing thesis topics, organizations, and links. |
+| `service.yaml` | Academic and departmental committee service, peer review. | Role, organization, years of service, and descriptions. |
+| `calendar.yaml` | Teaching schedule, office hours, and appointments widget. | Native FullCalendar v7 integration with Google Calendar API v3 synchronization, Google Palette Manager, multi-tier `colorMap` keyword rules, Popper.js hover popovers, and 3-column centered toolbar grid. |
+| `education.yaml` | Chronological academic degrees and honors. | Degrees, institutions, years, and doctoral advisor Alex Zupan. |
+| `experiences.yaml` | Academic appointments and teaching appointments timeline. | Position title, institution, date ranges, and responsibilities. |
+| `projects.yaml` | Interactive research software and computational projects. | Action buttons, badges, and project modals. |
+
+
 ---
 
 ## Coding Guidelines
@@ -184,6 +203,8 @@ tags:
 - **Safe HTML:** Use `safeHTML` only when absolutely necessary and verified safe.
 - **Icons:** Use standard `<i>` tags for Font Awesome icons (e.g., `<i class="fa-solid fa-house"></i>`, `<i class="fa-brands fa-github"></i>`).
 - **Image Alt Attributes:** Purely decorative and brand logo icons should use `alt=""` or appropriate accessible descriptions rather than generic redundant terms like "logo".
+- **Heading Progression & Footer Accessibility:** Footer column headings (`Contact me:` and `Navigation` in `layouts/partials/footer.html`) use semantic `<h3 class="h5">` tags instead of `<h5>`. This maintains unbroken heading progression following homepage `<h2>` section headers while preserving compact Bootstrap `.h5` typography and theme contrast.
+
 
 ### SCSS & Modern Dart Sass (Unified Design System)
 
@@ -290,6 +311,7 @@ tags:
 2. **Configurability:** Every new visual feature must be toggleable via `hugo.yaml` or `data/` files.
 3. **Defaults:** New features must be **disabled by default**.
 4. **Localization:** Do not hardcode English strings. Use `{{ i18n "string_id" }}`.
+5. **Strict Oxford Comma:** Always use the Oxford comma across all natural language copy, documentation, commit messages, and lists.
 
 ---
 
@@ -319,3 +341,13 @@ tags:
 2. Fix the logic in the theme `layouts/` or `assets/`.
 3. Verify the fix by running `mise run check` in `~/Desktop/toha`.
 4. Verify visually if needed with `mise run example-site`.
+
+---
+
+## Verification Checklist for Agents
+
+Before completing any task in `toha`:
+1. **Never Touch `.npmrc` Secret:** Never export, echo, or commit the private Font Awesome token from `website2`.
+2. **Execute Full Lint Verification:** Run `npm run lint` (ESLint) and `npm run lint:scss` (Prettier SCSS) to ensure 0 errors and 0 warnings.
+3. **Verify Production Build:** Always run `mise run build` to verify that Hugo compiles against `website2` without warnings or template errors.
+4. **Enforce Oxford Comma:** Verify all commit messages, documentation, and user-facing text include the Oxford comma.
