@@ -1,7 +1,7 @@
 @use "../core" as *;
 
 .footer {
-    color: get-light-color("muted-text-color") !important;
+    color: get-light-color("footer-muted-color") !important;
     background-color: get-light-color("footer-color");
     position: relative;
     z-index: 9999;
@@ -9,16 +9,17 @@
     h3,
     h4,
     h5 {
-        color: get-light-color("inverse-text-color");
+        color: get-light-color("footer-heading-color");
     }
 
     a {
-        color: get-light-color("muted-text-color");
+        color: get-light-color("footer-muted-color");
         @include transition();
         &:hover {
             margin-left: 5px;
-            -webkit-text-decoration: get-light-color("muted-text-color") underline;
-            text-decoration: get-light-color("muted-text-color") underline;
+            color: get-light-color("footer-text-color");
+            -webkit-text-decoration: get-light-color("footer-text-color") underline;
+            text-decoration: get-light-color("footer-text-color") underline;
             @include transition();
         }
     }
@@ -62,30 +63,30 @@
     }
 
     hr {
-        background-color: get-light-color("muted-text-color");
+        background-color: get-light-color("footer-muted-color");
     }
 
     p:first-child {
-        color: get-light-color("inverse-text-color");
+        color: get-light-color("footer-text-color");
     }
 
     input {
-        background-color: get-light-color("inverse-text-color");
+        background-color: get-light-color("footer-text-color");
         &:focus {
             background-color: get-light-color("bg-secondary");
         }
     }
 
     #disclaimer {
-        color: get-light-color("muted-text-color") !important;
+        color: get-light-color("footer-muted-color") !important;
         text-align: justify;
         & > strong {
-            color: get-light-color("inverse-text-color") !important;
+            color: get-light-color("footer-text-color") !important;
         }
     }
 
     #theme {
-        color: get-light-color("inverse-text-color");
+        color: get-light-color("footer-text-color");
         img {
             width: 32px;
             display: inline-block;
@@ -104,28 +105,29 @@
 
 html[data-theme="dark"] {
     .footer {
-        color: get-dark-color("muted-text-color") !important;
+        color: get-dark-color("footer-muted-color") !important;
         background-color: get-dark-color("footer-color");
         h3,
         h4,
         h5 {
-            color: get-dark-color("heading-color");
+            color: get-dark-color("footer-heading-color");
         }
 
         a {
-            color: get-dark-color("muted-text-color");
+            color: get-dark-color("footer-muted-color");
             &:hover {
-                -webkit-text-decoration: get-dark-color("muted-text-color") underline;
-                text-decoration: get-dark-color("muted-text-color") underline;
+                color: get-dark-color("footer-text-color");
+                -webkit-text-decoration: get-dark-color("footer-text-color") underline;
+                text-decoration: get-dark-color("footer-text-color") underline;
             }
         }
 
         hr {
-            background-color: get-dark-color("muted-text-color");
+            background-color: get-dark-color("footer-muted-color");
         }
 
         p:first-child {
-            color: get-dark-color("muted-text-color");
+            color: get-dark-color("footer-text-color");
         }
 
         input {
@@ -135,19 +137,19 @@ html[data-theme="dark"] {
                 color: get-dark-color("text-color");
             }
             &::placeholder {
-                color: get-dark-color("muted-text-color");
+                color: get-dark-color("footer-muted-color");
             }
         }
 
         #disclaimer {
-            color: get-dark-color("muted-text-color") !important;
+            color: get-dark-color("footer-muted-color") !important;
             & > strong {
-                color: get-dark-color("text-color") !important;
+                color: get-dark-color("footer-text-color") !important;
             }
         }
 
         #theme {
-            color: get-dark-color("text-color");
+            color: get-dark-color("footer-text-color");
         }
     }
 }

@@ -222,7 +222,14 @@ html[data-theme="dark"] {
         li {
             a {
                 color: get-dark-color("heading-color");
+                &:hover {
+                    @include nav-item-hover-effect("dark");
+                }
             }
+        }
+
+        .navbar-nav .active {
+            @include nav-item-hover-effect("dark");
         }
 
         #top-navbar-divider {
@@ -237,6 +244,10 @@ html[data-theme="dark"] {
             &.show {
                 a {
                     color: get-dark-color("heading-color") !important;
+
+                    &:hover {
+                        @include nav-item-hover-effect("dark");
+                    }
                 }
             }
         }
