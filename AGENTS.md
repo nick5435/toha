@@ -244,18 +244,22 @@ tags:
   - Player accenting configured via `--media-accent-color` and `--media-primary-color` in `assets/styles/components/misc.scss`.
   - Video.js skill installed under `.agents/skills/videojs` for media embedding workflows.
 - **FullCalendar v7 & Google Calendar Integration:**
-  - Migrated to native FullCalendar v7 (`fullcalendar@^7.1.2`, `@fullcalendar/google-calendar@^7.1.2`, `temporal-polyfill@^1.0.5`).
+  - Migrated to native FullCalendar v7 (`fullcalendar@^7.1.2`, `@fullcalendar/google-calendar@^7.1.2`, and `temporal-polyfill@^1.0.5`).
   - Template partial `layouts/partials/sections/calendar.html` and controller `assets/scripts/sections/calendar.js`.
-  - Built-in Google Calendar Palette Manager maps Google's 11 standard indexed color IDs (`colorId` 1–11) to exact Google Calendar hex colors (Sage, Grape, Flamingo, Banana, Peacock, Basil, Tomato, etc.).
-  - Interactive event detail popovers positioned via Popper.js (`@popperjs/core`) with clean glassmorphic elevation, color swatch indicators, time formatting, and location/description rendering.
-  - Centered toolbar header with balanced 3-column CSS grid aligning title with section headings.
+  - Built-in Google Calendar Palette Manager maps Google's 11 standard indexed color IDs (`colorId` 1–11) to exact Google Calendar hex colors (Sage, Grape, Flamingo, Banana, Peacock, Basil, Tomato, and aliases).
+  - Multi-tier color resolution engine supporting explicit `colorMap` keyword rules, single fallback colors, and deterministic normalized course topic hashing to guarantee distinct, non-cyan event colors.
+  - Interactive event detail popovers positioned via Popper.js (`@popperjs/core`) with clean glassmorphic elevation, color swatch indicators, time formatting, location pins, and external Google Calendar links.
+  - Centered toolbar header with balanced 3-column CSS grid (`minmax(0, 1fr) auto minmax(0, 1fr)`) aligning the title directly with section headings, subtitles, and badges.
   - Default time slot range: 8:00 AM – 5:00 PM (`slotMinTime: "08:00:00"`, `slotMaxTime: "17:00:00"`), anchored with `scrollTime`, defaulting to America/Chicago time zone.
   - Full theme adaptation reacting live to site light/dark mode switches via `MutationObserver` on `data-theme`.
 - **Math Rendering (MathJax v4):**
   - Uses MathJax v4 (`mathjax@^4.1.3`) loaded via component path `mathjax/tex-mml-chtml.js`.
   - Mathematical font family: `@mathjax/mathjax-newcm-font` (New Computer Modern woff2 fonts mounted via `hugo.yaml`).
   - Delimiters: inline (`$`, `\(`) and display (`$$`, `\[`).
-- **Default Font:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) mounted via `hugo.yaml` to `static/files`.
+- **Typography Governance (Poppins Only, Mulish Strictly Banned):**
+  - Exclusively uses **Poppins** (`@fontsource/poppins`, weights 300, 400, 500, 600, and 700) self-hosted via npm, mounted via `hugo.yaml` to `static/files`.
+  - The legacy Mulish font (`@fontsource/mulish`) from ancestral Toha forks is strictly prohibited, deprecated, and eradicated.
+  - If Hugo ever references stale module cache containing Mulish imports, purge via `rm -rf ~/Library/Caches/hugo_cache/* && hugo mod clean --all`.
 - **Icons:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro):
   - SCSS imported directly in `assets/styles/application.template.scss`.
   - Webfonts mounted via Hugo module mounts to `static/webfonts`.
