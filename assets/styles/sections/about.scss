@@ -59,6 +59,11 @@ $progress-bar-colors: (
         font-size: 1.05rem;
     }
 
+    .about-summary p {
+        text-indent: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
     .social-link {
         list-style: none;
         padding: 0.2rem;
@@ -216,6 +221,11 @@ html[data-theme="dark"] {
     .about-section {
     .about-subtitle {
         font-size: 1.05rem;
+    }
+
+    .about-summary p {
+        text-indent: 1.75rem;
+        margin-bottom: 0.75rem;
     }
 
         .social-link {
