@@ -41,7 +41,7 @@ function initCalendar() {
 
   // Google Calendar event source via @fullcalendar/google-calendar
   if (calendarId && apiKey) {
-    const ids = calendarId.split('').map((id) => id.trim()).filter(Boolean);
+    const ids = calendarId.split(',').map((id) => id.trim()).filter(Boolean);
     ids.forEach((id) => {
       const srcObj = {
         googleCalendarId: id,
@@ -92,6 +92,7 @@ function initCalendar() {
 
   const calendar = new Calendar(calendarEl, {
     plugins: [classicThemePlugin, googleCalendarPlugin],
+    googleCalendarApiKey: apiKey,
     initialView,
     timeZone,
     firstDay: isNaN(firstDay) ? 1 : firstDay,
