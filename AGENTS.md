@@ -36,6 +36,7 @@ The live reference site and integration test bed for Toha is located at `~/Deskt
 - **Editorial Tone & Math Standards:**
   - Tone is academic, clear, and mathematically rigorous.
   - When authoring or revising posts, abstracts, and publications, preserve standard topology terminology and LaTeX/MathJax notation (e.g., $S^1$, $T^2$, $\Sigma_{g,1}$, 4-manifolds, $X^4$).
+  - Strictly use the **Oxford comma** across all natural language copy, documentation, commit messages, and lists.
 - **Legacy Content Warning:**
   - **Ignore `website2/old_content/`**: Do NOT read, search, or migrate files from `website2/old_content/`. It contains outdated drafts and assets that are deliberately deprecated.
 
@@ -246,12 +247,19 @@ tags:
 - **FullCalendar v7 & Google Calendar Integration:**
   - Migrated to native FullCalendar v7 (`fullcalendar@^7.1.2`, `@fullcalendar/google-calendar@^7.1.2`, and `temporal-polyfill@^1.0.5`).
   - Template partial `layouts/partials/sections/calendar.html` and controller `assets/scripts/sections/calendar.js`.
-  - Built-in Google Calendar Palette Manager maps Google's 11 standard indexed color IDs (`colorId` 1–11) to exact Google Calendar hex colors (Sage, Grape, Flamingo, Banana, Peacock, Basil, Tomato, and aliases).
-  - Multi-tier color resolution engine supporting explicit `colorMap` keyword rules, single fallback colors, and deterministic normalized course topic hashing to guarantee distinct, non-cyan event colors.
-  - Interactive event detail popovers positioned via Popper.js (`@popperjs/core`) with clean glassmorphic elevation, color swatch indicators, time formatting, location pins, and external Google Calendar links.
-  - Centered toolbar header with balanced 3-column CSS grid (`minmax(0, 1fr) auto minmax(0, 1fr)`) aligning the title directly with section headings, subtitles, and badges.
-  - Default time slot range: 8:00 AM – 5:00 PM (`slotMinTime: "08:00:00"`, `slotMaxTime: "17:00:00"`), anchored with `scrollTime`, defaulting to America/Chicago time zone.
-  - Full theme adaptation reacting live to site light/dark mode switches via `MutationObserver` on `data-theme`.
+  - **Client-Side Sync & Dynamic Google Colors API:** Fetches events directly from Google Calendar API v3 (`singleEvents=true`, `maxResults=2500`) and dynamically queries the official Google Colors API (`https://www.googleapis.com/calendar/v3/colors`) for live palette mapping.
+  - **Multi-Tier Color Resolution Engine:** Maps Google indexed color IDs (`colorId` 1–11), user-defined `colorMap` keyword overrides, or zero-config course/topic hashing via DJB2 to rich 700-level palette colors (`#4338ca`, `#047857`, `#7e22ce`, `#c2410c`, `#0369a1`, `#b91c1c`, `#0f766e`, `#4f46e5`, `#be185d`, `#334155`, and `#b45309`).
+  - **Pure White Event Typography & Contrast:** All event cards enforce pure white text (`textColor: '#ffffff'`, `text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7)`) with a luminous separation border (`inset 0 0 0 1px rgba(255, 255, 255, 0.22)`) across both light and dark modes.
+  - **Dark Mode Contrast Architecture (WCAG 2.1 AAA):**
+    - Active toolbar buttons use vibrant cyan-400 (`#22d3ee`) with deep slate text (`#0f172a`, 9.15:1 AAA), cyan border, and subtle glow.
+    - Inactive toolbar buttons feature `#334155` background, `#475569` border, and `#f8fafc` typography.
+    - Day headers render in deep slate (`rgba(15, 23, 42, 0.7)`) with `#f8fafc` text, while today's column receives a cyan-300 accent indicator.
+    - Time slot gutters use high-contrast slate-300 (`#cbd5e1`, 8.2:1 AAA), and grid borders use `rgba(148, 163, 184, 0.25)`.
+    - Internal token `--fc-classic-event-contrast: #ffffff;` prevents FullCalendar default dark text inheritance.
+  - **Interactive Popper.js Popovers:** Floating cards with glassmorphic blur, color swatches, formatted start/end times, location pins, and external Google Calendar links.
+  - **Centered 3-Column Toolbar Grid:** CSS Grid (`minmax(0, 1fr) auto minmax(0, 1fr)`) placing the date title in the exact horizontal midpoint, aligned with section headings, subtitles, and badges.
+  - **Operating Time Windows & Timezone:** Configurable defaults (8:00 AM – 5:00 PM, Sunday week start, and America/Chicago timezone).
+  - **Live Theme Synchronization:** Reacts live to `data-theme` changes via `MutationObserver`.
 - **Math Rendering (MathJax v4):**
   - Uses MathJax v4 (`mathjax@^4.1.3`) loaded via component path `mathjax/tex-mml-chtml.js`.
   - Mathematical font family: `@mathjax/mathjax-newcm-font` (New Computer Modern woff2 fonts mounted via `hugo.yaml`).

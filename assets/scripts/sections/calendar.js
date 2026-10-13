@@ -173,13 +173,6 @@ function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor, goo
 /**
  * Escapes HTML characters for safe rendering in popovers.
  */
-/**
- * Calculates accessible text contrast color (#0f172a or #ffffff) based on WCAG 2.1 relative luminance.
- */
-function getContrastColor() {
-  return '#ffffff';
-}
-
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
@@ -425,8 +418,6 @@ function initCalendar() {
                     eventColor,
                     googleColors
                   );
-                  const itemTextColor = '#ffffff';
-
                   return {
                     id: item.id,
                     title: item.summary || 'Untitled Event',
