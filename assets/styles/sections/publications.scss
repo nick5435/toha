@@ -17,12 +17,17 @@
         .card-header {
             background: none;
             border: none;
-            display: flex;
-            flex-direction: column;
+            padding: 0.75rem 1rem 0.25rem;
+
+            .card-title {
+                color: get-light-color("heading-color");
+                font-weight: 600;
+            }
 
             .sub-title {
                 color: get-light-color("muted-text-color");
-                margin-top: 0.4rem;
+                font-size: 0.9rem;
+                margin-top: 0.25rem;
                 display: flex;
                 justify-content: space-between;
                 flex-wrap: wrap;
@@ -33,38 +38,73 @@
             }
 
             .authors {
-                color: get-light-color("text-color");
+                font-size: 0.875rem;
+                color: get-light-color("muted-text-color");
+                margin-top: 0.25rem;
 
-                .author-name {
-                    color: get-light-color("text-color");
+                .current-author {
+                    color: get-light-color("heading-color");
+                    font-weight: 600;
+                }
+
+                a {
+                    color: get-light-color("accent-color");
+                    text-decoration: underline;
+                    text-underline-offset: 2px;
+
+                    &:hover {
+                        color: get-light-color("hover-over-accent-color");
+                    }
                 }
             }
 
             a[href] {
                 text-decoration: underline;
-            }
-
-            a:not([href]) {
-                text-decoration: none; /* No underline when href is absent */
+                text-underline-offset: 2px;
             }
         }
 
         .card-body {
-            padding: 0;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding: 0 1rem;
+            color: get-light-color("text-color");
+
+            .abstract {
+                color: get-light-color("text-color");
+
+                p {
+                    color: inherit;
+                    line-height: 1.6;
+                }
+
+                a {
+                    color: get-light-color("accent-color");
+                    text-decoration: underline;
+
+                    &:hover {
+                        color: get-light-color("hover-over-accent-color");
+                    }
+                }
+            }
         }
 
         .card-footer {
             background: get-light-color("bg-card");
             border: none;
-            padding: 0;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-bottom: 0.3rem;
+            padding: 0 1rem 0.75rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .action-links {
+                .btn {
+                    border-radius: 9999px !important;
+                    font-size: 0.85rem !important;
+                    font-weight: 500 !important;
+                    padding: 0.25rem 0.75rem !important;
+                }
+            }
         }
     }
 
@@ -74,6 +114,20 @@
 
     .btn-group {
         justify-content: center;
+    }
+
+    .pub-filter-btn {
+        border-radius: 9999px !important;
+        padding: 0.35rem 0.85rem !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+
+        &.active {
+            background-color: get-light-color("accent-color") !important;
+            border-color: get-light-color("accent-color") !important;
+            color: get-light-color("text-over-accent-color") !important;
+        }
     }
 
     @include media("<=large") {
@@ -106,27 +160,6 @@
             flex: 100%;
             max-width: 100%;
         }
-        .details-btn {
-            .btn {
-                margin-top: 0.5rem;
-                margin-left: auto;
-            }
-        }
-
-        .card {
-            .card-footer {
-                padding-left: 0.5rem;
-
-                .tags {
-                    flex: 100%;
-                    max-width: 100%;
-
-                    .btn {
-                        margin-top: 0.2rem;
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -144,15 +177,51 @@ html[data-theme="dark"] {
             }
 
             .card-header {
+                background: none;
+                border: none;
+
+                .card-title {
+                    color: get-dark-color("heading-color");
+                }
+
                 .sub-title {
                     color: get-dark-color("muted-text-color");
                 }
 
                 .authors {
+                    color: get-dark-color("muted-text-color");
+
+                    .current-author {
+                        color: get-dark-color("heading-color");
+                    }
+
+                    a {
+                        color: get-dark-color("hover-over-accent-color");
+
+                        &:hover {
+                            color: #22d3ee;
+                        }
+                    }
+                }
+            }
+
+            .card-body {
+                color: get-dark-color("text-color");
+
+                .abstract {
                     color: get-dark-color("text-color");
 
-                    .author-name {
+                    p {
                         color: get-dark-color("text-color");
+                    }
+
+                    a {
+                        color: get-dark-color("hover-over-accent-color");
+                        text-decoration: underline;
+
+                        &:hover {
+                            color: #22d3ee;
+                        }
                     }
                 }
             }
@@ -160,6 +229,12 @@ html[data-theme="dark"] {
             .card-footer {
                 background: get-dark-color("bg-card");
             }
+        }
+
+        .pub-filter-btn.active {
+            background-color: get-dark-color("accent-color") !important;
+            border-color: get-dark-color("accent-color") !important;
+            color: get-dark-color("text-over-accent-color") !important;
         }
     }
 }

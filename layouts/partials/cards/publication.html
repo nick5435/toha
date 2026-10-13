@@ -1,49 +1,63 @@
-{{ $dataCategories:= slice "pub-all"}}
-{{ range .categories}}
-  {{ $dataCategories = $dataCategories | append (printf "pub-%s" .)}}
-{{end}}
+{{ $cats := slice "all" }}
+{{ range .tags }}
+  {{ $cats = $cats | append (lower .) }}
+{{ end }}
+{{ range .categories }}
+  {{ $cats = $cats | append (lower .) }}
+{{ end }}
 
 <div
   class="col-12 p-2 pub-filtr-item"
-  data-category='{{ delimit $dataCategories ","}}'
+  data-category="{{ delimit $cats "," }}"
 >
   <div class="card mt-3">
     <div class="card-header">
       <h3 class="card-title h5 mb-0">{{ .title }}</h3>
       <div class="sub-title">
-        <span>
+        <span class="ms-0">
           {{ if .publishedIn.url }}
-          <a class="" href="{{.publishedIn.url}}" target="_blank" rel="noopener">{{ .publishedIn.name }}</a>
+          <a href="{{ .publishedIn.url }}" target="_blank" rel="noopener">{{ .publishedIn.name | markdownify }}</a>
           {{ else }}
-          <span>{{ .publishedIn.name }}</span>
+          <span>{{ .publishedIn.name | markdownify }}</span>
           {{ end }}
         </span>
         <span class="ms-2">{{ .publishedIn.date }}</span>
       </div>
-      <div class="authors">
-        {{ range $index,$author:= .authors }}
-        {{if .url}}
-          <span class="me-2"><a class="" href="{{.url}}" target="_blank" rel="noopener">{{ .name }}</a></span>
-        {{ else }}
-        <span class="me-2 author-name">{{ .name }}</span>
-        {{ end }}
+      {{ if .authors }}
+      <div class="authors mt-1">
+        {{ $len := len .authors }}
+        {{ range $index, $author := .authors }}
+          {{ if $author.url }}
+            <a href="{{ $author.url }}" target="_blank" rel="noopener" class="{{ if eq $author.name "Nicholas Meyer" }}fw-semibold current-author{{ end }}">{{ $author.name }}</a>
+          {{ else }}
+            <span class="{{ if eq $author.name "Nicholas Meyer" }}fw-semibold current-author{{ end }}">{{ $author.name }}</span>
+          {{ end }}
+          {{ if lt (add $index 1) $len }}<span class="author-separator text-muted">, </span>{{ end }}
         {{ end }}
       </div>
+      {{ end }}
     </div>
     <div class="card-body">
-      <p>{{ .paper.summary | markdownify }}</p>
+      {{ if .paper.summary }}
+      <div class="abstract mb-3">
+        <p class="mb-0">{{ .paper.summary | markdownify }}</p>
+      </div>
+      {{ end }}
     </div>
     <div class="card-footer">
       <div class="tags">
-        {{ range $index,$tag:= .tags }}
+        {{ range $index, $tag := .tags }}
             <span class="btn badge btn-info ms-1 p-1">
               {{ $tag }}
             </span>
         {{ end }}
       </div>
       {{ if .paper.url }}
-      <div class="details-btn">
-        <a class="btn btn-outline-info ms-1 ps-2 mb-2" href="{{ .paper.url }}" target="_blank" rel="noopener" role="button">{{ i18n "project_details"}}</a>
+      <div class="action-links ms-auto">
+        <a class="btn btn-sm btn-outline-info" href="{{ .paper.url }}" target="_blank" rel="noopener">
+          <i class="fa-solid fa-file-lines me-1"></i>View Paper
+          <i class="fa-solid fa-arrow-up-right-from-square ms-1 small"></i>
+        </a>
       </div>
       {{ end }}
     </div>
