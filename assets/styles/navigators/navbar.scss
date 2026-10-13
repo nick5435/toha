@@ -123,17 +123,36 @@
 
     &.transparent-navbar {
         background-color: transparent !important;
-        .navbar-brand {
-            color: get-light-color("hero-text-color");
-            font-weight: 600;
-        }
-        li {
-            a {
-                color: get-light-color("hero-text-color");
+
+        .navbar-brand,
+        .nav-link,
+        .nav-item a,
+        li a {
+            color: $color-cyan-400 !important;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+
+            &:hover,
+            &:focus {
+                color: $color-cyan-300 !important;
             }
         }
-        .feather-menu {
-            stroke: get-light-color("hero-text-color");
+
+        .navbar-brand {
+            font-weight: 600;
+        }
+
+        .dropdown-toggle::after {
+            border-top-color: $color-cyan-400 !important;
+        }
+
+        .feather-menu,
+        .feather-sidebar {
+            stroke: $color-cyan-400 !important;
+        }
+
+        .navbar-toggler {
+            color: $color-cyan-400 !important;
+            border-color: rgba($color-cyan-400, 0.4) !important;
         }
     }
 
@@ -271,20 +290,6 @@ html[data-theme="dark"] {
                         color: get-dark-color("accent-color");
                     }
                 }
-            }
-        }
-
-        &.transparent-navbar {
-            .navbar-brand {
-                color: get-dark-color("hero-text-color");
-            }
-            li {
-                a {
-                    color: get-dark-color("hero-text-color");
-                }
-            }
-            .feather-menu {
-                stroke: get-dark-color("hero-text-color");
             }
         }
     }
