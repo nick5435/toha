@@ -30,6 +30,35 @@
         }
     }
 
+    .contact-list {
+        list-style: none;
+        padding-left: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, max-content));
+        gap: 0.35rem 2.5rem;
+        align-items: center;
+
+        li {
+            margin-top: 0;
+            display: inline-flex;
+            align-items: center;
+
+            a {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                span:first-child {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 1.25rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
     hr {
         background-color: get-light-color("muted-text-color");
     }
