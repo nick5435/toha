@@ -3,19 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "*": [
-        "*",
-        "assets/*",
-        "assets/scripts/*"
+        "*"
       ]
     }
-  },
-  "include": [
-    "**/*.js",
-    "**/*.mjs"
-  ],
-  "exclude": [
-    "node_modules",
-    "public",
-    "resources"
-  ]
+  }
 }

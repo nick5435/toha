@@ -13,8 +13,6 @@ module:
     target: data
   - source: assets
     target: assets
-  - source: mathjax-config.json
-    target: assets/scripts/features/math/mathjax-config.json
   - source: i18n
     target: i18n
   - source: archetypes
@@ -47,4 +45,3 @@ module:
     target: static/output
   - source: ./node_modules/mathjax/output
     target: static/output
-

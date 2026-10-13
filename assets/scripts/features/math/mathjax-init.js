@@ -1,4 +1,3 @@
-import baseConfig from './mathjax-config.json'
 import * as params from '@params'
 
 if (typeof window !== 'undefined' && window.localStorage) {
@@ -40,6 +39,50 @@ if (cleanUserTex.processenvironments !== undefined) {
   delete cleanUserTex.processenvironments
 }
 
+const cleanUserOptions = { ...(userOptions.options || {}) }
+if (cleanUserOptions.enablespeech !== undefined) {
+  if (cleanUserOptions.enableSpeech === undefined) {
+    cleanUserOptions.enableSpeech = cleanUserOptions.enablespeech
+  }
+  delete cleanUserOptions.enablespeech
+}
+if (cleanUserOptions.enablebraille !== undefined) {
+  if (cleanUserOptions.enableBraille === undefined) {
+    cleanUserOptions.enableBraille = cleanUserOptions.enablebraille
+  }
+  delete cleanUserOptions.enablebraille
+}
+if (cleanUserOptions.enableenrichment !== undefined) {
+  if (cleanUserOptions.enableEnrichment === undefined) {
+    cleanUserOptions.enableEnrichment = cleanUserOptions.enableenrichment
+  }
+  delete cleanUserOptions.enableenrichment
+}
+if (cleanUserOptions.enablecomplexity !== undefined) {
+  if (cleanUserOptions.enableComplexity === undefined) {
+    cleanUserOptions.enableComplexity = cleanUserOptions.enablecomplexity
+  }
+  delete cleanUserOptions.enablecomplexity
+}
+if (cleanUserOptions.enableexplorer !== undefined) {
+  if (cleanUserOptions.enableExplorer === undefined) {
+    cleanUserOptions.enableExplorer = cleanUserOptions.enableexplorer
+  }
+  delete cleanUserOptions.enableexplorer
+}
+if (cleanUserOptions.menuoptions) {
+  if (!cleanUserOptions.menuOptions) {
+    cleanUserOptions.menuOptions = cleanUserOptions.menuoptions
+  }
+  delete cleanUserOptions.menuoptions
+}
+if (cleanUserOptions.skiphtmltags) {
+  if (!cleanUserOptions.skipHtmlTags) {
+    cleanUserOptions.skipHtmlTags = cleanUserOptions.skiphtmltags
+  }
+  delete cleanUserOptions.skiphtmltags
+}
+
 const cleanUserChtml = { ...(userOptions.chtml || {}) }
 if (cleanUserChtml.fonturl) {
   if (!cleanUserChtml.fontURL) cleanUserChtml.fontURL = cleanUserChtml.fonturl
@@ -50,36 +93,90 @@ if (cleanUserChtml.dynamicprefix) {
   delete cleanUserChtml.dynamicprefix
 }
 
+const defaultTex = {
+  inlineMath: [
+    ['$', '$'],
+    ['\\(', '\\)']
+  ],
+  displayMath: [
+    ['$$', '$$'],
+    ['\\[', '\\]']
+  ],
+  processEscapes: true,
+  processEnvironments: true
+}
+
+const defaultOptions = {
+  enableSpeech: false,
+  enableBraille: false,
+  enableEnrichment: false,
+  enableComplexity: false,
+  enableExplorer: false,
+  menuOptions: {
+    settings: {
+      renderer: 'CHTML'
+    }
+  },
+  skipHtmlTags: [
+    'script',
+    'noscript',
+    'style',
+    'textarea',
+    'pre',
+    'code',
+    'annotation',
+    'annotation-xml'
+  ]
+}
+
+const defaultChtml = {
+  fontURL: '/fonts/mathjax',
+  dynamicPrefix: '/fonts/mathjax/dynamic'
+}
+
+const defaultLoader = {
+  paths: {
+    mathjax: '/',
+    'mathjax-newcm': '/fonts/mathjax'
+  }
+}
+
+const defaultStartup = {
+  typeset: true
+}
+
 const existingMathJax = window.MathJax || {}
 
 window.MathJax = {
   ...existingMathJax,
-  ...baseConfig,
   ...userOptions,
   tex: {
-    ...(baseConfig.tex || {}),
+    ...defaultTex,
     ...(existingMathJax.tex || {}),
     ...cleanUserTex
   },
   options: {
-    ...(baseConfig.options || {}),
+    ...defaultOptions,
     ...(existingMathJax.options || {}),
-    ...(userOptions.options || {})
+    ...cleanUserOptions
   },
   chtml: {
-    ...(baseConfig.chtml || {}),
+    ...defaultChtml,
     ...(existingMathJax.chtml || {}),
     ...cleanUserChtml
   },
   loader: {
-    paths: {
-      ...(baseConfig.loader?.paths || {})
-    },
+    ...defaultLoader,
     ...(existingMathJax.loader || {}),
-    ...(userOptions.loader || {})
+    ...(userOptions.loader || {}),
+    paths: {
+      ...defaultLoader.paths,
+      ...(existingMathJax.loader?.paths || {}),
+      ...(userOptions.loader?.paths || {})
+    }
   },
   startup: {
-    ...(baseConfig.startup || {}),
+    ...defaultStartup,
     ...(existingMathJax.startup || {}),
     ...(userOptions.startup || {})
   }
