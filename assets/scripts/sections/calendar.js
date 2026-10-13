@@ -2,6 +2,135 @@ import 'temporal-polyfill/global';
 import Calendar from 'fullcalendar/all';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import classicThemePlugin from 'fullcalendar/themes/classic';
+import { createPopper } from '@popperjs/core';
+
+/**
+ * Escapes HTML characters for safe rendering in popovers.
+ */
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+let activePopper = null;
+let activePopoverEl = null;
+
+function hideEventPopover() {
+  if (activePopper) {
+    activePopper.destroy();
+    activePopper = null;
+  }
+  if (activePopoverEl) {
+    activePopoverEl.remove();
+    activePopoverEl = null;
+  }
+}
+
+function showEventPopover(event, targetEl) {
+  hideEventPopover();
+
+  activePopoverEl = document.createElement('div');
+  activePopoverEl.className = 'calendar-event-popover';
+  activePopoverEl.setAttribute('role', 'tooltip');
+
+  let timeStr = '';
+  if (event.allDay) {
+    timeStr = 'All day';
+  } else if (event.start) {
+    const timeOptions = { hour: 'numeric', minute: '2-digit' };
+    const startFormatted = event.start.toLocaleTimeString([], timeOptions);
+    if (event.end) {
+      const endFormatted = event.end.toLocaleTimeString([], timeOptions);
+      timeStr = `${startFormatted} – ${endFormatted}`;
+    } else {
+      timeStr = startFormatted;
+    }
+  }
+
+  const location = event.extendedProps && event.extendedProps.location;
+  const description = event.extendedProps && event.extendedProps.description;
+
+  let locationHtml = '';
+  if (location) {
+    locationHtml = `
+      <div class="popover-detail-row">
+        <i class="fa-solid fa-location-dot popover-icon"></i>
+        <span class="popover-detail-text">${escapeHtml(location)}</span>
+      </div>`;
+  }
+
+  let descHtml = '';
+  if (description) {
+    const cleanDesc = description.replace(/<[^>]*>/g, '').trim();
+    if (cleanDesc) {
+      descHtml = `
+        <div class="popover-detail-row">
+          <i class="fa-solid fa-align-left popover-icon"></i>
+          <span class="popover-detail-text">${escapeHtml(cleanDesc)}</span>
+        </div>`;
+    }
+  }
+
+  const footerHtml = event.url
+    ? `<div class="popover-footer">
+        <i class="fa-solid fa-up-right-from-square popover-icon"></i>
+        <span>Click to view in Google Calendar</span>
+       </div>`
+    : '';
+
+  activePopoverEl.innerHTML = `
+    <div class="popover-header">
+      <div class="popover-title">${escapeHtml(event.title || 'Untitled Event')}</div>
+    </div>
+    <div class="popover-body">
+      ${timeStr ? `
+        <div class="popover-detail-row">
+          <i class="fa-solid fa-clock popover-icon"></i>
+          <span class="popover-detail-text">${escapeHtml(timeStr)}</span>
+        </div>` : ''}
+      ${locationHtml}
+      ${descHtml}
+      ${footerHtml}
+    </div>
+  `;
+
+  document.body.appendChild(activePopoverEl);
+
+  activePopper = createPopper(targetEl, activePopoverEl, {
+    placement: 'top',
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 8]
+        }
+      },
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: ['bottom', 'right', 'left']
+        }
+      },
+      {
+        name: 'preventOverflow',
+        options: {
+          padding: 8
+        }
+      }
+    ]
+  });
+
+  requestAnimationFrame(() => {
+    if (activePopoverEl) {
+      activePopoverEl.classList.add('show');
+    }
+  });
+}
 
 /**
  * Initializes the FullCalendar widget for the calendar section.
@@ -115,7 +244,14 @@ function initCalendar() {
     eventSourceFailure: function(error) {
       console.error('FullCalendar Event Source Error:', error);
     },
+    eventMouseEnter: function(info) {
+      showEventPopover(info.event, info.el);
+    },
+    eventMouseLeave: function() {
+      hideEventPopover();
+    },
     eventClick: function(info) {
+      hideEventPopover();
       if (info.event.url) {
         info.jsEvent.preventDefault();
         window.open(info.event.url, '_blank', 'noopener,noreferrer');
@@ -136,12 +272,15 @@ function initCalendar() {
 
   let resizeTimer = null;
   window.addEventListener('resize', () => {
+    hideEventPopover();
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       adjustViewForScreen();
       calendar.updateSize();
     }, 150);
   });
+
+  window.addEventListener('scroll', hideEventPopover, { passive: true });
 
   // Dynamically sync theme changes with FullCalendar colorScheme
   const themeObserver = new MutationObserver((mutations) => {

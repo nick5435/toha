@@ -159,6 +159,95 @@
     }
 }
 
+// Hover Event Detail Popover (Floating Card)
+.calendar-event-popover {
+    position: absolute;
+    z-index: 1060;
+    max-width: 320px;
+    min-width: 240px;
+    border-radius: $radius-lg;
+    padding: 0.85rem 1rem;
+    font-family: $font-family-base;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+        opacity $transition-duration-fast ease,
+        transform $transition-duration-fast ease;
+
+    // Glassmorphism & elevation in light mode
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(21, 94, 117, 0.18);
+    box-shadow: 0 10px 30px rgba(15, 80, 100, 0.16), 0 2px 8px rgba(15, 80, 100, 0.08);
+    color: get-light-color("text-color");
+
+    &.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .popover-header {
+        margin-bottom: 0.45rem;
+        padding-bottom: 0.35rem;
+        border-bottom: 1px solid rgba(21, 94, 117, 0.12);
+
+        .popover-title {
+            font-family: $font-family-heading;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: get-light-color("heading-color");
+            line-height: 1.3;
+        }
+    }
+
+    .popover-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .popover-detail-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.825rem;
+
+        .popover-icon {
+            font-size: 0.85rem;
+            margin-top: 0.18rem;
+            color: get-light-color("accent-color");
+            flex-shrink: 0;
+            width: 14px;
+            text-align: center;
+        }
+
+        .popover-detail-text {
+            color: get-light-color("text-color");
+            word-break: break-word;
+        }
+    }
+
+    .popover-footer {
+        margin-top: 0.35rem;
+        padding-top: 0.35rem;
+        border-top: 1px dashed rgba(21, 94, 117, 0.12);
+        font-size: 0.75rem;
+        color: get-light-color("muted-text-color");
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+
+        .popover-icon {
+            font-size: 0.75rem;
+            color: get-light-color("accent-color");
+        }
+    }
+}
+
 html[data-theme="dark"] {
     .calendar-section {
         @include section-header-standard("dark");
@@ -260,6 +349,43 @@ html[data-theme="dark"] {
                 border-color: get-dark-color("card-border-color");
                 background: get-dark-color("bg-card");
                 box-shadow: $shadow-dark-md;
+            }
+        }
+    }
+
+    // Hover Event Detail Popover (Dark Mode)
+    .calendar-event-popover {
+        background: rgba(30, 41, 59, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-color: rgba(34, 211, 238, 0.25);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.35);
+        color: get-dark-color("text-color");
+
+        .popover-header {
+            border-bottom-color: rgba(34, 211, 238, 0.15);
+
+            .popover-title {
+                color: get-dark-color("heading-color");
+            }
+        }
+
+        .popover-detail-row {
+            .popover-icon {
+                color: get-dark-color("accent-color");
+            }
+
+            .popover-detail-text {
+                color: get-dark-color("text-color");
+            }
+        }
+
+        .popover-footer {
+            border-top-color: rgba(34, 211, 238, 0.15);
+            color: get-dark-color("muted-text-color");
+
+            .popover-icon {
+                color: get-dark-color("accent-color");
             }
         }
     }
