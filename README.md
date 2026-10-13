@@ -240,19 +240,24 @@ We use [Mise](https://mise.jdx.dev) (`mise.toml`) for deterministic tooling and 
 | **Install Example Site Deps** | `mise run install-example-deps` | Runs `hugo mod tidy`, `hugo mod npm pack`, and `npm install` in `website2`. |
 | **Development Server** | `mise run example-site` | Launches Hugo dev server against `website2` (`http://localhost:1313`) with live reload. |
 | **Linting** | `mise run lint` | Runs ESLint (`npm run lint`) and Prettier SCSS check (`npm run lint:scss`). |
+| **Auto-fix Lint & Style** | `mise run lint-fix` | Auto-fixes ESLint errors (`npm run lint:fix`) and formats SCSS (`npm run format:scss`). |
 | **Format SCSS** | `npm run format:scss` | Auto-formats modular stylesheets via Prettier. |
 | **Production Build** | `mise run build` | Builds `website2` for production (`hugo --gc --minify --cleanDestinationDir`). |
 | **Verification (Single Truth)** | `mise run check` | Executes full lint checks followed by the production build against `website2`. |
 | **Update Dependencies** | `mise run update` | Updates npm dependencies and rebuilds `package.hugo.json`. |
 | **Fix Security Issues** | `mise run fix-security` | Runs `npm audit fix --force`. |
 
-### Design & Upstreaming Principles
+### Design, Architecture & Upstreaming Principles
 
 - **Configuration over Code:** New visual features must be configurable via `hugo.yaml` or `data/` and **disabled by default**.
+- **Public vs. Private Repository Boundaries:**
+  - `toha` contains purely public layouts (`layouts/`), scripts (`assets/scripts/`), shortcodes, and modular stylesheets (`assets/styles/`).
+  - Site content, author records (`data/en/author.yaml`), and private files (such as `.npmrc` housing private Font Awesome Pro tokens) live strictly downstream in site repos (e.g., `~/Desktop/website2`). Never commit private `.npmrc` files or site content to `toha`.
+- **Primary Theme Authority:** Layout partials (`layouts/partials/...`) and styles (`assets/styles/...`) belong upstream in `toha`. The integration site (`website2`) maintains a minimal `override.scss` reserved for site-specific adjustments.
+- **Modern Asset Stack:** Video.js v10 (`@videojs/html`), MathJax v4 (`mathjax@^4.1.3` + `@mathjax/mathjax-newcm-font`), `@popperjs/core` (^2.11.8), and ESLint v10 flat config with `neostandard`.
 - **Professional-First Networking:** Never reintroduce consumer social media widgets or tracking scripts. Preserve strict focus on LinkedIn, GitHub, ORCID, Google Scholar, and ResearchGate.
 - **Modern Sass:** Use Dart Sass `@use` and `@forward` syntax. `@import` is deprecated and forbidden.
 - **Accessibility:** Ensure all color combinations pass WCAG 2.1 AA. Contextual links must feature visible underlines (`text-underline-offset: 2px`).
-- **Primary Theme Authority:** Layout partials (`layouts/partials/...`) and styles (`assets/styles/...`) belong upstream in `toha`. The integration site (`website2`) maintains a minimal `override.scss` reserved for site-specific adjustments.
 - **Internationalization:** Never hardcode English strings in templates; use `{{ i18n "string_id" }}`.
 - **AI Agent Context:** See [`AGENTS.md`](AGENTS.md) for full architecture specifications, token conventions (`text-over-accent-color` vs `hero-text-color`), academic reference personas, and contributing workflows.
 

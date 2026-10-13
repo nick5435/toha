@@ -1,3 +1,7 @@
 # TODO
 
-> add wisdom learned today to `agents.md` and `README.md`. then, transfer your applicable knowledge to the ~/Desktop/website2 workspace via `agents.md` and `README.md` as needed. The knowledge transfer should be bidirectional and reflect the working processes of these workspaces. The final files shouldn't be the same. We keep what's unique to each project in each workspace's respective `agents.md` and `README.md` files. Layout, scripts, and themeing info stays here, content lives in ~/Desktop/Website2 alongside any theme-specific customizations or things that need to stay in a private github repository, such as `.npmrc` files.
+- [x] Add wisdom learned today to `AGENTS.md` and `README.md` in `toha`.
+- [x] Transfer applicable knowledge to `~/Desktop/website2` via `AGENTS.md` and `README.md`.
+  - Bidirectional reflection of working processes and repository boundaries.
+  - Layouts, scripts, and modular SCSS theming info stay in `toha`.
+  - Content, author records, and private configs (`.npmrc`) stay in `website2`.

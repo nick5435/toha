@@ -48,13 +48,15 @@ We use [Mise](https://mise.jdx.dev/) (`mise.toml`) for deterministic tooling and
 - `go` (`latest`)
 - Dart Sass (`brew install dart-sass`) for modern Sass module compilation.
 
-### Multi-Repo Relationship
+### Multi-Repo Relationship & Repository Boundaries
 
-- **`~/Desktop/toha`** (`github.com/nick5435/toha`): Upstream theme repository. Canonical home of all layouts (`layouts/`), partials, and modular SCSS styles (`assets/styles/`).
-- **`~/Desktop/website2`** (`github.com/nick5435/website2`): Integration test bed and live reference site. Uses Hugo Modules to import Toha, with a local `replace` directive in `website2/go.mod`:
-  ```go
-  replace github.com/hugo-toha/toha/v4 => github.com/nick5435/toha/v4 <version/pseudo-version>
-  ```
+- **`~/Desktop/toha`** (`github.com/nick5435/toha`): Upstream theme repository. Canonical home of all layouts (`layouts/`), partials, scripts, and modular SCSS styles (`assets/styles/`).
+- **`~/Desktop/website2`** (`github.com/nick5435/website2`): Integration test bed and live reference site. Private repository containing personal content, data, and sensitive configurations.
+- **Strict Separation of Concerns:**
+  - **Layouts, Scripts & Theming:** Reside strictly in `~/Desktop/toha`. Never keep duplicate layout partials or large SCSS blocks in `website2`.
+  - **Content & Author Data:** Resides strictly in `~/Desktop/website2` (`content/`, `data/en/sections/`, `data/en/author.yaml`).
+  - **Private Credentials & Secrets:** Private npm credentials (such as `.npmrc` housing the Font Awesome Pro token for `@awesome.me/kit-f6f8bfcfbd`) belong **exclusively** in `~/Desktop/website2`. **NEVER commit `.npmrc` or any private authentication tokens to `toha`**, which is public/theme-level code.
+- **Dependency Wiring:** `website2` uses Hugo Modules to import Toha, referencing `github.com/nick5435/toha/v4` via `go.mod`.
 
 ### Tooling Tasks (`mise`) in `toha`
 
@@ -67,7 +69,7 @@ All root tasks are configured in `mise.toml`:
 | **Development Server** | `mise run example-site` | Installs dependencies and launches the Hugo dev server on `website2` (`http://localhost:1313`) with `--minify` and live reload. |
 | **Linting** | `mise run lint` | Runs ESLint (`npm run lint`) and Prettier SCSS check (`npm run lint:scss`). |
 | **Auto-fix Lint & Style** | `mise run lint-fix` | Auto-fixes ESLint errors (`npm run lint:fix`) and formats SCSS (`npm run format:scss`). |
-| **Format SCSS** | `npm run format:scss` | Auto-formats stylesheets via Prettier according to `.prettierrc.yml`. |
+| **Format SCSS** | `npm run format:scss` | Auto-formats modular stylesheets via Prettier according to `.prettierrc.yml`. |
 | **Production Build** | `mise run build` | Executes a clean production build (`hugo --gc --minify --cleanDestinationDir`) against `website2`. |
 | **Verification (Single Truth)** | `mise run check` | Runs full linting (`npm run lint` + `npm run lint:scss`) followed by the production build against `website2`. |
 | **Update Dependencies** | `mise run update` | Updates npm dependencies and rebuilds `package.hugo.json`. |
@@ -161,10 +163,11 @@ tags:
 - **Alternating Section Backgrounds:** The homepage alternates between `bg-primary` and `bg-secondary` container holders.
 - **Section Subtitles & Badges:** Standardized across sections using `.activity-section-subtitle` / `.section-subtitle` and `.badge.activity-badge` / `.badge.section-badge` (styled in `assets/styles/components/buttons.scss`).
 - **Interactive Filtering:** Sections with `filter: true` (e.g., `talks.html`) render a button group (`.talk-filter-btn`) matching item data attributes (`data-category`), driven by lightweight client-side vanilla JavaScript.
-- **Responsive Grids:**
+- **Responsive Grids & Footers:**
   - `technology.html`: Uses a condensed 3x2 responsive card grid (`col-12 col-md-6 col-lg-4`) with icon badges and technology pill tags.
   - `activities.html`: Uses responsive cards with 48px rounded icon wrappers and hover elevation.
   - `students.html`: Uses 2-column cards (`col-md-12 col-lg-6`) via `layouts/partials/cards/students.html`.
+  - `footer.html`: Responsive multi-column contact footer (`layouts/partials/footer.html`, `assets/styles/sections/footer.scss`) configured via site parameters (`footer.contact.columns`). Dynamically distributes email, phone, office location, and professional links in clean vertical stacks across desktop and mobile.
 
 ---
 
@@ -209,23 +212,35 @@ tags:
   - **Important:** `application.template.scss` contains Go template code and is excluded from Prettier via `.prettierignore` to prevent template syntax corruption.
 - **Responsiveness:** Mobile-first approach is preferred, but ensure desktop elegance.
 
-### JavaScript
+### JavaScript & Tooling
 
 - **Vanilla JS:** Avoid adding external libraries unless strictly necessary.
+- **Tooling & Linter Standards:**
+  - ESLint v10 (`eslint@^10.12.0`) flat config (`eslint.config.mjs`) powered by `neostandard` and `eslint-config-prettier`.
+  - Bootstrap utility upgrade: uses modern `@popperjs/core` (^2.11.8); deprecated `popper.js` (v1) is forbidden.
+  - Auto-fix with `mise run lint-fix` (`npm run lint:fix && npm run format:scss`).
 - **Fingerprinting & Minification:** All JS resources in templates must be processed through Hugo Pipes:
   - _Example:_ `{{ $js := resources.Get "scripts/pages/home.js" | js.Build (dict "minify" true) | fingerprint }}`
 - **DOM Manipulation:** Ensure DOM elements exist before attaching listeners (check `?.` or `!= null`).
 - **Icons:** Font Awesome icons are handled via Web Fonts and CSS; do not add the Font Awesome SVG/JS bundle to `application.js`.
 
-### Typography, Icons & Features
+### Media, Typography & Math
 
-- **Default Font:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700). Mounted via `hugo.yaml` to `static/files`.
+- **Video.js v10 HTML5 Media:**
+  - Migrated from legacy Plyr to Video.js v10 (`@videojs/html@^10.0.1`).
+  - Shortcode `layouts/shortcodes/video.html` renders native `<video-player>` and `<video-neutral-skin>` custom elements with automatic CDN fallback.
+  - Player accenting configured via `--media-accent-color` and `--media-primary-color` in `assets/styles/components/misc.scss`.
+  - Video.js skill installed under `.agents/skills/videojs` for media embedding workflows.
+- **Math Rendering (MathJax v4):**
+  - Uses MathJax v4 (`mathjax@^4.1.3`) loaded via component path `mathjax/tex-mml-chtml.js`.
+  - Mathematical font family: `@mathjax/mathjax-newcm-font` (New Computer Modern woff2 fonts mounted via `hugo.yaml`).
+  - Delimiters: inline (`$`, `\(`) and display (`$$`, `\[`).
+- **Default Font:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) mounted via `hugo.yaml` to `static/files`.
 - **Icons:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro):
   - SCSS imported directly in `assets/styles/application.template.scss`.
   - Webfonts mounted via Hugo module mounts to `static/webfonts`.
   - Families supported: Classic, Duotone, Sharp, Sharp-Duotone.
   - Agent tools in `website2/.agents/skills/`: `/suggest-icon <concept>`, `/add-icon <name>`, `/fa-help <question>`.
-- **Math Rendering:** MathJax v4 (`mathjax@^4.1.3`) with inline delimiters (`$`, `\(`) and display delimiters (`$$`, `\[`).
 
 ---
 
