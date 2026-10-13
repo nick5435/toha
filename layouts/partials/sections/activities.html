@@ -1,0 +1,71 @@
+{{ $sectionID := replace (lower .section.name) " " "-" }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="container-fluid anchor pb-5 activities-section" id="{{ $sectionID }}">
+  {{ if not (.section.hideTitle) }}
+    <h2 class="text-center">{{ .section.name | markdownify }}</h2>
+  {{ else }}
+    <h2 class="text-center" style="display: none">{{ .section.name | markdownify }}</h2>
+  {{ end }}
+
+  {{ if .section.subtitle }}
+  <div class="container text-center mb-4">
+    <p class="text-muted activity-section-subtitle mx-auto">{{ .section.subtitle | markdownify }}</p>
+  </div>
+  {{ end }}
+
+  <div class="container">
+    <div class="row g-4 justify-content-center" id="activity-card-holder">
+      {{ range .activities }}
+      <div class="col-12 col-md-6 d-flex">
+        <div class="card activity-card w-100 p-4">
+          <div class="card-body d-flex flex-column p-0">
+            <div class="d-flex align-items-center mb-3">
+              {{ if .icon }}
+              <div class="activity-icon-wrapper me-3 flex-shrink-0">
+                <i class="{{ .icon }}"></i>
+              </div>
+              {{ end }}
+              <div>
+                <h3 class="activity-title h5 mb-0">{{ .title | markdownify }}</h3>
+                {{ if .category }}
+                <span class="activity-category text-muted small">{{ .category | markdownify }}</span>
+                {{ end }}
+              </div>
+            </div>
+
+            {{ if .summary }}
+            <div class="activity-summary mb-3">
+              <p class="mb-0">{{ .summary | markdownify }}</p>
+            </div>
+            {{ end }}
+
+            {{ if or .tags .url }}
+            <div class="activity-card-footer mt-auto pt-2 d-flex flex-column gap-2">
+              {{ if .tags }}
+              <div class="activity-tags-holder">
+                {{ range .tags }}
+                <span class="badge activity-badge">{{ . }}</span>
+                {{ end }}
+              </div>
+              {{ end }}
+
+              {{ if .url }}
+              <div class="activity-link-holder">
+                <a href="{{ .url }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info activity-link">
+                  {{ .linkText | default "More Details" }}
+                  <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                </a>
+              </div>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

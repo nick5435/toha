@@ -2,6 +2,8 @@
 
 .talks-section {
     @include section-title-adjustment();
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
 
     .card {
         background: get-light-color("bg-card");
@@ -77,6 +79,20 @@
 
     .btn-group {
         justify-content: center;
+    }
+
+    .talk-filter-btn {
+        border-radius: 9999px !important;
+        padding: 0.35rem 0.85rem !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+
+        &.active {
+            background-color: get-light-color("accent-color") !important;
+            border-color: get-light-color("accent-color") !important;
+            color: get-light-color("text-over-accent-color") !important;
+        }
     }
 
     @include media("<=large") {
@@ -162,6 +178,12 @@ html[data-theme="dark"] {
             .card-footer {
                 background: get-dark-color("bg-card");
             }
+        }
+
+        .talk-filter-btn.active {
+            background-color: get-dark-color("accent-color") !important;
+            border-color: get-dark-color("accent-color") !important;
+            color: get-dark-color("text-over-accent-color") !important;
         }
     }
 }

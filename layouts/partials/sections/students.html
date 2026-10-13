@@ -5,9 +5,25 @@
 
 <div class="container-fluid anchor pb-5 service-section" id="{{ $sectionID }}">
   {{ if not (.section.hideTitle) }}
-  <h2 class="text-center">{{ .section.name | markdownify}}</h2>
+  <h2 class="text-center">{{ .section.name | markdownify }}</h2>
   {{ else }}
   <h2 class="text-center" style="display: none">{{ .section.name | markdownify }}</h2>
+  {{ end }}
+
+  {{ if .section.subtitle }}
+  <div class="container text-center mb-3">
+    <p class="text-muted activity-section-subtitle mx-auto">{{ .section.subtitle | markdownify }}</p>
+  </div>
+  {{ end }}
+
+  {{ if .tags }}
+  <div class="container text-center mb-4">
+    <div class="d-inline-flex flex-wrap justify-content-center gap-1">
+      {{ range .tags }}
+      <span class="badge activity-badge">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
   {{ end }}
 
   <div class="container">

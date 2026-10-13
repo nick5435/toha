@@ -1,17 +1,20 @@
-{{ $dataCategories:= slice "talk-all"}}
-{{ range .categories}}
-  {{ $dataCategories = $dataCategories | append (printf "pub-%s" .)}}
-{{end}}
+{{ $cats := slice "all" }}
+{{ range .tags }}
+  {{ $cats = $cats | append (lower .) }}
+{{ end }}
+{{ range .categories }}
+  {{ $cats = $cats | append (lower .) }}
+{{ end }}
 
 <div
   class="col-12 p-2 talk-filtr-item"
-  data-category='{{ delimit $dataCategories ","}}'
+  data-category='{{ delimit $cats "," }}'
 >
   <div class="card mt-3">
     <div class="card-header">
       <h3 class="card-title h5 mb-0">{{ .title }}</h3>
       <div class="sub-title">
-        <span class="ms-0">{{.location | markdownify}}</span>
+        <span class="ms-0">{{ .location | markdownify }}</span>
         <span class="ms-2">{{ .date }}</span>
       </div>
     </div>

@@ -1,0 +1,53 @@
+{{ $sectionID := replace (lower .section.name) " " "-" }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="container-fluid anchor py-4 technology-section" id="{{ $sectionID }}">
+  <div class="container text-center mb-3">
+    {{ if not (.section.hideTitle) }}
+      <h2 class="mb-1">{{ .section.name | markdownify }}</h2>
+    {{ end }}
+    {{ if .section.subtitle }}
+      <p class="text-muted technology-section-subtitle mx-auto mb-0">{{ .section.subtitle | markdownify }}</p>
+    {{ end }}
+  </div>
+
+  <div class="container">
+    <div class="row g-3 justify-content-center" id="technology-card-holder">
+      {{ range .technologies }}
+      <div class="col-12 col-md-6 col-lg-4 d-flex technology-item">
+        <div class="card technology-card w-100 p-3">
+          <div class="card-body d-flex flex-column p-0">
+            <div class="d-flex align-items-center mb-2">
+              {{ if .icon }}
+              <div class="technology-icon-wrapper me-2 flex-shrink-0">
+                <i class="{{ .icon }}"></i>
+              </div>
+              {{ end }}
+              <div class="overflow-hidden">
+                <h3 class="technology-title h6 mb-0 text-truncate">{{ .title | markdownify }}</h3>
+                {{ if .category }}
+                <span class="technology-category text-muted small text-truncate d-block">{{ .category | markdownify }}</span>
+                {{ end }}
+              </div>
+            </div>
+
+            {{ if .summary }}
+            <p class="technology-summary mb-2 small">{{ .summary | markdownify }}</p>
+            {{ end }}
+
+            {{ if .tags }}
+            <div class="technology-tags-holder mt-auto pt-1">
+              {{ range .tags }}
+              <span class="badge activity-badge">{{ . }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

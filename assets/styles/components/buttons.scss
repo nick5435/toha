@@ -151,6 +151,26 @@
     }
 }
 
+// Section pill badges and subtitles
+.activity-badge,
+.section-badge {
+    background-color: rgba(get-light-color("accent-color"), 0.1);
+    color: get-light-color("accent-color");
+    font-weight: 500;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(get-light-color("accent-color"), 0.18);
+    display: inline-block;
+}
+
+.activity-section-subtitle,
+.section-subtitle {
+    max-width: 680px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
 html[data-theme="dark"] {
     .btn-dark {
         background-color: get-dark-color("accent-color") !important;
@@ -238,5 +258,12 @@ html[data-theme="dark"] {
             background-color: get-dark-color("accent-color") !important;
             color: get-dark-color("text-over-accent-color") !important;
         }
+    }
+
+    .activity-badge,
+    .section-badge {
+        background-color: rgba(get-dark-color("accent-color"), 0.15);
+        color: get-dark-color("accent-color");
+        border-color: rgba(get-dark-color("accent-color"), 0.25);
     }
 }

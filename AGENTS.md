@@ -103,6 +103,11 @@ Toha differs from standard Hugo themes. The structure of the homepage and sideba
 - **Icons:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`), webfonts mounted to `static/webfonts`. Details in `.font-awesome.md`.
 - **Math:** MathJax (`mathjax@^3.2.2`).
 
+## Primary Theme Authority & Upstreaming
+
+- **Partials & Layouts:** Theme layout and partial modifications (`layouts/partials/...`) originate and belong in this repository (`~/Desktop/toha`), rather than being kept as ad-hoc overrides in `website2`.
+- **Modular SCSS:** Custom CSS and design enhancements belong in `assets/styles/` within the modular SCSS structure (`sections/`, `components/`, etc.) rather than accumulating in site-level `override.scss`.
+
 ## Contributing Rules (Strict)
 
 1. **Backward Compatibility:** NEVER break existing `config` or `data` structures.

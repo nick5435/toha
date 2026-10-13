@@ -1,19 +1,22 @@
-<div class="col-md-12 col-lg-6 p-2">
-  <div class="card mt-3">
+<div class="col-md-12 col-lg-6 p-2 d-flex">
+  <div class="card w-100 mt-3 d-flex flex-column">
     <div class="card-header">
-      <h3 class="card-title h5 mb-0">{{ .studentName |markdownify}}</h3>
+      <h3 class="card-title h5 mb-0">{{ .studentName | markdownify }}</h3>
       <div class="sub-title">
         <span><a href="{{ .organization.url }}" title="{{ .organization.name }}" target="_blank" rel="noopener">{{ .organization.name | markdownify }}</a></span>
-        <span class="ms-2">{{.timeline | markdownify}}</span>
+        <span class="ms-2">{{ .timeline | markdownify }}</span>
       </div>
     </div>
     <div class="card-body">
-      <p>{{ .overview | markdownify }}</p>
+      <p class="mb-0">{{ .overview | markdownify }}</p>
     </div>
-    {{/*  <div class="card-footer">
-      {{ if .url }}
-        <a class="btn btn-outline-info ms-1 ps-2 mb-2" href="{{ .url }}" target="_blank" rel="noopener" role="button">{{ i18n "project_details"}}</a>
-      {{ end }}
-    </div>  */}}
+    {{ if .url }}
+    <div class="card-footer mt-auto bg-transparent border-0 pt-0 pb-3">
+      <a class="btn btn-sm btn-outline-info" href="{{ .url }}" target="_blank" rel="noopener" role="button">
+        {{ .linkText | default "LinkedIn Profile" }}
+        <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+      </a>
+    </div>
+    {{ end }}
   </div>
 </div>

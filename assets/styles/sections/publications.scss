@@ -2,6 +2,8 @@
 
 .publications-section {
     @include section-title-adjustment();
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
 
     .card {
         background: get-light-color("bg-card");

@@ -10,6 +10,22 @@
     <h2 class="text-center" style="display: none">{{ .section.name }}</h2>
   {{ end }}
 
+  {{ if .section.subtitle }}
+  <div class="container text-center mb-3">
+    <p class="text-muted activity-section-subtitle mx-auto">{{ .section.subtitle | markdownify }}</p>
+  </div>
+  {{ end }}
+
+  {{ if .tags }}
+  <div class="container text-center mb-4">
+    <div class="d-inline-flex flex-wrap justify-content-center gap-1">
+      {{ range .tags }}
+      <span class="badge activity-badge">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
   <div class="container">
     <table class="education-info-table">
         <tbody>
@@ -117,10 +133,9 @@
                             </div>
                             {{ end }}
                             {{ if .customSections }}
-                            <div class="custom-section">
+                            <div class="custom-section mt-2">
                                 {{ range .customSections }}
-                                    <h5 class="text-heading h6">{{ .name }}: </h5>
-                                    <div class="custom-content">{{ .content | markdownify }}</div>
+                                    <div class="mb-1"><strong class="text-heading">{{ .name }}:</strong> <span class="custom-content">{{ .content | markdownify }}</span></div>
                                 {{ end }}
                             </div>
                             {{ end }}

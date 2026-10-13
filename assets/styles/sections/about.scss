@@ -55,6 +55,10 @@ $progress-bar-colors: (
 }
 
 .about-section {
+    .about-subtitle {
+        font-size: 1.05rem;
+    }
+
     .social-link {
         list-style: none;
         padding: 0.2rem;
@@ -210,6 +214,10 @@ $progress-bar-colors: (
 
 html[data-theme="dark"] {
     .about-section {
+    .about-subtitle {
+        font-size: 1.05rem;
+    }
+
         .social-link {
             a {
                 color: get-dark-color("text-color");

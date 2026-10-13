@@ -15,12 +15,22 @@
     {{ if or (.softSkills) (.badges) }} <div class="col-sm-6"> {{ else }} <div class="col-sm-12"> {{ end }}
       <h2 class="p-1 h3">{{ $author.name }}</h2>
       {{ if .designation }}
-      <h3 class="p-1 h5 text-muted">
+      <h3 class="p-1 h5 text-muted mb-1">
         {{ .designation }}
         {{ if .company }}
         {{ i18n "at"}} <a href="{{ .company.url }}" title="{{ .company.name }}" target="_blank" rel="noopener">{{ .company.name }}</a>
         {{ end }}
       </h3>
+      {{ end }}
+      {{ if .section.subtitle }}
+      <p class="p-1 text-muted about-subtitle mb-2">{{ .section.subtitle | markdownify }}</p>
+      {{ end }}
+      {{ if .tags }}
+      <div class="p-1 about-tags-holder mb-3">
+        {{ range .tags }}
+        <span class="badge activity-badge me-1 mb-1">{{ . }}</span>
+        {{ end }}
+      </div>
       {{ end }}
       <p class="p-1 text-justify">
         {{ .summary | markdownify }}

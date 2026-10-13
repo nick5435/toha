@@ -1,0 +1,4 @@
+{{ $sectionID := replace (lower .section.name) " " "-"  }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
