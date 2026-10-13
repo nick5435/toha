@@ -2,18 +2,10 @@
 <html lang="{{ .Site.Language.Locale | default .Site.Language.Lang }}">
   <head>
     <title>{{- .Site.Title -}}</title>
-    {{ $siteDescription := .Site.Params.description }}
-    {{ if (index hugo.Data .Site.Language.Lang).site }}
-      {{ $siteConfig := (index hugo.Data .Site.Language.Lang).site }}
-      {{ if $siteConfig.description }}
-        {{ $siteDescription = $siteConfig.description }}
-      {{ end }}
-    {{ end }}
-    <meta name="description" content="{{ $siteDescription }}" />
-    
     <!-- import common headers -->
     {{- partial "header.html" . -}}
     {{- partial "opengraph.html" . -}}
+    {{- partial "structured_data.html" . -}}
     
     <!--================= add analytics if enabled =========================-->
     {{- partial "analytics.html" . -}}

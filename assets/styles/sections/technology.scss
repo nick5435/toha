@@ -10,6 +10,7 @@
         font-size: 0.95rem;
         line-height: 1.5;
         color: get-light-color("muted-text-color");
+        text-align: center;
     }
 
     .technology-card {
@@ -17,7 +18,10 @@
         border: 1px solid rgba(0, 0, 0, 0.08);
         background: get-light-color("bg-card");
         box-shadow: 0 2px 12px rgba(15, 80, 100, 0.05);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
 
         &:hover {
             transform: translateY(-3px);
@@ -34,7 +38,9 @@
             font-size: 1.15rem;
             background: rgba(get-light-color("accent-color"), 0.1);
             color: get-light-color("accent-color");
-            transition: transform 0.25s ease, background-color 0.25s ease;
+            transition:
+                transform 0.25s ease,
+                background-color 0.25s ease;
         }
 
         &:hover .technology-icon-wrapper {

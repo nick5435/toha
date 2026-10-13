@@ -1,19 +1,59 @@
-{{ $title := .Params.title | default (index hugo.Data site.Language.Lang).site.openGraph.title | default site.Title }}
-{{ $type := .Params.type | default (index hugo.Data site.Language.Lang).site.openGraph.type | default "website" }}
-{{ $description := .Params.description | default (index hugo.Data site.Language.Lang).site.openGraph.description |
-default (index hugo.Data site.Language.Lang).site.description }}
-{{ $url := .Permalink | default (index hugo.Data site.Language.Lang).site.openGraph.url | default site.BaseURL }}
+{{- $author := (index hugo.Data site.Language.Lang).author -}}
+{{- $siteData := (index hugo.Data site.Language.Lang).site -}}
+{{- $title := .Title | default .Params.title | default $siteData.openGraph.title | default site.Title -}}
+{{- $type := .Params.type -}}
+{{- if not $type -}}
+  {{- if and .IsPage (ne .Page.Kind "home") -}}
+    {{- $type = "article" -}}
+  {{- else -}}
+    {{- $type = $siteData.openGraph.type | default "website" -}}
+  {{- end -}}
+{{- end -}}
+{{- $description := .Description | default .Summary | default .Params.description | default $siteData.openGraph.description | default $siteData.description | default site.Params.description -}}
+{{- $url := .Permalink | default $siteData.openGraph.url | default site.BaseURL -}}
 
-<!-- ============ open graph tags ========== -->
-<meta property="og:title" content="{{ $title }}" />
+<!-- ============ Open Graph Tags ============ -->
+<meta property="og:site_name" content="{{ site.Title }}" />
+<meta property="og:title" content="{{ $title | plainify }}" />
 <meta property="og:type" content="{{ $type }}" />
-<meta property="og:description" content="{{ $description }}" />
+<meta property="og:description" content="{{ $description | plainify | truncate 250 }}" />
+<meta property="og:url" content="{{ $url }}" />
+{{ with .Site.Language.Locale | default .Site.Language.Lang }}
+<meta property="og:locale" content="{{ . }}" />
+{{ end }}
+
+{{/* Open Graph Image */}}
 {{- with .Params.images -}}
   <meta property="og:image" content="{{ index . 0 | absURL }}">
 {{- else -}}
-  {{- $image := (index hugo.Data site.Language.Lang).site.openGraph.image | default (index hugo.Data site.Language.Lang).author.image }}
-  {{- with $image }}
+  {{- with .Params.image -}}
     <meta property="og:image" content="{{ . | absURL }}">
-  {{ end -}}
+  {{- else -}}
+    {{- $image := $siteData.openGraph.image | default $author.image -}}
+    {{- with $image }}
+      <meta property="og:image" content="{{ . | absURL }}">
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
-<meta property="og:url" content="{{ $url }}">
+
+{{/* Article-specific Open Graph Metadata */}}
+{{- if eq $type "article" -}}
+  {{- if not .PublishDate.IsZero -}}
+    <meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{- end -}}
+  {{- if not .Lastmod.IsZero -}}
+    <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{- end -}}
+  {{- with .Section -}}
+    <meta property="article:section" content="{{ . }}" />
+  {{- end -}}
+  {{- with .Params.tags -}}
+    {{- range . -}}
+      <meta property="article:tag" content="{{ . }}" />
+    {{- end -}}
+  {{- end -}}
+  {{- $articleAuthor := .Params.author | default $author.name -}}
+  {{- with $articleAuthor -}}
+    <meta property="article:author" content="{{ . }}" />
+  {{- end -}}
+{{- end -}}

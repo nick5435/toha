@@ -38,6 +38,7 @@
       <div class="text-container ms-auto">
         <ul class="social-link d-flex">
           {{ range .socialLinks }}
+          {{ if not (in (slice "twitter" "facebook" "instagram" "tiktok" "reddit" "mastodon" "tumblr" "threads" "snapchat") (lower .name)) }}
           <li>
             {{ if eq .name "Email" }}
               <a href="mailto:{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
@@ -47,6 +48,7 @@
               <a href="{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}" target="_blank" rel="{{.rel | default "noopener"}}"><i class="{{ .icon }}"></i></a>
             {{ end }}
           </li>
+          {{ end }}
           {{ end }}
         </ul>
       </div>

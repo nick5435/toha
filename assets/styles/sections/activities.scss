@@ -9,6 +9,7 @@
         max-width: 680px;
         font-size: 1.05rem;
         line-height: 1.6;
+        text-align: center;
     }
 
     .activity-card {
@@ -16,7 +17,10 @@
         border: 1px solid rgba(0, 0, 0, 0.08);
         background: get-light-color("bg-card");
         box-shadow: 0 4px 16px rgba(15, 80, 100, 0.06);
-        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+        transition:
+            transform 0.28s ease,
+            box-shadow 0.28s ease,
+            border-color 0.28s ease;
 
         &:hover {
             transform: translateY(-4px);
@@ -33,7 +37,9 @@
             font-size: 1.35rem;
             background: rgba(get-light-color("accent-color"), 0.1);
             color: get-light-color("accent-color");
-            transition: transform 0.25s ease, background-color 0.25s ease;
+            transition:
+                transform 0.25s ease,
+                background-color 0.25s ease;
         }
 
         &:hover .activity-icon-wrapper {

@@ -1,7 +1,7 @@
-name = "Toha"
+name = "Toha Professional Modern"
 license = "MIT"
 licenselink = "https://github.com/hugo-themes/toha/blob/main/LICENSE"
-description = "A simple hugo theme for personal portfolio"
+description = "A modern, academic and professional portfolio theme for Hugo with high accessibility and privacy-first design"
 
 # The home page of the theme, where the source can be found.
 homepage = "https://github.com/hugo-themes/toha"

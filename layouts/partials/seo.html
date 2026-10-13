@@ -1,0 +1,62 @@
+{{/* Centralized SEO Metadata Partial */}}
+{{- $author := (index hugo.Data site.Language.Lang).author -}}
+{{- $siteData := (index hugo.Data site.Language.Lang).site -}}
+
+{{/* 1. Contextual Description */}}
+{{- $description := .Description | default .Summary | default .Params.description -}}
+{{- if not $description -}}
+  {{- if $siteData.description -}}
+    {{- $description = $siteData.description -}}
+  {{- else -}}
+    {{- $description = site.Params.description -}}
+  {{- end -}}
+{{- end -}}
+{{- with $description }}
+<meta name="description" content="{{ . | plainify | truncate 250 }}" />
+{{- end }}
+
+{{/* 2. Keywords */}}
+{{- $keywords := slice -}}
+{{- with .Params.keywords -}}
+  {{- $keywords = $keywords | append . -}}
+{{- end -}}
+{{- with .Params.tags -}}
+  {{- $keywords = $keywords | append . -}}
+{{- end -}}
+{{- with .Params.categories -}}
+  {{- $keywords = $keywords | append . -}}
+{{- end -}}
+{{- if and (eq (len $keywords) 0) $siteData.keywords -}}
+  {{- $keywords = $siteData.keywords -}}
+{{- end -}}
+{{- if gt (len $keywords) 0 }}
+<meta name="keywords" content="{{ delimit $keywords ", " }}" />
+{{- end }}
+
+{{/* 3. Author */}}
+{{- $pageAuthor := .Params.author | default $author.name -}}
+{{- with $pageAuthor }}
+<meta name="author" content="{{ . }}" />
+{{- end }}
+
+{{/* 4. Robots */}}
+{{- if .Params.hidden }}
+<meta name="robots" content="noindex, nofollow" />
+{{- else }}
+<meta name="robots" content="index, follow" />
+{{- end }}
+
+{{/* 5. Canonical URL */}}
+{{ with .Params.relcanonical }}
+<link rel="canonical" href="{{ . | relLangURL }}" />
+{{ else }}
+<link rel="canonical" href="{{ .Permalink }}" />
+{{ end }}
+
+{{/* 6. Multilingual Alternate hreflang tags */}}
+{{- if .IsTranslated }}
+  {{- range .Translations }}
+<link rel="alternate" hreflang="{{ .Language.Locale | default .Language.Lang }}" href="{{ .Permalink }}" />
+  {{- end }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}" />
+{{- end }}
