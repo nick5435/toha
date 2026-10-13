@@ -13,6 +13,8 @@ module:
     target: data
   - source: assets
     target: assets
+  - source: mathjax-config.js
+    target: assets/scripts/features/math/mathjax-config.js
   - source: i18n
     target: i18n
   - source: archetypes
