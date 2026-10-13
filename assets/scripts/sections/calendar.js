@@ -70,19 +70,59 @@ const PALETTE_NAMES = {
  * 4. Automatic smart palette hashing (groups sections of the same course,
  *    and assigns distinct, vibrant Google Calendar palette colors)
  */
-function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor) {
-  // 1. Google API colorId (1-11)
-  if (item.colorId && GOOGLE_CALENDAR_PALETTE[item.colorId]) {
-    return GOOGLE_CALENDAR_PALETTE[item.colorId];
+let googleColorsCache = null;
+
+/**
+ * Fetches the official Google Calendar color definitions via Google Calendar API v3.
+ */
+async function fetchGoogleColors(apiKey) {
+  if (googleColorsCache) {
+    return googleColorsCache;
+  }
+  try {
+    const res = await fetch(
+      `https://www.googleapis.com/calendar/v3/colors?key=${encodeURIComponent(apiKey)}`
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data && (data.event || data.calendar)) {
+        googleColorsCache = data;
+        return data;
+      }
+    }
+  } catch (err) {
+    console.warn('Google Calendar Colors API fetch notice:', err);
+  }
+  return null;
+}
+
+/**
+ * Resolves an individual event color.
+ * Evaluation precedence:
+ * 1. Google API colorId (dynamically fetched from Google Calendar API v3 colors endpoint)
+ * 2. Optional user-configured colorMap (if specified in YAML for custom overrides)
+ * 3. Fallback explicit color (if configured in YAML and not "theme" or empty)
+ * 4. Automatic zero-config topic hashing (normalizes course section numbers,
+ *    and assigns distinct, harmonious Google Calendar palette colors via DJB2)
+ */
+function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor, googleColors) {
+  // 1. Google API colorId dynamically matched against Google Colors endpoint
+  if (item.colorId) {
+    if (googleColors && googleColors.event && googleColors.event[item.colorId]) {
+      return googleColors.event[item.colorId].background;
+    }
+    if (GOOGLE_CALENDAR_PALETTE[item.colorId]) {
+      return GOOGLE_CALENDAR_PALETTE[item.colorId];
+    }
   }
 
   const summary = (item.summary || '').trim();
 
-  // 2. Custom colorMap / categoryColors rule matching
-  if (colorMap && typeof colorMap === 'object') {
+  // 2. Optional custom colorMap rule matching (if defined)
+  if (colorMap && typeof colorMap === 'object' && Object.keys(colorMap).length > 0) {
     const lowerSummary = summary.toLowerCase();
     for (const [key, val] of Object.entries(colorMap)) {
-      if (lowerSummary.includes(key.toLowerCase())) {
+      if (key && lowerSummary.includes(key.toLowerCase())) {
         const lowerVal = String(val).toLowerCase().trim();
         if (PALETTE_NAMES[lowerVal]) return PALETTE_NAMES[lowerVal];
         if (GOOGLE_CALENDAR_PALETTE[lowerVal]) return GOOGLE_CALENDAR_PALETTE[lowerVal];
@@ -96,32 +136,33 @@ function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor) {
     return defaultEventColor;
   }
 
-  // 4. Automatic smart color assignment by normalized topic/course title
-  // Strips trailing section numbers (e.g., "College Algebra 001" -> "college algebra")
+  // 4. Automatic zero-config course/topic color assignment
+  // Normalizes titles by stripping section numbers (e.g., "College Algebra 001" -> "college algebra")
   const normalizedTitle = summary
     .replace(/\s+(0\d+|\d+|sec\w*|section\w*)$/i, '')
     .trim()
     .toLowerCase();
 
   if (normalizedTitle) {
+    // Authentic Google Calendar event palette colors
     const autoPalette = [
-      '#4f46e5', // Blueberry / Indigo
-      '#059669', // Sage / Emerald
-      '#8e24aa', // Grape / Purple
-      '#d97706', // Tangerine / Amber
-      '#0284c7', // Peacock / Sky
-      '#d50000', // Tomato / Red
-      '#0d9488', // Basil / Teal
+      '#4f46e5', // Blueberry
+      '#059669', // Sage / Basil
+      '#8e24aa', // Grape
+      '#d97706', // Tangerine
+      '#0284c7', // Peacock
+      '#dc2626', // Tomato
+      '#0d9488', // Teal
       '#7986cb', // Lavender
-      '#e67c73', // Flamingo / Coral
-      '#475569'  // Graphite / Slate
+      '#db2777', // Flamingo
+      '#475569', // Graphite
+      '#f59e0b'  // Banana
     ];
-    let hash = 0;
+    let h = 5381;
     for (let i = 0; i < normalizedTitle.length; i++) {
-      hash = (hash << 5) - hash + normalizedTitle.charCodeAt(i);
-      hash |= 0;
+      h = ((h << 5) + h + normalizedTitle.charCodeAt(i)) & 0xffffffff;
     }
-    const index = Math.abs(hash) % autoPalette.length;
+    const index = Math.abs(h) % autoPalette.length;
     return autoPalette[index];
   }
 
@@ -340,16 +381,18 @@ function initCalendar() {
             url.searchParams.set('timeZone', timeZone);
           }
 
-          fetch(url.toString())
-            .then((res) => {
+          Promise.all([
+            fetch(url.toString()).then((res) => {
               if (!res.ok) {
                 throw new Error(
                   `Google Calendar API HTTP ${res.status}: ${res.statusText}`
                 );
               }
               return res.json();
-            })
-            .then((data) => {
+            }),
+            fetchGoogleColors(apiKey)
+          ])
+            .then(([data, googleColors]) => {
               if (data.error) {
                 throw new Error(
                   data.error.message || 'Google Calendar API error'
@@ -366,12 +409,13 @@ function initCalendar() {
                       encodeURIComponent(timeZone);
                   }
 
-                  // Resolve individual color with smart fallback & colorMap support
+                  // Resolve individual color with Google Colors API & smart fallback
                   const itemColor = resolveEventColor(
                     item,
                     colorMap,
                     useThemeColor,
-                    eventColor
+                    eventColor,
+                    googleColors
                   );
 
                   return {
