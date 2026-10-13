@@ -1,3 +1,4 @@
+import baseConfig from './mathjax-config.json'
 import * as params from '@params'
 
 if (typeof window !== 'undefined' && window.localStorage) {
@@ -39,42 +40,6 @@ if (cleanUserTex.processenvironments !== undefined) {
   delete cleanUserTex.processenvironments
 }
 
-const defaultTex = {
-  inlineMath: [
-    ['$', '$'],
-    ['\\(', '\\)']
-  ],
-  displayMath: [
-    ['$$', '$$'],
-    ['\\[', '\\]']
-  ],
-  processEscapes: true,
-  processEnvironments: true
-}
-
-const defaultOptions = {
-  enableSpeech: false,
-  enableBraille: false,
-  enableEnrichment: false,
-  enableComplexity: false,
-  enableExplorer: false,
-  menuOptions: {
-    settings: {
-      renderer: 'CHTML'
-    }
-  },
-  skipHtmlTags: [
-    'script',
-    'noscript',
-    'style',
-    'textarea',
-    'pre',
-    'code',
-    'annotation',
-    'annotation-xml'
-  ]
-}
-
 const cleanUserChtml = { ...(userOptions.chtml || {}) }
 if (cleanUserChtml.fonturl) {
   if (!cleanUserChtml.fontURL) cleanUserChtml.fontURL = cleanUserChtml.fonturl
@@ -85,41 +50,36 @@ if (cleanUserChtml.dynamicprefix) {
   delete cleanUserChtml.dynamicprefix
 }
 
-const defaultChtml = {
-  fontURL: '/fonts/mathjax',
-  dynamicPrefix: '/fonts/mathjax/dynamic'
-}
-
 const existingMathJax = window.MathJax || {}
 
 window.MathJax = {
   ...existingMathJax,
+  ...baseConfig,
   ...userOptions,
   tex: {
-    ...defaultTex,
+    ...(baseConfig.tex || {}),
     ...(existingMathJax.tex || {}),
     ...cleanUserTex
   },
   options: {
-    ...defaultOptions,
+    ...(baseConfig.options || {}),
     ...(existingMathJax.options || {}),
     ...(userOptions.options || {})
   },
   chtml: {
-    ...defaultChtml,
+    ...(baseConfig.chtml || {}),
     ...(existingMathJax.chtml || {}),
     ...cleanUserChtml
   },
   loader: {
     paths: {
-      mathjax: '/',
-      'mathjax-newcm': '/fonts/mathjax'
+      ...(baseConfig.loader?.paths || {})
     },
     ...(existingMathJax.loader || {}),
     ...(userOptions.loader || {})
   },
   startup: {
-    typeset: true,
+    ...(baseConfig.startup || {}),
     ...(existingMathJax.startup || {}),
     ...(userOptions.startup || {})
   }

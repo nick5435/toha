@@ -1,4 +1,4 @@
-import './mathjax-config'
+import './mathjax-init'
 import 'mathjax/tex-mml-chtml.js'
 
 if (typeof window !== 'undefined') {
