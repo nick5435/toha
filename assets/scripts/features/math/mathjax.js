@@ -1,22 +1,15 @@
 import './mathjax-config'
 import 'mathjax/tex-mml-chtml.js'
 
-if (typeof window !== 'undefined' && window.MathJax) {
-  const triggerTypeset = () => {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise().catch((err) => {
+if (typeof window !== 'undefined') {
+  window.renderMathInElement = (element) => {
+    if (window.MathJax?.startup?.promise && window.MathJax?.typesetPromise) {
+      return window.MathJax.startup.promise.then(() => {
+        return window.MathJax.typesetPromise(element ? [element] : undefined)
+      }).catch((err) => {
         console.warn('MathJax typesetting error:', err)
       })
     }
-  }
-
-  if (window.MathJax.startup && window.MathJax.startup.promise) {
-    window.MathJax.startup.promise.then(triggerTypeset).catch((err) => {
-      console.warn('MathJax startup error:', err)
-    })
-  } else if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', triggerTypeset)
-  } else {
-    triggerTypeset()
+    return Promise.resolve()
   }
 }

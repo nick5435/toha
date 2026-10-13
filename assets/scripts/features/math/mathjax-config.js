@@ -26,15 +26,27 @@ if (cleanUserTex.displaymath) {
   if (!cleanUserTex.displayMath) cleanUserTex.displayMath = cleanUserTex.displaymath
   delete cleanUserTex.displaymath
 }
+if (cleanUserTex.processescapes !== undefined) {
+  if (cleanUserTex.processEscapes === undefined) {
+    cleanUserTex.processEscapes = cleanUserTex.processescapes
+  }
+  delete cleanUserTex.processescapes
+}
+if (cleanUserTex.processenvironments !== undefined) {
+  if (cleanUserTex.processEnvironments === undefined) {
+    cleanUserTex.processEnvironments = cleanUserTex.processenvironments
+  }
+  delete cleanUserTex.processenvironments
+}
 
 const defaultTex = {
   inlineMath: [
     ['$', '$'],
-    ['\\(' , '\\)']
+    ['\\(', '\\)']
   ],
   displayMath: [
     ['$$', '$$'],
-    ['\\[', '\\\]']
+    ['\\[', '\\]']
   ],
   processEscapes: true,
   processEnvironments: true
@@ -42,8 +54,10 @@ const defaultTex = {
 
 const defaultOptions = {
   enableSpeech: false,
+  enableBraille: false,
   enableEnrichment: false,
   enableComplexity: false,
+  enableExplorer: false,
   menuOptions: {
     settings: {
       renderer: 'CHTML'
@@ -61,8 +75,19 @@ const defaultOptions = {
   ]
 }
 
+const cleanUserChtml = { ...(userOptions.chtml || {}) }
+if (cleanUserChtml.fonturl) {
+  if (!cleanUserChtml.fontURL) cleanUserChtml.fontURL = cleanUserChtml.fonturl
+  delete cleanUserChtml.fonturl
+}
+if (cleanUserChtml.dynamicprefix) {
+  if (!cleanUserChtml.dynamicPrefix) cleanUserChtml.dynamicPrefix = cleanUserChtml.dynamicprefix
+  delete cleanUserChtml.dynamicprefix
+}
+
 const defaultChtml = {
-  fontURL: '/fonts/mathjax'
+  fontURL: '/fonts/mathjax',
+  dynamicPrefix: '/fonts/mathjax/dynamic'
 }
 
 const existingMathJax = window.MathJax || {}
@@ -83,11 +108,12 @@ window.MathJax = {
   chtml: {
     ...defaultChtml,
     ...(existingMathJax.chtml || {}),
-    ...(userOptions.chtml || {})
+    ...cleanUserChtml
   },
   loader: {
     paths: {
-      mathjax: '/'
+      mathjax: '/',
+      'mathjax-newcm': '/fonts/mathjax'
     },
     ...(existingMathJax.loader || {}),
     ...(userOptions.loader || {})
