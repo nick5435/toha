@@ -8,8 +8,8 @@
 
     &:hover,
     &:focus {
-        box-shadow: $box-shadow;
-        border: 1px solid get-light-color("bg-primary");
+        box-shadow: $shadow-hover;
+        border: 1px solid get-light-color("card-hover-border-color");
         @include transition();
         .card-img-top {
             transform: scale(1.2);
@@ -144,7 +144,8 @@ html[data-theme="dark"] {
 
         &:hover,
         &:focus {
-            border: 1px solid rgba(get-dark-color("accent-color"), 0.2);
+            border: 1px solid get-dark-color("card-hover-border-color");
+            box-shadow: $shadow-dark-hover;
         }
         .card-footer {
             background: get-dark-color("bg-card") !important;

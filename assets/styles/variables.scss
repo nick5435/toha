@@ -10,133 +10,210 @@ $breakpoints: (
     ultra-large: 2560px,
 );
 
-// Color are chosen from TailwindCSS color scheme
-// https://tailwindcss.com/docs/customizing-colors
+// ============================================================================
+// Foundational Color Palette
+// Curated, named colors from Tailwind CSS & Material Design workflows
+// ============================================================================
 
-// transitions
+// Primary Accent Scale: Cyan / Teal
+$color-cyan-300: #67e8f9;
+$color-cyan-400: #22d3ee;
+$color-cyan-500: #06b6d4;
+$color-cyan-600: #0891b2;
+$color-cyan-700: #0e7490;
+$color-cyan-800: #155e75; // WCAG AA/AAA on light backgrounds
+$color-cyan-900: #164e63; // Deep hover state
+
+// Neutral Scale: Slate
+$color-slate-50: #f8fafc;
+$color-slate-100: #f1f5f9;
+$color-slate-200: #e2e8f0;
+$color-slate-300: #cbd5e1;
+$color-slate-400: #94a3b8;
+$color-slate-500: #64748b;
+$color-slate-600: #475569; // WCAG 2.1 AA >= 4.5:1 on slate 200
+$color-slate-700: #334155;
+$color-slate-800: #1e293b;
+$color-slate-900: #0f172a;
+$color-slate-950: #020617;
+
+// Dark-mode Background Grays
+$color-gray-800: #1f2937;
+$color-gray-900: #111827;
+
+// Base Whites & Blacks
+$color-white: #ffffff;
+$color-black: #000000;
+
+// Semantic Alert & Code Accents
+$color-red-100: #fee2e2;
+$color-red-600: #dc2626;
+$color-red-800: #991b1b;
+$color-green-100: #dcfce7;
+$color-green-600: #16a34a;
+$color-green-800: #166534;
+$color-amber-200: #fde68a;
+$color-yellow-100: #fef9c3;
+$color-yellow-600: #ca8a04;
+$color-yellow-800: #854d0e;
+$color-sky-100: #e0f2fe;
+$color-sky-800: #075985;
+
+// Data Visualization & Progress Accents (Material / Tailwind)
+$color-blue-500: #2196f3;
+$color-pink-500: #e91e63;
+$color-purple-500: #9c27b0;
+$color-orange-500: #ff9800;
+$color-teal-500: #009688;
+
+// ============================================================================
+// Layout, Radii, Shadows, and Transitions
+// ============================================================================
+
+// Transitions
+$transition-duration-fast: 0.15s;
+$transition-duration-normal: 0.25s;
 $transition-duration: 0.3s;
 $transition-type: ease-out;
 
-// borders and shadows
-$box-shadow: 0px 8px 56px rgba(15, 80, 100, 0.16);
+// Border Radii Scale
+$radius-xs: 2px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 14px;
+$radius-pill: 9999px;
 
-// themes
+// Elevation & Box Shadows
+$box-shadow: 0px 8px 56px rgba(15, 80, 100, 0.16); // Legacy theme token
+$shadow-sm: 0 2px 8px rgba(15, 80, 100, 0.05);
+$shadow-md: 0 4px 16px rgba(15, 80, 100, 0.08);
+$shadow-lg: 0 8px 24px rgba(15, 80, 100, 0.12);
+$shadow-hover: 0 10px 28px rgba(15, 80, 100, 0.14);
+
+// Dark Theme Elevation & Shadows
+$shadow-dark-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+$shadow-dark-md: 0 4px 18px rgba(0, 0, 0, 0.35);
+$shadow-dark-hover: 0 10px 28px rgba(0, 0, 0, 0.45);
+
+// ============================================================================
+// Theme Token Maps (Light & Dark)
+// WCAG 2.1 AA / AAA Contrast Compliant
+// ============================================================================
+
 $themes: (
     "light": (
-        // cyan 800 (WCAG 2.1 AA/AAA compliant across light backgrounds)
-        "accent-color": #155e75,
-        // cyan 900
-        "hover-over-accent-color": #164e63,
-        // white
-        "text-over-accent-color": #ffffff,
-        // white
-        "hero-text-color": #ffffff,
-        // slate 50
-        "bg-primary": #f8fafc,
-        // slate 900
-        "bg-primary-inverse": #0f172a,
-        // slate 200
-        "bg-secondary": #e2e8f0,
-        "bg-card": #fff,
-        // slate 800
-        "heading-color": #1e293b,
-        // slate 700
-        "text-color": #334155,
-        // slate 300
-        "inverse-text-color": #cbd5e1,
-        // slate 600 (WCAG 2.1 AA >=4.5:1 on bg-secondary and >=7:1 AAA on bg-primary/bg-card)
-        "muted-text-color": #475569,
-        // red 600
-        "inline-code-color": #dc2626,
-        // amber 200
-        "highlight-color": #fde68a,
-        // slate 900
-        "footer-color": #0f172a,
-        // Footer text tokens (WCAG AA/AAA on slate 900 #0f172a)
-        "footer-heading-color": #ffffff,
-        "footer-text-color": #f1f5f9,
-        "footer-muted-color": #94a3b8,
-        // Badge and tag pill tokens
+        // Primary brand & accent colors
+        "accent-color": $color-cyan-800,
+        "hover-over-accent-color": $color-cyan-900,
+        "text-over-accent-color": $color-white,
+        "hero-text-color": $color-white,
+
+        // Background containers
+        "bg-primary": $color-slate-50,
+        "bg-primary-inverse": $color-slate-900,
+        "bg-secondary": $color-slate-200,
+        "bg-card": $color-white,
+
+        // Typography & text hierarchy
+        "heading-color": $color-slate-800,
+        "text-color": $color-slate-700,
+        "inverse-text-color": $color-slate-300,
+        "muted-text-color": $color-slate-600,
+
+        // WCAG 2.1 AA >= 4.5:1 on slate-200
+        // Borders & Dividers
+        "border-color": $color-slate-200,
+        "card-border-color": rgba(0, 0, 0, 0.08),
+        "card-hover-border-color": rgba(21, 94, 117, 0.25),
+        // Badges & Tag Pills
         "badge-bg-color": rgba(21, 94, 117, 0.1),
-        "badge-text-color": #155e75,
+        "badge-text-color": $color-cyan-800,
         "badge-border-color": rgba(21, 94, 117, 0.22),
+        // Icon Wrappers
+        "icon-wrapper-bg": rgba(21, 94, 117, 0.1),
+        "icon-wrapper-hover-bg": rgba(21, 94, 117, 0.18),
+        // Code & Highlights
+        "inline-code-color": $color-red-600,
+        "highlight-color": $color-amber-200,
+
+        // Contact & Multi-column Footer
+        "footer-color": $color-slate-900,
+        "footer-heading-color": $color-white,
+        "footer-text-color": $color-slate-100,
+        "footer-muted-color": $color-slate-400,
     ),
     "dark": (
-        // cyan 400
-        "accent-color": #22d3ee,
-        // cyan 300
-        "hover-over-accent-color": #67e8f9,
-        // slate 900
-        "text-over-accent-color": #0f172a,
-        // white
-        "hero-text-color": #ffffff,
-        // gray-800
-        "bg-primary": #1f2937,
-        // slate 900
-        "bg-primary-inverse": #0f172a,
-        // gray 900
-        "bg-secondary": #111827,
-        // slate 800
-        "bg-card": #1e293b,
-        // slate 100
-        "heading-color": #f1f5f9,
-        // slate 300
-        "text-color": #cbd5e1,
-        // slate 900
-        "inverse-text-color": #0f172a,
-        // slate 400 (#95aed1)
+        // Primary brand & accent colors
+        "accent-color": $color-cyan-400,
+        "hover-over-accent-color": $color-cyan-300,
+        "text-over-accent-color": $color-slate-900,
+        "hero-text-color": $color-white,
+
+        // Background containers
+        "bg-primary": $color-gray-800,
+        "bg-primary-inverse": $color-slate-900,
+        "bg-secondary": $color-gray-900,
+        "bg-card": $color-slate-800,
+
+        // Typography & text hierarchy
+        "heading-color": $color-slate-100,
+        "text-color": $color-slate-300,
+        "inverse-text-color": $color-slate-900,
         "muted-text-color": #95aed1,
-        // red 600
-        "inline-code-color": #dc2626,
-        // amber 200
-        "highlight-color": #fde68a,
-        // slate 900
-        "footer-color": #0f172a,
-        // Footer text tokens (WCAG AA/AAA on slate 900 #0f172a)
-        "footer-heading-color": #ffffff,
-        "footer-text-color": #f1f5f9,
-        "footer-muted-color": #94a3b8,
-        // Badge and tag pill tokens
+
+        // High-contrast slate-400 on dark slate-800
+        // Borders & Dividers
+        "border-color": rgba(148, 163, 184, 0.2),
+        "card-border-color": rgba(255, 255, 255, 0.08),
+        "card-hover-border-color": rgba(34, 211, 238, 0.35),
+        // Badges & Tag Pills
         "badge-bg-color": rgba(34, 211, 238, 0.15),
-        "badge-text-color": #22d3ee,
+        "badge-text-color": $color-cyan-400,
         "badge-border-color": rgba(34, 211, 238, 0.25),
+        // Icon Wrappers
+        "icon-wrapper-bg": rgba(34, 211, 238, 0.15),
+        "icon-wrapper-hover-bg": rgba(34, 211, 238, 0.25),
+        // Code & Highlights
+        "inline-code-color": $color-red-600,
+        "highlight-color": $color-amber-200,
+
+        // Contact & Multi-column Footer
+        "footer-color": $color-slate-900,
+        "footer-heading-color": $color-white,
+        "footer-text-color": $color-slate-100,
+        "footer-muted-color": $color-slate-400,
     ),
 );
 
+// Professional Social & Academic Networks
 $brand-colors: (
     "linkedin": #0077b5,
     "github": #24292e,
     "orcid": #a6ce39,
 );
 
+// Alert Notification Tokens
 $alerts: (
     "success": (
-        // green 100
-        "bg-color": #dcfce7,
-        // green 800
-        "text-color": #166534,
+        "bg-color": $color-green-100,
+        "text-color": $color-green-800,
     ),
     "info": (
-        // sky 100
-        "bg-color": #e0f2fe,
-        // sky 800
-        "text-color": #075985,
+        "bg-color": $color-sky-100,
+        "text-color": $color-sky-800,
     ),
     "warning": (
-        // yellow 100
-        "bg-color": #fef9c3,
-        // yellow 800
-        "text-color": #854d0e,
+        "bg-color": $color-yellow-100,
+        "text-color": $color-yellow-800,
     ),
     "danger": (
-        // red 100
-        "bg-color": #fee2e2,
-        // red 800
-        "text-color": #991b1b,
+        "bg-color": $color-red-100,
+        "text-color": $color-red-800,
     ),
 );
 
-// typography
+// Typography
 $font-family-sans-serif:
     "Poppins",
     system-ui,

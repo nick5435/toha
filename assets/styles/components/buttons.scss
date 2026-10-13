@@ -154,23 +154,10 @@
 // Section pill badges and subtitles
 .activity-badge,
 .section-badge {
-    background-color: get-light-color("badge-bg-color");
-    color: get-light-color("badge-text-color");
-    font-weight: 500;
-    font-size: 0.78rem;
-    padding: 0.35rem 0.65rem;
-    border-radius: 9999px;
-    border: 1px solid get-light-color("badge-border-color");
-    display: inline-block;
+    @include badge-pill("light");
 }
 
-.activity-section-subtitle,
-.section-subtitle {
-    max-width: 680px;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    text-align: center;
-}
+@include section-header-standard("light");
 
 html[data-theme="dark"] {
     .btn-dark {
@@ -263,8 +250,8 @@ html[data-theme="dark"] {
 
     .activity-badge,
     .section-badge {
-        background-color: get-dark-color("badge-bg-color");
-        color: get-dark-color("badge-text-color");
-        border-color: get-dark-color("badge-border-color");
+        @include badge-pill("dark");
     }
+
+    @include section-header-standard("dark");
 }

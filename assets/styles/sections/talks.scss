@@ -5,27 +5,13 @@
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
 
-    .card {
-        background: get-light-color("bg-card");
-        border-top: 2px solid get-light-color("accent-color");
+    @include section-header-standard("light");
 
-        &:hover,
-        &:focus {
-            border-top: 2px solid get-light-color("accent-color");
-        }
+    .card {
+        @include academic-card("light");
 
         .card-header {
-            background: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-
-            .card-title {
-                color: get-light-color("heading-color");
-            }
-
             .sub-title {
-                color: get-light-color("muted-text-color");
                 margin-top: 0.4rem;
                 display: flex;
                 justify-content: space-between;
@@ -38,35 +24,19 @@
 
             a[href] {
                 text-decoration: underline;
+                text-underline-offset: 2px;
             }
         }
 
         .card-body {
-            padding: 0 1rem;
-            color: get-light-color("text-color");
-
             .abstract {
-                color: get-light-color("text-color");
-
-                p {
-                    color: inherit;
-                }
-
                 a {
-                    color: get-light-color("accent-color");
-                    text-decoration: underline;
-
-                    &:hover {
-                        color: get-light-color("hover-over-accent-color");
-                    }
+                    @include themed-link("light");
                 }
             }
         }
 
         .card-footer {
-            background: get-light-color("bg-card");
-            border: none;
-            padding: 0 1rem 0.5rem;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
@@ -82,17 +52,7 @@
     }
 
     .talk-filter-btn {
-        border-radius: 9999px !important;
-        padding: 0.35rem 0.85rem !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        transition: all 0.2s ease !important;
-
-        &.active {
-            background-color: get-light-color("accent-color") !important;
-            border-color: get-light-color("accent-color") !important;
-            color: get-light-color("text-over-accent-color") !important;
-        }
+        @include filter-button("light");
     }
 
     @include media("<=large") {
@@ -130,60 +90,22 @@
 
 html[data-theme="dark"] {
     .talks-section {
+        @include section-header-standard("dark");
+
         .card {
-            --bs-card-bg: #{get-dark-color("bg-card")};
-            background-color: get-dark-color("bg-card") !important;
-            background: get-dark-color("bg-card") !important;
-            border-top: 2px solid get-dark-color("accent-color");
-
-            &:hover,
-            &:focus {
-                border-top: 2px solid get-dark-color("accent-color");
-            }
-
-            .card-header {
-                background: none;
-                border: none;
-
-                .card-title {
-                    color: get-dark-color("heading-color");
-                }
-
-                .sub-title {
-                    color: get-dark-color("muted-text-color");
-                }
-            }
+            @include academic-card("dark");
 
             .card-body {
-                color: get-dark-color("text-color");
-
                 .abstract {
-                    color: get-dark-color("text-color");
-
-                    p {
-                        color: get-dark-color("text-color");
-                    }
-
                     a {
-                        color: get-dark-color("hover-over-accent-color");
-                        text-decoration: underline;
-
-                        &:hover {
-                            color: #22d3ee;
-                        }
+                        @include themed-link("dark");
                     }
                 }
-            }
-
-            .card-footer {
-                background: get-dark-color("bg-card");
             }
         }
 
-        .talk-filter-btn.active {
-            background-color: get-dark-color("accent-color") !important;
-            border-color: get-dark-color("accent-color") !important;
-            color: get-dark-color("text-over-accent-color") !important;
+        .talk-filter-btn {
+            @include filter-button("dark");
         }
     }
 }

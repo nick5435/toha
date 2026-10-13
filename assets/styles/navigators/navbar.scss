@@ -170,7 +170,7 @@
             height: auto;
             width: auto;
             margin-right: 15px;
-            border-top: 1px solid #c0ccda;
+            border-top: 1px solid get-light-color("border-color");
         }
 
         .dropdown-menu {
@@ -234,6 +234,7 @@ html[data-theme="dark"] {
 
         #top-navbar-divider {
             background-color: get-dark-color("muted-text-color");
+            border-top-color: get-dark-color("border-color");
         }
 
         .dropdown-menu {

@@ -183,19 +183,30 @@ tags:
 - **Icons:** Use standard `<i>` tags for Font Awesome icons (e.g., `<i class="fa-solid fa-house"></i>`, `<i class="fa-brands fa-github"></i>`).
 - **Image Alt Attributes:** Purely decorative and brand logo icons should use `alt=""` or appropriate accessible descriptions rather than generic redundant terms like "logo".
 
-### SCSS & Modern Dart Sass
+### SCSS & Modern Dart Sass (Unified Design System)
 
 - **Dart Sass Module System:** Use modern `@use` and `@forward` syntax. **`@import` is deprecated and forbidden.**
   - Partial stylesheets must `@use '../core' as *;` to access theme tokens, mixins, and responsive breakpoints.
+  - `_core.scss` forwards `./variables` and `./mixins` directly, making tokens, variables, and mixins universally available.
 - **No Inline CSS:** All styles must reside in `assets/styles/`.
-- **Variables & Tokens:** Use SCSS variables and theme helper functions:
+- **Foundational Color Palette (`variables.scss`):** All colors are defined as explicit, named SCSS variables adhering to Tailwind CSS and Material Design workflows:
+  - *Primary Accent (Cyan / Teal):* `$color-cyan-800` (`#155e75`, light accent with WCAG AA/AAA contrast), `$color-cyan-900` (`#164e63`, light hover), `$color-cyan-400` (`#22d3ee`, dark accent), `$color-cyan-300` (`#67e8f9`, dark hover).
+  - *Neutrals (Slate):* `$color-slate-50` (`#f8fafc`, light bg), `$color-slate-200` (`#e2e8f0`, secondary bg), `$color-slate-600` (`#475569`, light muted text with $\ge 4.5:1$ AA contrast on slate-200 and $>7:1$ AAA on white), `$color-slate-700` (`#334155`, body text), `$color-slate-800` (`#1e293b`, headings), `$color-slate-900` (`#0f172a`, inverse bg/footers).
+  - *Data & Progress Accents:* `$color-blue-500`, `$color-green-600`, `$color-yellow-600`, `$color-pink-500`, `$color-orange-500`, `$color-cyan-500`.
+- **Theme Token Maps (`$themes` in `variables.scss`):**
   - Access colors via `get-light-color($token)` and `get-dark-color($token)`.
-  - **`text-over-accent-color` vs `hero-text-color`:**
-    - `text-over-accent-color`: Text/icons displayed *on top of buttons, badges, and pills* styled with `accent-color`. Must have WCAG contrast against the accent color (e.g., `#ffffff` on dark cyan in light mode; `#0f172a` on light cyan in dark mode).
-    - `hero-text-color`: Text/icons displayed *over hero background images* (`.home`, `.greeting`, `.typing-carousel`, bounce arrow, `.transparent-navbar`). Always `#ffffff` in both light and dark modes to ensure contrast over photographic or dark hero backgrounds.
-- **Buttons & Badges:**
-  - Bootstrap 5 CSS variables (`--bs-btn-*`) are customized in `assets/styles/components/buttons.scss` for `.btn-outline-info`, `.btn-info`, and `.btn-dark`.
-  - Use `.activity-badge` / `.section-badge` for topic pills under section headers.
+  - Standard tokens: `accent-color`, `hover-over-accent-color`, `text-over-accent-color`, `hero-text-color`, `bg-primary`, `bg-primary-inverse`, `bg-secondary`, `bg-card`, `heading-color`, `text-color`, `inverse-text-color`, `muted-text-color`, `border-color`, `card-border-color`, `card-hover-border-color`, `badge-bg-color`, `badge-text-color`, `badge-border-color`, `icon-wrapper-bg`, `icon-wrapper-hover-bg`, `footer-color`, `footer-heading-color`, `footer-text-color`, `footer-muted-color`.
+- **Standard Design System Mixins (`mixins.scss`):**
+  - `@mixin section-header-standard($theme: "light")`: Standardizes centered subtitles (`.section-subtitle`, `.activity-section-subtitle`, `.technology-section-subtitle`) across homepage sections.
+  - `@mixin academic-card($theme: "light")`: Standardizes academic & research cards (`publications`, `talks`, `service`, `accomplishments`) with 2px accent top borders, hover elevation, and dark-theme adaptation.
+  - `@mixin interactive-card($theme: "light", $translateY: -3px)`: Standardizes showcase cards (`activities`, `technology`, `projects`) with rounded corners, subtle borders, and smooth elevation on hover.
+  - `@mixin icon-wrapper($theme: "light", $size: 42px, $radius: $radius-lg, $font-size: 1.25rem)`: Standardizes rounded feature icon wrappers with theme accent coloring and hover scaling.
+  - `@mixin badge-pill($theme: "light")`: Standardizes topic and category pills (`.activity-badge`, `.section-badge`, tag pills) with theme tokens.
+  - `@mixin filter-button($theme: "light")`: Standardizes category filter button pills (`.talk-filter-btn`, `.pub-filter-btn`).
+  - `@mixin themed-link($theme: "light")`: Standardizes contextual links with accessible underline and smooth color hover.
+- **Elevation & Radii Scale:**
+  - Radii: `$radius-xs` (2px), `$radius-sm` (4px), `$radius-md` (8px), `$radius-lg` (12px), `$radius-xl` (14px), `$radius-pill` (9999px).
+  - Shadows: `$shadow-sm`, `$shadow-md`, `$shadow-lg`, `$shadow-hover`, `$shadow-dark-sm`, `$shadow-dark-md`, `$shadow-dark-hover`.
 - **Link Styling:** Contextual content links must feature an underline (`text-decoration: underline`, `text-underline-offset: 2px`) to satisfy WCAG 1.4.1 (use of color alone is not sufficient to distinguish links). Navigation items, buttons, and card links may explicitly suppress underlines.
 - **Typography & Content Formatting:**
   - Default font family is `$font-family-sans-serif: 'Poppins', ...`.

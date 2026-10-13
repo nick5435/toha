@@ -73,3 +73,240 @@
     }
     @return red;
 }
+
+// ============================================================================
+// Standardized Design System Mixins
+// Used to unify layouts, sections, components, and navigators
+// ============================================================================
+
+// Section Header Hierarchy: Title -> Subtitle -> Badges
+@mixin section-header-standard($theme: "light") {
+    .section-subtitle,
+    .activity-section-subtitle,
+    .technology-section-subtitle {
+        max-width: 680px;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        @if $theme == "light" {
+            color: get-light-color("muted-text-color");
+        } @else {
+            color: get-dark-color("muted-text-color");
+        }
+    }
+}
+
+// Academic & Research Cards (Publications, Talks, Service, Accomplishments)
+@mixin academic-card($theme: "light") {
+    @if $theme == "light" {
+        background: get-light-color("bg-card");
+        border-top: 2px solid get-light-color("accent-color");
+        border-radius: $radius-sm;
+        box-shadow: $shadow-sm;
+        @include transition(box-shadow, $transition-duration-normal);
+
+        &:hover,
+        &:focus {
+            border-top: 2px solid get-light-color("hover-over-accent-color");
+            box-shadow: $shadow-md;
+        }
+
+        .card-header {
+            background: none;
+            border: none;
+            padding: 0.75rem 1rem 0.25rem;
+
+            .card-title {
+                color: get-light-color("heading-color");
+                font-weight: 600;
+            }
+
+            .sub-title {
+                color: get-light-color("muted-text-color");
+                font-size: 0.9rem;
+            }
+        }
+
+        .card-body {
+            padding: 0 1rem;
+            color: get-light-color("text-color");
+
+            .abstract {
+                color: get-light-color("text-color");
+
+                p {
+                    color: inherit;
+                    line-height: 1.6;
+                }
+            }
+        }
+
+        .card-footer {
+            background: get-light-color("bg-card");
+            border: none;
+            padding: 0 1rem 0.75rem;
+        }
+    } @else {
+        background: get-dark-color("bg-card");
+        border-top: 2px solid get-dark-color("accent-color");
+        box-shadow: $shadow-dark-sm;
+
+        &:hover,
+        &:focus {
+            border-top: 2px solid get-dark-color("hover-over-accent-color");
+            box-shadow: $shadow-dark-md;
+        }
+
+        .card-header {
+            background: none;
+            border: none;
+
+            .card-title {
+                color: get-dark-color("heading-color");
+            }
+
+            .sub-title {
+                color: get-dark-color("muted-text-color");
+            }
+        }
+
+        .card-body {
+            color: get-dark-color("text-color");
+
+            .abstract {
+                color: get-dark-color("text-color");
+
+                p {
+                    color: inherit;
+                }
+            }
+        }
+
+        .card-footer {
+            background: get-dark-color("bg-card");
+        }
+    }
+}
+
+// Interactive Elevation Cards (Activities, Technology, Projects)
+@mixin interactive-card($theme: "light", $translateY: -3px) {
+    @if $theme == "light" {
+        border-radius: $radius-lg;
+        border: 1px solid get-light-color("card-border-color");
+        background: get-light-color("bg-card");
+        box-shadow: $shadow-sm;
+        transition:
+            transform $transition-duration-normal ease,
+            box-shadow $transition-duration-normal ease,
+            border-color $transition-duration-normal ease;
+
+        &:hover {
+            transform: translateY($translateY);
+            box-shadow: $shadow-hover;
+            border-color: get-light-color("card-hover-border-color");
+        }
+    } @else {
+        background: get-dark-color("bg-card");
+        border-color: get-dark-color("card-border-color");
+        box-shadow: $shadow-dark-sm;
+
+        &:hover {
+            border-color: get-dark-color("card-hover-border-color");
+            box-shadow: $shadow-dark-hover;
+        }
+    }
+}
+
+// Standardized Rounded Icon Wrappers
+@mixin icon-wrapper($theme: "light", $size: 42px, $radius: $radius-lg, $font-size: 1.25rem) {
+    @if $theme == "light" {
+        width: $size;
+        height: $size;
+        border-radius: $radius;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size;
+        background: get-light-color("icon-wrapper-bg");
+        color: get-light-color("accent-color");
+        transition:
+            transform $transition-duration-normal ease,
+            background-color $transition-duration-normal ease;
+    } @else {
+        background: get-dark-color("icon-wrapper-bg");
+        color: get-dark-color("accent-color");
+    }
+}
+
+// Standardized Badge & Tag Pills
+@mixin badge-pill($theme: "light") {
+    @if $theme == "light" {
+        background-color: get-light-color("badge-bg-color");
+        color: get-light-color("badge-text-color");
+        font-weight: 500;
+        font-size: 0.78rem;
+        padding: 0.35rem 0.65rem;
+        border-radius: $radius-pill;
+        border: 1px solid get-light-color("badge-border-color");
+        display: inline-block;
+        line-height: 1.2;
+        text-decoration: none !important;
+        transition:
+            background-color $transition-duration-fast ease,
+            border-color $transition-duration-fast ease,
+            color $transition-duration-fast ease;
+    } @else {
+        background-color: get-dark-color("badge-bg-color");
+        color: get-dark-color("badge-text-color");
+        border-color: get-dark-color("badge-border-color");
+    }
+}
+
+// Category & Section Filter Buttons
+@mixin filter-button($theme: "light") {
+    @if $theme == "light" {
+        border-radius: $radius-pill !important;
+        padding: 0.35rem 0.85rem !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        transition: all $transition-duration-fast ease !important;
+
+        &.active {
+            background-color: get-light-color("accent-color") !important;
+            border-color: get-light-color("accent-color") !important;
+            color: get-light-color("text-over-accent-color") !important;
+        }
+    } @else {
+        &.active {
+            background-color: get-dark-color("accent-color") !important;
+            border-color: get-dark-color("accent-color") !important;
+            color: get-dark-color("text-over-accent-color") !important;
+        }
+    }
+}
+
+// Accessible Contextual Links (WCAG 1.4.1)
+@mixin themed-link($theme: "light") {
+    @if $theme == "light" {
+        color: get-light-color("accent-color");
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color $transition-duration-fast ease;
+
+        &:hover,
+        &:focus {
+            color: get-light-color("hover-over-accent-color");
+            text-decoration: underline;
+        }
+    } @else {
+        color: get-dark-color("accent-color");
+
+        &:hover,
+        &:focus {
+            color: get-dark-color("hover-over-accent-color");
+            text-decoration: underline;
+        }
+    }
+}
