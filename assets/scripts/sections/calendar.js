@@ -222,6 +222,7 @@ function initCalendar() {
   const calendar = new Calendar(calendarEl, {
     plugins: [classicThemePlugin, googleCalendarPlugin],
     googleCalendarApiKey: apiKey,
+    headerToolbarClass: 'calendar-header-toolbar',
     initialView,
     timeZone,
     firstDay: isNaN(firstDay) ? 1 : firstDay,

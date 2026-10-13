@@ -86,14 +86,84 @@
         --fc-classic-highlight: rgba(21, 94, 117, 0.12);
         --fc-classic-ring-color: rgba(21, 94, 117, 0.25);
 
-        // Toolbar title typography
-        .fc-classic-AVD,
-        .fc-toolbar-title {
-            font-family: $font-family-heading;
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: get-light-color("heading-color");
-            letter-spacing: -0.01em;
+        // Toolbar Grid Alignment (Centers the date with the heading, subtitle, and tags above it)
+        .calendar-header-toolbar,
+        .fc-header-toolbar,
+        > div:has(.fc-classic-AVD),
+        > div:has([role="heading"]),
+        > div:first-child:has(button) {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+            justify-content: stretch !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin-bottom: 1.25rem !important;
+
+            // Start section (Left navigation controls, buttons, and switches)
+            > div:nth-child(1),
+            > section:nth-child(1) {
+                grid-column: 1 !important;
+                justify-self: start !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+            }
+
+            // Center section (Date, title, and heading) — centered with heading, subtitle, and tags
+            > div:nth-child(2),
+            > section:nth-child(2) {
+                grid-column: 2 !important;
+                justify-self: center !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+
+                .fc-classic-AVD,
+                .fc-toolbar-title,
+                [role="heading"] {
+                    font-family: $font-family-heading;
+                    font-size: 1.35rem;
+                    font-weight: 600;
+                    color: get-light-color("heading-color");
+                    letter-spacing: -0.01em;
+                    text-align: center !important;
+                    margin: 0 auto !important;
+                    white-space: nowrap !important;
+                }
+            }
+
+            // End section (Right view switcher, mode toggles, and buttons)
+            > div:nth-child(3),
+            > section:nth-child(3) {
+                grid-column: 3 !important;
+                justify-self: end !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+            }
+
+            @media (max-width: 767.98px) {
+                grid-template-columns: 1fr !important;
+                gap: 0.75rem !important;
+
+                > div:nth-child(1),
+                > div:nth-child(2),
+                > div:nth-child(3),
+                > section:nth-child(1),
+                > section:nth-child(2),
+                > section:nth-child(3) {
+                    grid-column: 1 !important;
+                    justify-self: center !important;
+                    justify-content: center !important;
+                    width: 100% !important;
+                }
+
+                > div:nth-child(2),
+                > section:nth-child(2) {
+                    order: -1;
+                }
+            }
         }
 
         // Toolbar Buttons
@@ -141,7 +211,9 @@
             padding: 2px 6px;
             box-shadow: $shadow-sm;
             cursor: pointer;
-            transition: transform $transition-duration-fast ease, box-shadow $transition-duration-fast ease;
+            transition:
+                transform $transition-duration-fast ease,
+                box-shadow $transition-duration-fast ease;
 
             &:hover {
                 transform: translateY(-1px);
@@ -182,7 +254,9 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(21, 94, 117, 0.18);
-    box-shadow: 0 10px 30px rgba(15, 80, 100, 0.16), 0 2px 8px rgba(15, 80, 100, 0.08);
+    box-shadow:
+        0 10px 30px rgba(15, 80, 100, 0.16),
+        0 2px 8px rgba(15, 80, 100, 0.08);
     color: get-light-color("text-color");
 
     &.show {
@@ -307,10 +381,20 @@ html[data-theme="dark"] {
             --fc-classic-highlight: rgba(34, 211, 238, 0.18);
             --fc-classic-ring-color: rgba(34, 211, 238, 0.3);
 
-            // Toolbar title
-            .fc-classic-AVD,
-            .fc-toolbar-title {
-                color: get-dark-color("heading-color");
+            // Toolbar title & centered date (Dark Mode)
+            .calendar-header-toolbar,
+            .fc-header-toolbar,
+            > div:has(.fc-classic-AVD),
+            > div:has([role="heading"]),
+            > div:first-child:has(button) {
+                > div:nth-child(2),
+                > section:nth-child(2) {
+                    .fc-classic-AVD,
+                    .fc-toolbar-title,
+                    [role="heading"] {
+                        color: get-dark-color("heading-color");
+                    }
+                }
             }
 
             // Buttons
@@ -359,7 +443,9 @@ html[data-theme="dark"] {
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-color: rgba(34, 211, 238, 0.25);
-        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.35);
+        box-shadow:
+            0 12px 36px rgba(0, 0, 0, 0.5),
+            0 2px 10px rgba(0, 0, 0, 0.35);
         color: get-dark-color("text-color");
 
         .popover-header {
