@@ -43,4 +43,42 @@ html[data-theme="dark"] {
 #calendar-holder {
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
+
+    .calendar-card {
+        border-radius: $radius-lg;
+        border: 1px solid get-light-color("card-border-color");
+        background: get-light-color("bg-card");
+        box-shadow: $shadow-sm;
+        overflow: hidden;
+        transition:
+            box-shadow $transition-duration-normal ease,
+            border-color $transition-duration-normal ease;
+
+        &:hover {
+            box-shadow: $shadow-md;
+            border-color: get-light-color("card-hover-border-color");
+        }
+    }
+
+    .calendar-iframe {
+        display: block;
+        width: 100%;
+        border: none;
+        background-color: #ffffff;
+    }
+}
+
+html[data-theme="dark"] {
+    #calendar-holder {
+        .calendar-card {
+            background: get-dark-color("bg-card");
+            border-color: get-dark-color("card-border-color");
+            box-shadow: $shadow-dark-sm;
+
+            &:hover {
+                border-color: get-dark-color("card-hover-border-color");
+                box-shadow: $shadow-dark-md;
+            }
+        }
+    }
 }

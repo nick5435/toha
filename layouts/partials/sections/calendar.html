@@ -26,9 +26,75 @@
   </div>
   {{ end }}
 
+  {{- $cal := .calendar | default dict -}}
+  {{- $height := $cal.height | default (.height | default 600) -}}
+  {{- $calTitle := $cal.title | default (.title | default (printf "%s's Calendar" site.Title)) -}}
+
+  {{- $embedURL := "" -}}
+  {{- if $cal.url -}}
+    {{- $embedURL = $cal.url -}}
+  {{- else if .embedUrl -}}
+    {{- $embedURL = .embedUrl -}}
+  {{- else if .url -}}
+    {{- $embedURL = .url -}}
+  {{- else -}}
+    {{- $wkst := $cal.weekStart | default ($cal.wkst | default 1) -}}
+    {{- $ctz := $cal.timeZone | default ($cal.ctz | default "America/Chicago") -}}
+    {{- $ctzEncoded := replace $ctz "/" "%2F" -}}
+    {{- $mode := $cal.mode | default "WEEK" -}}
+    {{- $showTitle := 0 -}}
+    {{- if $cal.showTitle -}}{{- $showTitle = 1 -}}{{- end -}}
+    {{- $showNav := 0 -}}
+    {{- if or (not (isset $cal "showNav")) $cal.showNav -}}{{- $showNav = 1 -}}{{- end -}}
+    {{- $showDate := 0 -}}
+    {{- if or (not (isset $cal "showDate")) $cal.showDate -}}{{- $showDate = 1 -}}{{- end -}}
+    {{- $showPrint := 0 -}}
+    {{- if $cal.showPrint -}}{{- $showPrint = 1 -}}{{- end -}}
+    {{- $showTabs := 0 -}}
+    {{- if $cal.showTabs -}}{{- $showTabs = 1 -}}{{- end -}}
+    {{- $showCalendars := 0 -}}
+    {{- if $cal.showCalendars -}}{{- $showCalendars = 1 -}}{{- end -}}
+    {{- $showTz := 0 -}}
+    {{- if $cal.showTz -}}{{- $showTz = 1 -}}{{- end -}}
+    {{- $color := $cal.color | default "#8e24aa" -}}
+    {{- $colorEncoded := replace $color "#" "%23" -}}
+
+    {{- $src := $cal.calendarId | default ($cal.id | default ($cal.src | default "NGY1MmZiMmU5dHZqNDFwamMzY3M0MzZzbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ")) -}}
+
+    {{- $baseURL := printf "https://calendar.google.com/calendar/embed?height=%v&wkst=%v&ctz=%s&mode=%s&title=%s&showPrint=%v&showCalendars=%v&showTitle=%v&showNav=%v&showDate=%v&showTabs=%v&showTz=%v" $height $wkst $ctzEncoded $mode (urlquery $calTitle) $showPrint $showCalendars $showTitle $showNav $showDate $showTabs $showTz -}}
+
+    {{- if reflect.IsSlice $src -}}
+      {{- range $src -}}
+        {{- if reflect.IsMap . -}}
+          {{- $calColor := .color | default $color -}}
+          {{- $calColorEnc := replace $calColor "#" "%23" -}}
+          {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery .id) "%40" "@") $calColorEnc -}}
+        {{- else -}}
+          {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery .) "%40" "@") $colorEncoded -}}
+        {{- end -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery $src) "%40" "@") $colorEncoded -}}
+    {{- end -}}
+
+    {{- $embedURL = $baseURL -}}
+  {{- end -}}
+
   <div class="container">
-    <div class="row" id="calendar-holder">
-      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&mode=WEEK&title=Nick%20Meyer's%20Calendar&showPrint=0&showCalendars=0&showTitle=0&src=NGY1MmZiMmU5dHZqNDFwamMzY3M0MzZzbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%238e24aa" title="Nick Meyer's Calendar" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no" loading="lazy"></iframe>
+    <div class="row justify-content-center" id="calendar-holder">
+      <div class="col-12 col-xl-11">
+        <div class="calendar-card">
+          <iframe
+            src="{{ $embedURL | safeURL }}"
+            title="{{ $calTitle }}"
+            class="calendar-iframe"
+            style="min-height: {{ $height }}px; height: {{ $height }}px;"
+            frameborder="0"
+            scrolling="no"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
     </div>
   </div>
 </div>
