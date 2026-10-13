@@ -294,6 +294,7 @@ All sections in the integration reference site follow the standardized centered 
   - Webfonts mounted via Hugo module mounts to `static/webfonts`.
   - Families supported: Classic, Duotone, Sharp, Sharp-Duotone.
   - Agent tools in `website2/.agents/skills/`: `/suggest-icon <concept>`, `/add-icon <name>`, `/fa-help <question>`.
+  - **Bandwidth Protection & Netlify Build Caching:** The private Kit package has bandwidth and download quotas on `npm.fontawesome.com`. Downstream sites must configure `netlify-plugin-cache` to persist `node_modules` across Netlify builds, set `NPM_CONFIG_PREFER_OFFLINE="true"`, and serve `/webfonts/*` with immutable 1-year cache headers (`Cache-Control: public, max-age=31536000, immutable`).
 
 ---
 
