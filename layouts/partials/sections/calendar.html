@@ -3,7 +3,7 @@
   {{ $sectionID = .section.id }}
 {{ end }}
 
-<div class="container-fluid anchor pb-5 service-section" id="{{ $sectionID }}">
+<div class="container-fluid anchor pb-5 calendar-section" id="{{ $sectionID }}">
   {{ if not (.section.hideTitle) }}
     <h2 class="text-center">{{ .section.name | markdownify }}</h2>
   {{ else }}
@@ -27,72 +27,95 @@
   {{ end }}
 
   {{- $cal := .calendar | default dict -}}
-  {{- $height := $cal.height | default (.height | default 600) -}}
+  {{- $height := $cal.height | default (.height | default 650) -}}
   {{- $calTitle := $cal.title | default (.title | default (printf "%s's Calendar" site.Title)) -}}
-
-  {{- $embedURL := "" -}}
-  {{- if $cal.url -}}
-    {{- $embedURL = $cal.url -}}
-  {{- else if .embedUrl -}}
-    {{- $embedURL = .embedUrl -}}
-  {{- else if .url -}}
-    {{- $embedURL = .url -}}
-  {{- else -}}
-    {{- $wkst := $cal.weekStart | default ($cal.wkst | default 1) -}}
-    {{- $ctz := $cal.timeZone | default ($cal.ctz | default "America/Chicago") -}}
-    {{- $ctzEncoded := replace $ctz "/" "%2F" -}}
-    {{- $mode := $cal.mode | default "WEEK" -}}
-    {{- $showTitle := 0 -}}
-    {{- if $cal.showTitle -}}{{- $showTitle = 1 -}}{{- end -}}
-    {{- $showNav := 0 -}}
-    {{- if or (not (isset $cal "showNav")) $cal.showNav -}}{{- $showNav = 1 -}}{{- end -}}
-    {{- $showDate := 0 -}}
-    {{- if or (not (isset $cal "showDate")) $cal.showDate -}}{{- $showDate = 1 -}}{{- end -}}
-    {{- $showPrint := 0 -}}
-    {{- if $cal.showPrint -}}{{- $showPrint = 1 -}}{{- end -}}
-    {{- $showTabs := 0 -}}
-    {{- if $cal.showTabs -}}{{- $showTabs = 1 -}}{{- end -}}
-    {{- $showCalendars := 0 -}}
-    {{- if $cal.showCalendars -}}{{- $showCalendars = 1 -}}{{- end -}}
-    {{- $showTz := 0 -}}
-    {{- if $cal.showTz -}}{{- $showTz = 1 -}}{{- end -}}
-    {{- $color := $cal.color | default "#8e24aa" -}}
-    {{- $colorEncoded := replace $color "#" "%23" -}}
-
-    {{- $src := $cal.calendarId | default ($cal.id | default ($cal.src | default "NGY1MmZiMmU5dHZqNDFwamMzY3M0MzZzbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ")) -}}
-
-    {{- $baseURL := printf "https://calendar.google.com/calendar/embed?height=%v&wkst=%v&ctz=%s&mode=%s&title=%s&showPrint=%v&showCalendars=%v&showTitle=%v&showNav=%v&showDate=%v&showTabs=%v&showTz=%v" $height $wkst $ctzEncoded $mode (urlquery $calTitle) $showPrint $showCalendars $showTitle $showNav $showDate $showTabs $showTz -}}
-
-    {{- if reflect.IsSlice $src -}}
-      {{- range $src -}}
-        {{- if reflect.IsMap . -}}
-          {{- $calColor := .color | default $color -}}
-          {{- $calColorEnc := replace $calColor "#" "%23" -}}
-          {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery .id) "%40" "@") $calColorEnc -}}
-        {{- else -}}
-          {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery .) "%40" "@") $colorEncoded -}}
-        {{- end -}}
-      {{- end -}}
-    {{- else -}}
-      {{- $baseURL = printf "%s&src=%s&color=%s" $baseURL (replace (urlquery $src) "%40" "@") $colorEncoded -}}
-    {{- end -}}
-
-    {{- $embedURL = $baseURL -}}
+  {{- $timeZone := $cal.timeZone | default ($cal.ctz | default "America/Chicago") -}}
+  {{- $firstDay := 1 -}}
+  {{- if isset $cal "weekStart" -}}
+    {{- $firstDay = $cal.weekStart -}}
+  {{- else if isset $cal "firstDay" -}}
+    {{- $firstDay = $cal.firstDay -}}
+  {{- else if isset $cal "wkst" -}}
+    {{- $firstDay = $cal.wkst -}}
   {{- end -}}
+  {{- $eventColor := $cal.color | default "" -}}
+  {{- $apiKey := $cal.apiKey | default ($cal.googleCalendarApiKey | default site.Params.calendar.apiKey) -}}
+
+  {{- /* Resolve Calendar ID (string or slice) */ -}}
+  {{- $rawId := $cal.calendarId | default ($cal.id | default ($cal.src | default "")) -}}
+  {{- $calendarId := "" -}}
+  {{- if reflect.IsSlice $rawId -}}
+    {{- $idList := slice -}}
+    {{- range $rawId -}}
+      {{- if reflect.IsMap . -}}
+        {{- $idList = $idList | append .id -}}
+      {{- else -}}
+        {{- $idList = $idList | append . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $calendarId = delimit $idList "," -}}
+  {{- else -}}
+    {{- $calendarId = $rawId -}}
+  {{- end -}}
+
+  {{- /* View mode resolution */ -}}
+  {{- $initialView := "timeGridWeek" -}}
+  {{- $mode := upper ($cal.mode | default "WEEK") -}}
+  {{- if or (eq $mode "MONTH") (eq $mode "DAYGRIDMONTH") -}}
+    {{- $initialView = "dayGridMonth" -}}
+  {{- else if or (eq $mode "AGENDA") (eq $mode "LIST") (eq $mode "LISTWEEK") -}}
+    {{- $initialView = "listWeek" -}}
+  {{- else if or (eq $mode "DAY") (eq $mode "TIMEGRIDDAY") -}}
+    {{- $initialView = "timeGridDay" -}}
+  {{- else if $cal.initialView -}}
+    {{- $initialView = $cal.initialView -}}
+  {{- end -}}
+
+  {{- /* Controls */ -}}
+  {{- $showNav := cond (or (not (isset $cal "showNav")) $cal.showNav) "true" "false" -}}
+  {{- $showToday := cond (or (not (isset $cal "showDate")) $cal.showDate) "true" "false" -}}
+  {{- $showViews := cond (or (not (isset $cal "showTabs")) $cal.showTabs) "true" "false" -}}
+
+  {{- $hasNativeEvents := or $apiKey $cal.events $cal.eventsUrl -}}
+  {{- $useIframeFallback := and $calendarId (not $hasNativeEvents) -}}
 
   <div class="container">
     <div class="row justify-content-center" id="calendar-holder">
       <div class="col-12 col-xl-11">
-        <div class="calendar-card">
-          <iframe
-            src="{{ $embedURL | safeURL }}"
-            title="{{ $calTitle }}"
-            class="calendar-iframe"
-            style="min-height: {{ $height }}px; height: {{ $height }}px;"
-            frameborder="0"
-            scrolling="no"
-            loading="lazy">
-          </iframe>
+        <div class="calendar-container">
+          {{ if $useIframeFallback }}
+            {{- $src := replace (urlquery $calendarId) "%40" "@" -}}
+            {{- $embedURL := printf "https://calendar.google.com/calendar/embed?height=%v&wkst=%v&ctz=%s&mode=%s&title=%s&showPrint=0&showCalendars=0&showTitle=0&showNav=1&showDate=1&showTabs=0&showTz=0&src=%s&color=%%23155e75" $height $firstDay (replace $timeZone "/" "%2F") $mode (urlquery $calTitle) $src -}}
+            <iframe
+              src="{{ $embedURL | safeURL }}"
+              title="{{ $calTitle }}"
+              class="calendar-iframe w-100"
+              style="min-height: {{ $height }}px; height: {{ $height }}px; border: 0;"
+              frameborder="0"
+              scrolling="no"
+              loading="lazy">
+            </iframe>
+          {{ else }}
+            <div
+              id="calendar-widget"
+              class="calendar-widget"
+              data-calendar-id="{{ $calendarId }}"
+              {{ with $apiKey }}data-api-key="{{ . }}"{{ end }}
+              data-initial-view="{{ $initialView }}"
+              data-time-zone="{{ $timeZone }}"
+              data-first-day="{{ $firstDay }}"
+              data-height="{{ $height }}"
+              data-event-color="{{ $eventColor }}"
+              data-show-nav="{{ $showNav }}"
+              data-show-today="{{ $showToday }}"
+              data-show-views="{{ $showViews }}"
+              {{ with $cal.slotMinTime }}data-slot-min-time="{{ . }}"{{ end }}
+              {{ with $cal.slotMaxTime }}data-slot-max-time="{{ . }}"{{ end }}
+              {{ with $cal.eventsUrl }}data-events-url="{{ . }}"{{ end }}
+              {{ with $cal.events }}data-events-json="{{ . | jsonify }}"{{ end }}
+              {{ with $cal.config }}data-config="{{ . | jsonify }}"{{ end }}
+            ></div>
+          {{ end }}
         </div>
       </div>
     </div>

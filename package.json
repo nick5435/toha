@@ -7,6 +7,7 @@
   "devDependencies": {
     "@awesome.me/kit-f6f8bfcfbd": "^1.0.2",
     "@fontsource/poppins": "^5.3.0",
+    "@fullcalendar/google-calendar": "^7.1.2",
     "@popperjs/core": "^2.11.8",
     "@videojs/html": "^10.0.1",
     "bootstrap": "^5.3.8",
@@ -16,6 +17,7 @@
     "feather-icons": "^4.29.2",
     "filterizr": "^2.2.4",
     "flag-icons": "^7.5.0",
+    "fullcalendar": "^7.1.2",
     "fuse.js": "^7.5.0",
     "globals": "^17.13.0",
     "highlight.js": "^11.12.0",
@@ -26,6 +28,7 @@
     "neostandard": "^0.14.0",
     "prettier": "^3.9.10",
     "sanitize.css": "^13.0.0",
+    "temporal-polyfill": "^1.0.5",
     "typeit": "^8.8.7"
   },
   "homepage": "https://github.com/nick5435/toha#readme",

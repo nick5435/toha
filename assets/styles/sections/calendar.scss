@@ -1,0 +1,266 @@
+@use "../core" as *;
+@use "fullcalendar/skeleton.css" as *;
+@use "fullcalendar/themes/classic/theme.css" as *;
+@use "fullcalendar/themes/classic/palette.css" as *;
+
+.calendar-section {
+    @include section-title-adjustment();
+    content-visibility: auto;
+    contain-intrinsic-size: auto 650px;
+
+    @include section-header-standard("light");
+
+    .calendar-container {
+        border-radius: $radius-lg;
+        border: 1px solid get-light-color("card-border-color");
+        background: get-light-color("bg-card");
+        box-shadow: $shadow-sm;
+        overflow: hidden;
+        padding: 1.5rem;
+        transition:
+            box-shadow $transition-duration-normal ease,
+            border-color $transition-duration-normal ease;
+
+        &:hover {
+            box-shadow: $shadow-md;
+            border-color: get-light-color("card-hover-border-color");
+        }
+    }
+
+    .calendar-iframe {
+        border-radius: $radius-md;
+        display: block;
+        background-color: #ffffff;
+    }
+
+    .calendar-api-banner {
+        border-radius: $radius-md;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        background: rgba(21, 94, 117, 0.08);
+        border: 1px solid rgba(21, 94, 117, 0.2);
+        color: get-light-color("heading-color");
+        font-size: 0.875rem;
+
+        code {
+            color: $color-cyan-800;
+            background: rgba(21, 94, 117, 0.08);
+            padding: 0.15rem 0.35rem;
+            border-radius: $radius-xs;
+            font-size: 0.8125rem;
+        }
+    }
+
+    // FullCalendar Customization (Light Mode)
+    .calendar-widget,
+    .fc-classic-n5m,
+    .fc {
+        font-family: $font-family-base;
+
+        // Primary Accent & Events
+        --fc-classic-primary: #{$color-cyan-800};
+        --fc-classic-primary-foreground: #ffffff;
+        --fc-classic-event: #{$color-cyan-800};
+        --fc-classic-event-contrast: #ffffff;
+
+        // Buttons
+        --fc-classic-button: #{$color-slate-100};
+        --fc-classic-button-foreground: #{$color-slate-800};
+        --fc-classic-button-border: #{$color-slate-300};
+        --fc-classic-button-strong: #{$color-cyan-800};
+        --fc-classic-button-strong-border: #{$color-cyan-900};
+        --fc-classic-button-outline: rgba(21, 94, 117, 0.4);
+
+        // Grid Backgrounds & Text
+        --fc-classic-background: #ffffff;
+        --fc-classic-foreground: #{$color-slate-800};
+        --fc-classic-faint: rgba(15, 23, 42, 0.02);
+        --fc-classic-faint-foreground: #{$color-slate-400};
+        --fc-classic-muted: #{$color-slate-50};
+        --fc-classic-muted-foreground: #{$color-slate-600};
+        --fc-classic-strong: rgba(15, 23, 42, 0.06);
+        --fc-classic-border: #{$color-slate-200};
+        --fc-classic-strong-border: #{$color-slate-300};
+        --fc-classic-today: rgba(21, 94, 117, 0.08);
+        --fc-classic-now: #{$color-cyan-700};
+        --fc-classic-highlight: rgba(21, 94, 117, 0.12);
+        --fc-classic-ring-color: rgba(21, 94, 117, 0.25);
+
+        // Toolbar title typography
+        .fc-classic-AVD,
+        .fc-toolbar-title {
+            font-family: $font-family-heading;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: get-light-color("heading-color");
+            letter-spacing: -0.01em;
+        }
+
+        // Toolbar Buttons
+        button {
+            font-family: $font-family-base;
+            border-radius: $radius-md !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            padding: 0.4rem 0.85rem;
+            transition: all $transition-duration-fast ease;
+
+            &:focus-visible {
+                outline: 2px solid $color-cyan-800 !important;
+                outline-offset: 2px !important;
+            }
+        }
+
+        // Header day names and slot headers
+        th,
+        .fc-col-header-cell {
+            font-family: $font-family-base;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: get-light-color("heading-color");
+            background-color: $color-slate-50;
+            padding: 8px 0;
+        }
+
+        // Time slot gutter labels
+        .fc-timegrid-slot-label,
+        [class*="slotHeader"] {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: get-light-color("muted-text-color");
+        }
+
+        // Events styling
+        .fc-event,
+        [class*="listItemEvent"],
+        [class*="rowEvent"] {
+            border-radius: $radius-sm;
+            font-size: 0.825rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            box-shadow: $shadow-sm;
+            cursor: pointer;
+            transition: transform $transition-duration-fast ease, box-shadow $transition-duration-fast ease;
+
+            &:hover {
+                transform: translateY(-1px);
+                box-shadow: $shadow-md;
+            }
+        }
+
+        // Popovers
+        .fc-popover {
+            border-radius: $radius-md;
+            border: 1px solid get-light-color("card-border-color");
+            background: #ffffff;
+            box-shadow: $shadow-lg;
+        }
+    }
+}
+
+html[data-theme="dark"] {
+    .calendar-section {
+        @include section-header-standard("dark");
+
+        .calendar-container {
+            background: get-dark-color("bg-card");
+            border-color: get-dark-color("card-border-color");
+            box-shadow: $shadow-dark-sm;
+
+            &:hover {
+                border-color: get-dark-color("card-hover-border-color");
+                box-shadow: $shadow-dark-md;
+            }
+        }
+
+        .calendar-api-banner {
+            background: rgba(34, 211, 238, 0.08);
+            border-color: rgba(34, 211, 238, 0.25);
+            color: get-dark-color("heading-color");
+
+            code {
+                color: $color-cyan-300;
+                background: rgba(34, 211, 238, 0.12);
+            }
+        }
+
+        // FullCalendar Customization (Dark Mode)
+        .calendar-widget,
+        .fc-classic-n5m,
+        .fc {
+            // Primary Accent & Events
+            --fc-classic-primary: #{$color-cyan-400};
+            --fc-classic-primary-foreground: #{$color-slate-900};
+            --fc-classic-event: #{$color-cyan-400};
+            --fc-classic-event-contrast: #{$color-slate-900};
+
+            // Buttons
+            --fc-classic-button: #{$color-slate-700};
+            --fc-classic-button-foreground: #{$color-slate-100};
+            --fc-classic-button-border: #{$color-slate-600};
+            --fc-classic-button-strong: #{$color-cyan-400};
+            --fc-classic-button-strong-border: #{$color-cyan-300};
+            --fc-classic-button-outline: rgba(34, 211, 238, 0.4);
+
+            // Grid Backgrounds & Text
+            --fc-classic-background: #{$color-slate-800};
+            --fc-classic-foreground: #{$color-slate-200};
+            --fc-classic-faint: rgba(255, 255, 255, 0.03);
+            --fc-classic-faint-foreground: #{$color-slate-500};
+            --fc-classic-muted: #{$color-gray-900};
+            --fc-classic-muted-foreground: #95aed1;
+            --fc-classic-strong: rgba(255, 255, 255, 0.08);
+            --fc-classic-border: rgba(148, 163, 184, 0.2);
+            --fc-classic-strong-border: rgba(148, 163, 184, 0.35);
+            --fc-classic-today: rgba(34, 211, 238, 0.1);
+            --fc-classic-now: #{$color-cyan-400};
+            --fc-classic-highlight: rgba(34, 211, 238, 0.18);
+            --fc-classic-ring-color: rgba(34, 211, 238, 0.3);
+
+            // Toolbar title
+            .fc-classic-AVD,
+            .fc-toolbar-title {
+                color: get-dark-color("heading-color");
+            }
+
+            // Buttons
+            button {
+                &:focus-visible {
+                    outline: 2px solid $color-cyan-400 !important;
+                }
+            }
+
+            // Header day names and slot headers
+            th,
+            .fc-col-header-cell {
+                color: get-dark-color("heading-color");
+                background-color: $color-gray-900;
+            }
+
+            // Time slot gutter labels
+            .fc-timegrid-slot-label,
+            [class*="slotHeader"] {
+                color: get-dark-color("muted-text-color");
+            }
+
+            // Events styling
+            .fc-event,
+            [class*="listItemEvent"],
+            [class*="rowEvent"] {
+                box-shadow: $shadow-dark-sm;
+
+                &:hover {
+                    box-shadow: $shadow-dark-md;
+                }
+            }
+
+            // Popovers
+            .fc-popover {
+                border-color: get-dark-color("card-border-color");
+                background: get-dark-color("bg-card");
+                box-shadow: $shadow-dark-md;
+            }
+        }
+    }
+}
