@@ -1,3 +1,5 @@
+@forward "./material2014";
+@use "./material2014" as *;
 @use "sass:map";
 
 $breakpoints: (
@@ -12,17 +14,9 @@ $breakpoints: (
 
 // ============================================================================
 // Foundational Color Palette
-// Curated, named colors from Tailwind CSS & Material Design workflows
+// Material Design 2014 colors forwarded from ./material2014.
+// Neutral slate scale & sky accents defined below for WCAG 2.1 compliance.
 // ============================================================================
-
-// Primary Accent Scale: Cyan / Teal
-$color-cyan-300: #67e8f9;
-$color-cyan-400: #22d3ee;
-$color-cyan-500: #06b6d4;
-$color-cyan-600: #0891b2;
-$color-cyan-700: #0e7490;
-$color-cyan-800: #155e75; // WCAG AA/AAA on light backgrounds
-$color-cyan-900: #164e63; // Deep hover state
 
 // Neutral Scale: Slate
 $color-slate-50: #f8fafc;
@@ -41,30 +35,9 @@ $color-slate-950: #020617;
 $color-gray-800: #1f2937;
 $color-gray-900: #111827;
 
-// Base Whites & Blacks
-$color-white: #ffffff;
-$color-black: #000000;
-
-// Semantic Alert & Code Accents
-$color-red-100: #fee2e2;
-$color-red-600: #dc2626;
-$color-red-800: #991b1b;
-$color-green-100: #dcfce7;
-$color-green-600: #16a34a;
-$color-green-800: #166534;
-$color-amber-200: #fde68a;
-$color-yellow-100: #fef9c3;
-$color-yellow-600: #ca8a04;
-$color-yellow-800: #854d0e;
+// Sky Accents
 $color-sky-100: #e0f2fe;
 $color-sky-800: #075985;
-
-// Data Visualization & Progress Accents (Material / Tailwind)
-$color-blue-500: #2196f3;
-$color-pink-500: #e91e63;
-$color-purple-500: #9c27b0;
-$color-orange-500: #ff9800;
-$color-teal-500: #009688;
 
 // ============================================================================
 // Layout, Radii, Shadows, and Transitions
@@ -125,14 +98,14 @@ $themes: (
         // Borders & Dividers
         "border-color": $color-slate-200,
         "card-border-color": rgba(0, 0, 0, 0.08),
-        "card-hover-border-color": rgba(21, 94, 117, 0.25),
+        "card-hover-border-color": rgba($color-cyan-800, 0.25),
         // Badges & Tag Pills
-        "badge-bg-color": rgba(21, 94, 117, 0.1),
+        "badge-bg-color": rgba($color-cyan-800, 0.1),
         "badge-text-color": $color-cyan-800,
-        "badge-border-color": rgba(21, 94, 117, 0.22),
+        "badge-border-color": rgba($color-cyan-800, 0.22),
         // Icon Wrappers
-        "icon-wrapper-bg": rgba(21, 94, 117, 0.1),
-        "icon-wrapper-hover-bg": rgba(21, 94, 117, 0.18),
+        "icon-wrapper-bg": rgba($color-cyan-800, 0.1),
+        "icon-wrapper-hover-bg": rgba($color-cyan-800, 0.18),
         // Code & Highlights
         "inline-code-color": $color-red-600,
         "highlight-color": $color-amber-200,
@@ -166,14 +139,14 @@ $themes: (
         // Borders & Dividers
         "border-color": rgba(148, 163, 184, 0.2),
         "card-border-color": rgba(255, 255, 255, 0.08),
-        "card-hover-border-color": rgba(34, 211, 238, 0.35),
+        "card-hover-border-color": rgba($color-cyan-400, 0.35),
         // Badges & Tag Pills
-        "badge-bg-color": rgba(34, 211, 238, 0.15),
+        "badge-bg-color": rgba($color-cyan-400, 0.15),
         "badge-text-color": $color-cyan-400,
-        "badge-border-color": rgba(34, 211, 238, 0.25),
+        "badge-border-color": rgba($color-cyan-400, 0.25),
         // Icon Wrappers
-        "icon-wrapper-bg": rgba(34, 211, 238, 0.15),
-        "icon-wrapper-hover-bg": rgba(34, 211, 238, 0.25),
+        "icon-wrapper-bg": rgba($color-cyan-400, 0.15),
+        "icon-wrapper-hover-bg": rgba($color-cyan-400, 0.25),
         // Code & Highlights
         "inline-code-color": $color-red-600,
         "highlight-color": $color-amber-200,
