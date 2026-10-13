@@ -33,4 +33,8 @@ module:
     target: static/webfonts
   - source: ./node_modules/@awesome.me/kit-f6f8bfcfbd/icons/webfonts
     target: static/webfonts
+  - source: ../../node_modules/mathjax/output
+    target: static/output
+  - source: ./node_modules/mathjax/output
+    target: static/output
 
