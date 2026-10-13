@@ -6,8 +6,6 @@ videoplayer:
   services:
     videojs:
       styles: []
-    plyr:
-      styles: []
 
 syntaxhighlight:
   services:

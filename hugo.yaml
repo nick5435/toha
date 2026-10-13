@@ -29,10 +29,18 @@ module:
     target: static/fonts/mathjax
   - source: ./node_modules/@mathjax/mathjax-newcm-font/chtml/woff2
     target: static/fonts/mathjax
+  - source: ../../node_modules/@mathjax/mathjax-newcm-font/chtml/dynamic
+    target: static/fonts/mathjax/dynamic
+  - source: ./node_modules/@mathjax/mathjax-newcm-font/chtml/dynamic
+    target: static/fonts/mathjax/dynamic
   - source: ../../node_modules/@awesome.me/kit-f6f8bfcfbd/icons/webfonts
     target: static/webfonts
   - source: ./node_modules/@awesome.me/kit-f6f8bfcfbd/icons/webfonts
     target: static/webfonts
+  - source: ../../node_modules/mathjax/sre
+    target: static/sre
+  - source: ./node_modules/mathjax/sre
+    target: static/sre
   - source: ../../node_modules/mathjax/output
     target: static/output
   - source: ./node_modules/mathjax/output
