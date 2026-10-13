@@ -66,6 +66,7 @@ All root tasks are configured in `mise.toml`:
 | **Install Example Site Deps** | `mise run install-example-deps` | Runs `hugo mod tidy`, `hugo mod npm pack`, and `npm install` inside `website2`. |
 | **Development Server** | `mise run example-site` | Installs dependencies and launches the Hugo dev server on `website2` (`http://localhost:1313`) with `--minify` and live reload. |
 | **Linting** | `mise run lint` | Runs ESLint (`npm run lint`) and Prettier SCSS check (`npm run lint:scss`). |
+| **Auto-fix Lint & Style** | `mise run lint-fix` | Auto-fixes ESLint errors (`npm run lint:fix`) and formats SCSS (`npm run format:scss`). |
 | **Format SCSS** | `npm run format:scss` | Auto-formats stylesheets via Prettier according to `.prettierrc.yml`. |
 | **Production Build** | `mise run build` | Executes a clean production build (`hugo --gc --minify --cleanDestinationDir`) against `website2`. |
 | **Verification (Single Truth)** | `mise run check` | Runs full linting (`npm run lint` + `npm run lint:scss`) followed by the production build against `website2`. |

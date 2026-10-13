@@ -30,6 +30,11 @@ description = "Run code linters"
 depends = ["install"]
 run = ["npm run lint", "npm run lint:scss"]
 
+[tasks.lint-fix]
+description = "Auto-fix lint errors and format stylesheets"
+depends = ["install"]
+run = ["npm run lint:fix", "npm run format:scss"]
+
 [tasks.example-site]
 description = "Start the development server with live reload"
 depends = ["install-example-deps"]
