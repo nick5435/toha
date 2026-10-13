@@ -28,7 +28,7 @@
 - **Accessibility by Design (WCAG 2.1 AA):** Built-in semantic HTML5 landmarks (`<main id="main-content">`), accessible keyboard skip links, contextual link underlines, high-contrast tokens, and descriptive attributes.
 - **Performance & CSS Containment:** Modern Dart Sass styling with CSS containment (`content-visibility: auto`, `contain-intrinsic-size`) on heavy homepage sections for 60fps scrolling.
 - **Modern Asset Pipeline:** Dart Sass module architecture (`@use`/`@forward`), ESBuild bundling, automated minification, and cache-busting fingerprints via Hugo Pipes.
-- **Typography & Math:** Self-hosted Poppins font (`@fontsource/poppins`), MathJax v3 formula rendering (`mathjax@^3.2.2`) with inline (`$`) and display (`$$`) delimiters, and custom Font Awesome Pro Kit icons (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro).
+- **Typography & Math:** Self-hosted Poppins font (`@fontsource/poppins`), MathJax v4 formula rendering (`mathjax@^4.1.3`) with inline (`$`) and display (`$$`) delimiters, and custom Font Awesome Pro Kit icons (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro).
 - **Dynamic Themes:** Dark mode, light mode, and automatic system detection (`prefers-color-scheme`) with WCAG-compliant contrast tokens (`text-over-accent-color` and `hero-text-color`).
 - **Deterministic Toolchain:** Single truth workflow powered by [Mise](https://mise.jdx.dev) (`mise.toml`).
 
@@ -131,7 +131,7 @@ The theme includes a complete, automated SEO and discovery engine:
 
 - Categorized posts with tags and hierarchical table of contents.
 - Reading time estimate and word count.
-- Full MathJax v3 formula rendering with inline (`$`) and display (`$$`) notation.
+- Full MathJax v4 formula rendering with inline (`$`) and display (`$$`) notation.
 - Code syntax highlighting with Highlight.js and one-click copy button.
 - Client-side full-text search powered by Fuse.js and Mark.js.
 - Standalone multi-topic Notes section.

@@ -1,2 +1,2 @@
 import './mathjax-config'
-import 'mathjax/es5/tex-mml-chtml.js'
+import 'mathjax/tex-mml-chtml.js'

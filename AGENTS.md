@@ -11,7 +11,7 @@ This is **Toha Professional Modern** (`toha-professional-modern`), a personal po
 - **Tech Stack:** Hugo (Extended), Dart Sass, Vanilla JavaScript, Hugo Pipes (DartSass + ESBuild).
 - **Default Typography:** Poppins (`@fontsource/poppins`, weights 300, 400, 500, 600, 700) self-hosted with fallback to modern system fonts.
 - **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro) via SCSS and webfonts (see `.font-awesome.md`), plus Feather icons and Flag icons.
-- **Math Rendering:** MathJax v3 (`mathjax@^3.2.2`).
+- **Math Rendering:** MathJax v4 (`mathjax@^4.1.3`).
 - **Media & Interactive Components:** Video.js (`@videojs/html@^10.0.1`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
 
 ---
@@ -224,7 +224,7 @@ tags:
   - Webfonts mounted via Hugo module mounts to `static/webfonts`.
   - Families supported: Classic, Duotone, Sharp, Sharp-Duotone.
   - Agent tools in `website2/.agents/skills/`: `/suggest-icon <concept>`, `/add-icon <name>`, `/fa-help <question>`.
-- **Math Rendering:** MathJax v3 (`mathjax@^3.2.2`) with inline delimiters (`$`, `\(`) and display delimiters (`$$`, `\[`).
+- **Math Rendering:** MathJax v4 (`mathjax@^4.1.3`) with inline delimiters (`$`, `\(`) and display delimiters (`$$`, `\[`).
 
 ---
 
