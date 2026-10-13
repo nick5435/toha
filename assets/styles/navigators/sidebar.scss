@@ -1,7 +1,7 @@
 @use "../core" as *;
 
 .sidebar-section {
-    margin-top: 2.5rem;
+    margin-top: 4.5rem;
     order: 1;
     flex: 20%;
     max-width: 20%;
@@ -9,8 +9,10 @@
 
     .sidebar-holder {
         position: sticky;
+        top: 4.5rem;
         background-color: get-light-color("bg-primary");
-        height: 100vh;
+        max-height: calc(100vh - 4.5rem);
+        height: auto;
         overflow: auto;
         box-shadow: $box-shadow;
         @include transition();

@@ -28,14 +28,14 @@
 {{ end }}
 
 {{ define "content" }}
-<section class="content-section" id="content-section">
+<main class="content-section" id="content-section">
   <div class="content container-fluid" id="content">
     <div class="container-fluid note-card-holder" id="note-card-holder">
       {{ $notes := where .RegularPagesRecursive "Layout" "!=" "search" }}
       {{ $paginator := .Paginate $notes 10 }}
       {{ range $paginator.Pages }}
         {{ .Content }}
-      {{ end }}
+{{ end }}
     </div>
     <div class="paginator">
       {{ partial "pagination.html" . }}

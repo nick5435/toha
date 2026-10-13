@@ -29,7 +29,7 @@
 {{ end }}
 
 {{ define "content" }}
-<section class="content-section" id="content-section">
+<main class="content-section" id="content-section">
   <div class="content container-fluid" id="content">
     <div class="container-fluid post-card-holder" id="post-card-holder">
       {{ $posts := where .RegularPagesRecursive "Layout" "!=" "search" }}
@@ -40,12 +40,12 @@
           {{/* ignore the search.md file*/}}
         {{ else }}
           {{ partial "cards/post.html" . }}
-        {{ end }}
+{{ end }}
       {{ end }}
     </div>
     <div class="paginator">
       {{ partial "pagination.html" . }}
     </div>
   </div>
-</section>
+</main>
 {{ end }}
