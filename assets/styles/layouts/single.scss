@@ -77,6 +77,15 @@ body.kind-page {
                         .post-content {
                             padding: 15px;
 
+                            p {
+                                text-indent: 1.75rem;
+                                margin-bottom: 0.75rem;
+                            }
+
+                            li p {
+                                text-indent: 0;
+                            }
+
                             h1,
                             h2 {
                                 margin-top: 1.4rem;
