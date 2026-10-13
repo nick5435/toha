@@ -172,6 +172,31 @@ function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor, goo
 /**
  * Escapes HTML characters for safe rendering in popovers.
  */
+/**
+ * Calculates accessible text contrast color (#0f172a or #ffffff) based on WCAG 2.1 relative luminance.
+ */
+function getContrastColor(hexColor) {
+  if (!hexColor || typeof hexColor !== "string") return "#ffffff";
+  let hex = hexColor.trim().replace(/^#/, "");
+  if (hex.length === 3) {
+    hex = hex.split("").map((c) => c + c).join("");
+  }
+  if (hex.length !== 6) return "#ffffff";
+
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+
+  const toLinear = (c) =>
+    c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const L = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+
+  const crWhite = 1.05 / (L + 0.05);
+  const crDark = (L + 0.05) / 0.061;
+
+  return crDark >= crWhite ? "#0f172a" : "#ffffff";
+}
+
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
@@ -417,6 +442,7 @@ function initCalendar() {
                     eventColor,
                     googleColors
                   );
+                  const itemTextColor = getContrastColor(itemColor);
 
                   return {
                     id: item.id,
@@ -431,7 +457,7 @@ function initCalendar() {
                           color: itemColor,
                           backgroundColor: itemColor,
                           borderColor: itemColor,
-                          textColor: '#ffffff'
+                          textColor: itemTextColor
                         }
                       : {}),
                     extendedProps: {

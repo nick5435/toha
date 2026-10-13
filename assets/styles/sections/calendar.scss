@@ -370,24 +370,24 @@ html[data-theme="dark"] {
             --fc-classic-event-contrast: #{$color-slate-900};
 
             // Buttons
-            --fc-classic-button: #{$color-slate-700};
-            --fc-classic-button-foreground: #{$color-slate-100};
-            --fc-classic-button-border: #{$color-slate-600};
+            --fc-classic-button: #334155;
+            --fc-classic-button-foreground: #f8fafc;
+            --fc-classic-button-border: #475569;
             --fc-classic-button-strong: #{$color-cyan-400};
             --fc-classic-button-strong-border: #{$color-cyan-300};
             --fc-classic-button-outline: rgba(34, 211, 238, 0.4);
 
             // Grid Backgrounds & Text
             --fc-classic-background: #{$color-slate-800};
-            --fc-classic-foreground: #{$color-slate-200};
-            --fc-classic-faint: rgba(255, 255, 255, 0.03);
-            --fc-classic-faint-foreground: #{$color-slate-500};
-            --fc-classic-muted: #{$color-gray-900};
-            --fc-classic-muted-foreground: #95aed1;
+            --fc-classic-foreground: #{$color-slate-100};
+            --fc-classic-faint: rgba(255, 255, 255, 0.04);
+            --fc-classic-faint-foreground: #{$color-slate-400};
+            --fc-classic-muted: rgba(15, 23, 42, 0.6);
+            --fc-classic-muted-foreground: #cbd5e1;
             --fc-classic-strong: rgba(255, 255, 255, 0.08);
-            --fc-classic-border: rgba(148, 163, 184, 0.2);
-            --fc-classic-strong-border: rgba(148, 163, 184, 0.35);
-            --fc-classic-today: rgba(34, 211, 238, 0.1);
+            --fc-classic-border: rgba(148, 163, 184, 0.25);
+            --fc-classic-strong-border: rgba(148, 163, 184, 0.38);
+            --fc-classic-today: rgba(34, 211, 238, 0.08);
             --fc-classic-now: #{$color-cyan-400};
             --fc-classic-highlight: rgba(34, 211, 238, 0.18);
             --fc-classic-ring-color: rgba(34, 211, 238, 0.3);
@@ -403,40 +403,177 @@ html[data-theme="dark"] {
                     .fc-classic-AVD,
                     .fc-toolbar-title,
                     [role="heading"] {
-                        color: get-dark-color("heading-color");
+                        color: #f8fafc !important;
                     }
                 }
             }
 
-            // Buttons
-            button {
+            // Inactive Toolbar Buttons (Dark Mode)
+            button,
+            .fc-button {
+                background-color: #334155 !important;
+                border: 1px solid #475569 !important;
+                color: #f8fafc !important;
+                font-weight: 500 !important;
+                transition:
+                    background-color $transition-duration-fast ease,
+                    border-color $transition-duration-fast ease,
+                    color $transition-duration-fast ease,
+                    box-shadow $transition-duration-fast ease;
+
+                &:hover {
+                    background-color: #475569 !important;
+                    border-color: #64748b !important;
+                    color: #ffffff !important;
+                }
+
                 &:focus-visible {
                     outline: 2px solid $color-cyan-400 !important;
+                    outline-offset: 2px !important;
                 }
             }
 
-            // Header day names and slot headers
+            // Active Toolbar Buttons (Dark Mode: Deep slate on vibrant cyan-400, 9.15:1 AAA contrast)
+            button[aria-pressed="true"],
+            .fc-button-active,
+            .fc-button.fc-button-active,
+            [class*="buttonActive"],
+            .fc-classic-Adi {
+                background-color: $color-cyan-400 !important;
+                border-color: $color-cyan-300 !important;
+                color: #0f172a !important;
+                font-weight: 600 !important;
+                box-shadow: 0 0 12px rgba(34, 211, 238, 0.35) !important;
+
+                &:hover {
+                    background-color: $color-cyan-300 !important;
+                    border-color: $color-cyan-200 !important;
+                    color: #0f172a !important;
+                }
+            }
+
+            // Header day names and column headers
             th,
             .fc-col-header-cell {
-                color: get-dark-color("heading-color");
-                background-color: $color-gray-900;
+                background-color: rgba(15, 23, 42, 0.7) !important;
+                border-color: rgba(148, 163, 184, 0.28) !important;
+
+                .fc-col-header-cell-cushion,
+                a {
+                    color: #f8fafc !important;
+                    font-weight: 600 !important;
+                    text-decoration: none !important;
+                }
             }
 
-            // Time slot gutter labels
+            // Today column header
+            .fc-col-header-cell.fc-day-today {
+                background-color: rgba(34, 211, 238, 0.12) !important;
+
+                .fc-col-header-cell-cushion,
+                a {
+                    color: $color-cyan-300 !important;
+                    font-weight: 700 !important;
+                }
+            }
+
+            // Time slot gutter labels, axis, and headings
             .fc-timegrid-slot-label,
-            [class*="slotHeader"] {
-                color: get-dark-color("muted-text-color");
+            .fc-timegrid-slot-label-cushion,
+            .fc-timegrid-axis-cushion,
+            .fc-axis,
+            [class*="slotHeader"],
+            [class*="axis"] {
+                color: #cbd5e1 !important; // Slate 300, 8.2:1 AAA contrast
+                font-weight: 500 !important;
             }
 
-            // Events styling
+            // Grid lines & table cell borders
+            table,
+            tr,
+            th,
+            td,
+            .fc-scrollgrid,
+            .fc-theme-classic th,
+            .fc-theme-classic td,
+            .fc-timegrid-slot,
+            .fc-timegrid-slot-minor {
+                border-color: rgba(148, 163, 184, 0.25) !important;
+            }
+
+            // Today column in grid
+            .fc-day-today {
+                background-color: rgba(34, 211, 238, 0.07) !important;
+            }
+
+            // Current time indicator line & arrow
+            .fc-timegrid-now-indicator-line {
+                border-color: #f43f5e !important;
+                border-width: 2px !important;
+            }
+
+            .fc-timegrid-now-indicator-arrow {
+                border-top-color: #f43f5e !important;
+                border-bottom-color: #f43f5e !important;
+            }
+
+            // Event cards
             .fc-event,
             [class*="listItemEvent"],
             [class*="rowEvent"] {
-                box-shadow: $shadow-dark-sm;
+                border-radius: 4px;
+                box-shadow:
+                    0 2px 6px rgba(0, 0, 0, 0.5),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+                transition:
+                    transform $transition-duration-fast ease,
+                    box-shadow $transition-duration-fast ease;
 
                 &:hover {
-                    box-shadow: $shadow-dark-md;
+                    box-shadow:
+                        0 4px 12px rgba(0, 0, 0, 0.6),
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+                    transform: translateY(-1px);
                 }
+
+                .fc-event-main {
+                    padding: 2px 5px;
+                }
+
+                .fc-event-title {
+                    font-weight: 600;
+                }
+
+                .fc-event-time {
+                    font-weight: 500;
+                    opacity: 0.95;
+                }
+            }
+
+            // List view styling in dark mode
+            .fc-list-day-cushion {
+                background-color: rgba(15, 23, 42, 0.8) !important;
+                color: #f8fafc !important;
+            }
+
+            .fc-list-event {
+                &:hover td {
+                    background-color: rgba(34, 211, 238, 0.1) !important;
+                }
+
+                .fc-list-event-title a {
+                    color: #f1f5f9 !important;
+                    text-decoration: none;
+                }
+
+                .fc-list-event-time {
+                    color: #cbd5e1 !important;
+                }
+            }
+
+            .fc-list-empty {
+                background-color: transparent !important;
+                color: #94a3b8 !important;
             }
 
             // Popovers
@@ -450,39 +587,44 @@ html[data-theme="dark"] {
 
     // Hover Event Detail Popover (Dark Mode)
     .calendar-event-popover {
-        background: rgba(30, 41, 59, 0.96);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-color: rgba(34, 211, 238, 0.25);
+        background: rgba(15, 23, 42, 0.96);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(34, 211, 238, 0.35);
         box-shadow:
-            0 12px 36px rgba(0, 0, 0, 0.5),
-            0 2px 10px rgba(0, 0, 0, 0.35);
-        color: get-dark-color("text-color");
+            0 16px 40px rgba(0, 0, 0, 0.7),
+            0 4px 16px rgba(0, 0, 0, 0.4);
+        color: #f1f5f9;
 
         .popover-header {
-            border-bottom-color: rgba(34, 211, 238, 0.15);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+
+            .popover-color-swatch {
+                box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.4);
+            }
 
             .popover-title {
-                color: get-dark-color("heading-color");
+                color: #f8fafc;
+                font-weight: 600;
             }
         }
 
         .popover-detail-row {
             .popover-icon {
-                color: get-dark-color("accent-color");
+                color: #22d3ee;
             }
 
             .popover-detail-text {
-                color: get-dark-color("text-color");
+                color: #e2e8f0;
             }
         }
 
         .popover-footer {
-            border-top-color: rgba(34, 211, 238, 0.15);
-            color: get-dark-color("muted-text-color");
+            border-top: 1px dashed rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
 
             .popover-icon {
-                color: get-dark-color("accent-color");
+                color: #22d3ee;
             }
         }
     }
