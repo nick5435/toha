@@ -145,18 +145,19 @@ function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor, goo
 
   if (normalizedTitle) {
     // Authentic Google Calendar event palette colors
+    // Rich, saturated Google Calendar palette colors engineered for crisp pure white text contrast
     const autoPalette = [
-      '#4f46e5', // Blueberry
-      '#059669', // Sage / Basil
-      '#8e24aa', // Grape
-      '#d97706', // Tangerine
-      '#0284c7', // Peacock
-      '#dc2626', // Tomato
-      '#0d9488', // Teal
-      '#7986cb', // Lavender
-      '#db2777', // Flamingo
-      '#475569', // Graphite
-      '#f59e0b'  // Banana
+      '#4338ca', // Blueberry (Indigo 700)
+      '#047857', // Sage / Basil (Emerald 700)
+      '#7e22ce', // Grape (Purple 700)
+      '#c2410c', // Tangerine (Orange 700)
+      '#0369a1', // Peacock (Sky 700)
+      '#b91c1c', // Tomato (Red 700)
+      '#0f766e', // Teal (Teal 700)
+      '#4f46e5', // Lavender (Indigo 600)
+      '#be185d', // Flamingo (Pink 700)
+      '#334155', // Graphite (Slate 700)
+      '#b45309'  // Banana (Amber 700)
     ];
     let h = 5381;
     for (let i = 0; i < normalizedTitle.length; i++) {
@@ -175,26 +176,8 @@ function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor, goo
 /**
  * Calculates accessible text contrast color (#0f172a or #ffffff) based on WCAG 2.1 relative luminance.
  */
-function getContrastColor(hexColor) {
-  if (!hexColor || typeof hexColor !== "string") return "#ffffff";
-  let hex = hexColor.trim().replace(/^#/, "");
-  if (hex.length === 3) {
-    hex = hex.split("").map((c) => c + c).join("");
-  }
-  if (hex.length !== 6) return "#ffffff";
-
-  const r = parseInt(hex.substring(0, 2), 16) / 255;
-  const g = parseInt(hex.substring(2, 4), 16) / 255;
-  const b = parseInt(hex.substring(4, 6), 16) / 255;
-
-  const toLinear = (c) =>
-    c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  const L = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
-
-  const crWhite = 1.05 / (L + 0.05);
-  const crDark = (L + 0.05) / 0.061;
-
-  return crDark >= crWhite ? "#0f172a" : "#ffffff";
+function getContrastColor() {
+  return '#ffffff';
 }
 
 function escapeHtml(str) {
@@ -442,7 +425,7 @@ function initCalendar() {
                     eventColor,
                     googleColors
                   );
-                  const itemTextColor = getContrastColor(itemColor);
+                  const itemTextColor = '#ffffff';
 
                   return {
                     id: item.id,
@@ -457,7 +440,7 @@ function initCalendar() {
                           color: itemColor,
                           backgroundColor: itemColor,
                           borderColor: itemColor,
-                          textColor: itemTextColor
+                          textColor: '#ffffff'
                         }
                       : {}),
                     extendedProps: {

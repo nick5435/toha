@@ -201,7 +201,7 @@
             color: get-light-color("muted-text-color");
         }
 
-        // Events styling
+        // Events styling (Ensure bright pure white text across all event boxes)
         .fc-event,
         [class*="listItemEvent"],
         [class*="rowEvent"] {
@@ -211,9 +211,34 @@
             padding: 2px 6px;
             box-shadow: $shadow-sm;
             cursor: pointer;
+            color: #ffffff !important;
             transition:
                 transform $transition-duration-fast ease,
                 box-shadow $transition-duration-fast ease;
+
+            &,
+            a,
+            .fc-event-main,
+            .fc-event-title,
+            .fc-event-time,
+            .fc-event-main-frame,
+            .fc-event-title-container,
+            div,
+            span {
+                color: #ffffff !important;
+                text-decoration: none !important;
+            }
+
+            .fc-event-title {
+                font-weight: 600;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+            }
+
+            .fc-event-time {
+                font-weight: 500;
+                opacity: 0.95;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+            }
 
             &:hover {
                 transform: translateY(-1px);
@@ -367,7 +392,7 @@ html[data-theme="dark"] {
             --fc-classic-primary: #{$color-cyan-400};
             --fc-classic-primary-foreground: #{$color-slate-900};
             --fc-classic-event: #{$color-cyan-400};
-            --fc-classic-event-contrast: #{$color-slate-900};
+            --fc-classic-event-contrast: #ffffff;
 
             // Buttons
             --fc-classic-button: #334155;
@@ -517,22 +542,36 @@ html[data-theme="dark"] {
                 border-bottom-color: #f43f5e !important;
             }
 
-            // Event cards
+            // Event cards (Guaranteed crisp pure white text with shadow in dark mode)
             .fc-event,
             [class*="listItemEvent"],
             [class*="rowEvent"] {
                 border-radius: 4px;
+                color: #ffffff !important;
                 box-shadow:
                     0 2px 6px rgba(0, 0, 0, 0.5),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.22) !important;
                 transition:
                     transform $transition-duration-fast ease,
                     box-shadow $transition-duration-fast ease;
 
+                &,
+                a,
+                .fc-event-main,
+                .fc-event-title,
+                .fc-event-time,
+                .fc-event-main-frame,
+                .fc-event-title-container,
+                div,
+                span {
+                    color: #ffffff !important;
+                    text-decoration: none !important;
+                }
+
                 &:hover {
                     box-shadow:
                         0 4px 12px rgba(0, 0, 0, 0.6),
-                        inset 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.35) !important;
                     transform: translateY(-1px);
                 }
 
@@ -542,11 +581,13 @@ html[data-theme="dark"] {
 
                 .fc-event-title {
                     font-weight: 600;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
                 }
 
                 .fc-event-time {
                     font-weight: 500;
                     opacity: 0.95;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
                 }
             }
 
