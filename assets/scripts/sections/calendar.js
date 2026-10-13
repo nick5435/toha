@@ -112,6 +112,9 @@ function initCalendar() {
       minute: '2-digit',
       meridiem: 'short'
     },
+    eventSourceFailure: function(error) {
+      console.error('FullCalendar Event Source Error:', error);
+    },
     eventClick: function(info) {
       if (info.event.url) {
         info.jsEvent.preventDefault();
