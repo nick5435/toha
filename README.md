@@ -64,6 +64,7 @@ All homepage sections are dynamically ordered by `section.weight` in `data/en/se
 | **Selected Talks** | Presentations, colloquia, and seminar talks with category filtering. | `talks.yaml` |
 | **Students Advised** | Supervised graduate and undergraduate students, theses, and projects. | `students.yaml` |
 | **Professional Service** | Editorial duties, peer review, and university committee contributions. | `service.yaml` |
+| **Calendar** | Native FullCalendar v7 widget with Google Calendar sync, palette mapping, and hover popovers. | `calendar.yaml` |
 | **Technology** | Responsive 3x2 card grid highlighting languages, environments, and tools. | `technology.yaml` |
 | **Outside the Classroom** | Hobbies, creative pursuits, athletics, and community pastimes. | `activities.yaml` |
 | **Education** | Academic degrees and honors (tabular or timeline card layout). | `education.yaml` |
@@ -71,6 +72,60 @@ All homepage sections are dynamically ordered by `section.weight` in `data/en/se
 | **Projects** | Filterable project cards with action buttons and modal dialogs. | `projects.yaml` |
 | **Skills** | Competency categories with proficiency bars or tag pills. | `skills.yaml` |
 | **Recent / Featured Posts** | Latest articles and blog highlights directly on the homepage. | `recent-posts.yaml` |
+
+---
+
+### Calendar Configuration (`data/en/sections/calendar.yaml`)
+
+Toha integrates a native **FullCalendar v7** (`fullcalendar`, `@fullcalendar/google-calendar`, `temporal-polyfill`) widget featuring Google Calendar API sync, an automatic Google Palette Manager, Popper-positioned event detail popovers, and theme adaptation:
+
+```yaml
+section:
+  name: Calendar
+  id: calendar
+  enable: true
+  weight: 2
+  showOnNavbar: true
+  subtitle: "Office Hours, Teaching Schedule, & Appointments"
+
+tags:
+  - "Office Hours"
+  - "Teaching Schedule"
+  - "Appointments"
+
+calendar:
+  # Google Calendar ID or group email address
+  calendarId: "4f52fb2e9tvj41pjc3cs436slk@group.calendar.google.com"
+
+  # Google Calendar API Key (for direct event fetching via API v3)
+  apiKey: "AIzaSy..."
+
+  # View & Time Settings
+  timeZone: "America/Chicago"  # Timezone (defaults to America/Chicago)
+  mode: "WEEK"                 # View: "WEEK" (timeGridWeek), "MONTH", "DAY", or "AGENDA" (listWeek)
+  weekStart: 0                 # First day of the week: 0 (Sunday), 1 (Monday)
+  slotMinTime: "08:00:00"      # Starting time slot (default 8:00 AM)
+  slotMaxTime: "17:00:00"      # Ending time slot (default 5:00 PM)
+  height: 600                  # Calendar height in pixels (or "auto")
+
+  # Event Coloring & Google Palette Manager
+  # Leave empty ("") to use the site theme's cyan accent, or provide a hex fallback (e.g. "#8e24aa").
+  # The built-in Google Calendar Palette Manager automatically maps Google's colorId (1–11)
+  # to their exact Google Calendar colors (Sage, Grape, Flamingo, Banana, Peacock, Basil, Tomato, etc.).
+  color: ""
+
+  # Optional keyword/title color mapping (accepts hex codes or Google palette names)
+  colorMap:
+    "College Algebra": "grape"
+    "Calculus": "peacock"
+    "Student Support": "sage"
+    "Department Meeting": "tangerine"
+
+  # Widget Controls
+  showNav: true                # Show previous/next navigation buttons
+  showDate: true               # Show "today" button
+  showTabs: true               # Show Month/Week/Day/Agenda view switcher
+```
 
 ---
 

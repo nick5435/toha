@@ -1,3 +1,22 @@
+{{/*
+  layouts/partials/sections/calendar.html
+  Renders the native FullCalendar v7 section widget with Google Calendar API v3 event synchronization,
+  palette mapping (colorId 1-11), interactive Popper.js hover popovers, and responsive layout.
+
+  Config options (data/<lang>/sections/calendar.yaml):
+    calendar.calendarId: Google Calendar ID or group address (required for Google feeds)
+    calendar.apiKey: Google Calendar API Key (required for client-side API v3 queries)
+    calendar.timeZone: Display timezone (default: "America/Chicago")
+    calendar.mode: View mode - "WEEK" (timeGridWeek), "MONTH" (dayGridMonth), "DAY" (timeGridDay), "AGENDA" (listWeek)
+    calendar.weekStart: First day of week - 0 (Sunday), 1 (Monday)
+    calendar.slotMinTime: Daily starting time slot (default: "08:00:00")
+    calendar.slotMaxTime: Daily ending time slot (default: "17:00:00")
+    calendar.height: Calendar pixel height or "auto" (default: 650)
+    calendar.color: Custom fallback color hex code, or "" for theme cyan accent
+    calendar.showNav: Show next/previous buttons (default: true)
+    calendar.showDate: Show today button (default: true)
+    calendar.showTabs: Show view switcher tabs (default: true)
+*/}}
 {{ $sectionID := replace (lower .section.name) " " "-"  }}
 {{ if .section.id }}
   {{ $sectionID = .section.id }}
@@ -40,6 +59,8 @@
   {{- end -}}
   {{- $eventColor := $cal.color | default "" -}}
   {{- $apiKey := $cal.apiKey | default ($cal.googleCalendarApiKey | default site.Params.calendar.apiKey) -}}
+  {{- $slotMinTime := $cal.slotMinTime | default "08:00:00" -}}
+  {{- $slotMaxTime := $cal.slotMaxTime | default "17:00:00" -}}
 
   {{- /* Resolve Calendar ID (string or slice) */ -}}
   {{- $rawId := $cal.calendarId | default ($cal.id | default ($cal.src | default "")) -}}
@@ -109,8 +130,10 @@
               data-show-nav="{{ $showNav }}"
               data-show-today="{{ $showToday }}"
               data-show-views="{{ $showViews }}"
-              {{ with $cal.slotMinTime }}data-slot-min-time="{{ . }}"{{ end }}
-              {{ with $cal.slotMaxTime }}data-slot-max-time="{{ . }}"{{ end }}
+              data-slot-min-time="{{ $slotMinTime }}"
+              data-slot-max-time="{{ $slotMaxTime }}"
+              {{- $colorMap := $cal.colorMap | default ($cal.categoryColors | default ($cal.colors | default dict)) -}}
+              {{ with $colorMap }}data-color-map="{{ . | jsonify }}"{{ end }}
               {{ with $cal.eventsUrl }}data-events-url="{{ . }}"{{ end }}
               {{ with $cal.events }}data-events-json="{{ . | jsonify }}"{{ end }}
               {{ with $cal.config }}data-config="{{ . | jsonify }}"{{ end }}

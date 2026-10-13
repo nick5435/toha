@@ -13,6 +13,7 @@ This is **Toha Professional Modern** (`toha-professional-modern`), a personal po
 - **Icon System:** Custom Font Awesome Pro Kit (`@awesome.me/kit-f6f8bfcfbd`, v7.3.1 Pro) via SCSS and webfonts (see `.font-awesome.md`), plus Feather icons and Flag icons.
 - **Math Rendering:** MathJax v4 (`mathjax@^4.1.3`).
 - **Media & Interactive Components:** Video.js (`@videojs/html@^10.0.1`), TypeIt (`typeit@^8.8.7`), Highlight.js (`highlight.js@^11.6.0`).
+- **Calendar & Scheduling:** FullCalendar v7 (`fullcalendar@^7.1.2`, `@fullcalendar/google-calendar@^7.1.2`, `temporal-polyfill@^1.0.5`) with Google Palette Manager and Popper.js popovers.
 
 ---
 
@@ -117,7 +118,7 @@ Toha differs from standard Hugo themes. The structure of the homepage and sideba
     - `_core.scss`: Forwards responsive breakpoints, variables, and mixins.
     - `variables.scss`: Central color palettes, typography, and theme token maps (`$themes`).
     - `components/`: UI components (`buttons.scss`, `cards.scss`, `links.scss`, `texts.scss`, `tables.scss`, `images.scss`, `misc.scss`).
-    - `sections/`: Section stylesheets (`about.scss`, `activities.scss`, `education.scss`, `experiences.scss`, `publications.scss`, `service.scss`, `talks.scss`, `technology.scss`, `footer.scss`, etc.).
+    - `sections/`: Section stylesheets (`about.scss`, `activities.scss`, `calendar.scss`, `education.scss`, `experiences.scss`, `publications.scss`, `service.scss`, `talks.scss`, `technology.scss`, `footer.scss`, etc.).
     - `application.template.scss`: Main SCSS entry point processed by the Hugo template engine.
 - `layouts/`
   - `_default/`: Base structures of pages (`baseof.html`, `list.html`, `single.html`).
@@ -242,6 +243,14 @@ tags:
   - Shortcode `layouts/shortcodes/video.html` renders native `<video-player>` and `<video-neutral-skin>` custom elements with automatic CDN fallback.
   - Player accenting configured via `--media-accent-color` and `--media-primary-color` in `assets/styles/components/misc.scss`.
   - Video.js skill installed under `.agents/skills/videojs` for media embedding workflows.
+- **FullCalendar v7 & Google Calendar Integration:**
+  - Migrated to native FullCalendar v7 (`fullcalendar@^7.1.2`, `@fullcalendar/google-calendar@^7.1.2`, `temporal-polyfill@^1.0.5`).
+  - Template partial `layouts/partials/sections/calendar.html` and controller `assets/scripts/sections/calendar.js`.
+  - Built-in Google Calendar Palette Manager maps Google's 11 standard indexed color IDs (`colorId` 1–11) to exact Google Calendar hex colors (Sage, Grape, Flamingo, Banana, Peacock, Basil, Tomato, etc.).
+  - Interactive event detail popovers positioned via Popper.js (`@popperjs/core`) with clean glassmorphic elevation, color swatch indicators, time formatting, and location/description rendering.
+  - Centered toolbar header with balanced 3-column CSS grid aligning title with section headings.
+  - Default time slot range: 8:00 AM – 5:00 PM (`slotMinTime: "08:00:00"`, `slotMaxTime: "17:00:00"`), anchored with `scrollTime`, defaulting to America/Chicago time zone.
+  - Full theme adaptation reacting live to site light/dark mode switches via `MutationObserver` on `data-theme`.
 - **Math Rendering (MathJax v4):**
   - Uses MathJax v4 (`mathjax@^4.1.3`) loaded via component path `mathjax/tex-mml-chtml.js`.
   - Mathematical font family: `@mathjax/mathjax-newcm-font` (New Computer Modern woff2 fonts mounted via `hugo.yaml`).

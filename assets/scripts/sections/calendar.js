@@ -1,8 +1,132 @@
+/**
+ * @file calendar.js
+ * @description FullCalendar v7 client-side controller for Toha Professional Modern.
+ * Handles Google Calendar API v3 event synchronization, Google Palette Manager
+ * (resolving colorId 1-11), Popper.js interactive hover popovers, balanced 3-column
+ * centered toolbar grid, responsive view switching, and live dark/light mode synchronization.
+ */
+
 import 'temporal-polyfill/global';
 import Calendar from 'fullcalendar/all';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import classicThemePlugin from 'fullcalendar/themes/classic';
 import { createPopper } from '@popperjs/core';
+
+/**
+ * Standard Google Calendar palette mapping (colorId '1' through '11').
+ */
+const GOOGLE_CALENDAR_PALETTE = {
+  1: '#7986cb', // Lavender
+  2: '#33b679', // Sage
+  3: '#8e24aa', // Grape
+  4: '#e67c73', // Flamingo
+  5: '#f6bf26', // Banana
+  6: '#f4511e', // Tangerine
+  7: '#039be5', // Peacock
+  8: '#616161', // Graphite
+  9: '#3f51b5', // Blueberry
+  10: '#0b8043', // Basil
+  11: '#d50000' // Tomato
+};
+
+/**
+ * Named Google Calendar palette entries and color aliases.
+ */
+const PALETTE_NAMES = {
+  lavender: '#7986cb',
+  sage: '#33b679',
+  grape: '#8e24aa',
+  flamingo: '#e67c73',
+  banana: '#f6bf26',
+  tangerine: '#f4511e',
+  peacock: '#039be5',
+  graphite: '#616161',
+  blueberry: '#3f51b5',
+  basil: '#0b8043',
+  tomato: '#d50000',
+  cyan: '#0891b2',
+  teal: '#0d9488',
+  emerald: '#059669',
+  green: '#16a34a',
+  blue: '#2563eb',
+  indigo: '#4f46e5',
+  purple: '#9333ea',
+  pink: '#db2777',
+  rose: '#e11d48',
+  red: '#dc2626',
+  orange: '#ea580c',
+  amber: '#d97706',
+  yellow: '#ca8a04',
+  slate: '#475569',
+  gray: '#4b5563'
+};
+
+/**
+ * Resolves an individual event color.
+ * Evaluation precedence:
+ * 1. Google API colorId (if returned by Google Calendar API v3)
+ * 2. User-configured colorMap / categoryColors (matching title or keyword)
+ * 3. Fallback explicit color (if configured in YAML and not "theme" or empty)
+ * 4. Automatic smart palette hashing (groups sections of the same course,
+ *    and assigns distinct, vibrant Google Calendar palette colors)
+ */
+function resolveEventColor(item, colorMap, useThemeColor, defaultEventColor) {
+  // 1. Google API colorId (1-11)
+  if (item.colorId && GOOGLE_CALENDAR_PALETTE[item.colorId]) {
+    return GOOGLE_CALENDAR_PALETTE[item.colorId];
+  }
+
+  const summary = (item.summary || '').trim();
+
+  // 2. Custom colorMap / categoryColors rule matching
+  if (colorMap && typeof colorMap === 'object') {
+    const lowerSummary = summary.toLowerCase();
+    for (const [key, val] of Object.entries(colorMap)) {
+      if (lowerSummary.includes(key.toLowerCase())) {
+        const lowerVal = String(val).toLowerCase().trim();
+        if (PALETTE_NAMES[lowerVal]) return PALETTE_NAMES[lowerVal];
+        if (GOOGLE_CALENDAR_PALETTE[lowerVal]) return GOOGLE_CALENDAR_PALETTE[lowerVal];
+        return val;
+      }
+    }
+  }
+
+  // 3. User explicit fallback color
+  if (!useThemeColor && defaultEventColor) {
+    return defaultEventColor;
+  }
+
+  // 4. Automatic smart color assignment by normalized topic/course title
+  // Strips trailing section numbers (e.g., "College Algebra 001" -> "college algebra")
+  const normalizedTitle = summary
+    .replace(/\s+(0\d+|\d+|sec\w*|section\w*)$/i, '')
+    .trim()
+    .toLowerCase();
+
+  if (normalizedTitle) {
+    const autoPalette = [
+      '#4f46e5', // Blueberry / Indigo
+      '#059669', // Sage / Emerald
+      '#8e24aa', // Grape / Purple
+      '#d97706', // Tangerine / Amber
+      '#0284c7', // Peacock / Sky
+      '#d50000', // Tomato / Red
+      '#0d9488', // Basil / Teal
+      '#7986cb', // Lavender
+      '#e67c73', // Flamingo / Coral
+      '#475569'  // Graphite / Slate
+    ];
+    let hash = 0;
+    for (let i = 0; i < normalizedTitle.length; i++) {
+      hash = (hash << 5) - hash + normalizedTitle.charCodeAt(i);
+      hash |= 0;
+    }
+    const index = Math.abs(hash) % autoPalette.length;
+    return autoPalette[index];
+  }
+
+  return undefined;
+}
 
 /**
  * Escapes HTML characters for safe rendering in popovers.
@@ -83,16 +207,29 @@ function showEventPopover(event, targetEl) {
        </div>`
     : '';
 
+  const eventColor =
+    event.backgroundColor ||
+    event.borderColor ||
+    (event.extendedProps && event.extendedProps.color);
+  const colorSwatchHtml = eventColor
+    ? `<span class="popover-color-swatch" style="background-color: ${escapeHtml(eventColor)};"></span>`
+    : '';
+
   activePopoverEl.innerHTML = `
     <div class="popover-header">
+      ${colorSwatchHtml}
       <div class="popover-title">${escapeHtml(event.title || 'Untitled Event')}</div>
     </div>
     <div class="popover-body">
-      ${timeStr ? `
+      ${
+        timeStr
+          ? `
         <div class="popover-detail-row">
           <i class="fa-solid fa-clock popover-icon"></i>
           <span class="popover-detail-text">${escapeHtml(timeStr)}</span>
-        </div>` : ''}
+        </div>`
+          : ''
+      }
       ${locationHtml}
       ${descHtml}
       ${footerHtml}
@@ -146,15 +283,27 @@ function initCalendar() {
   const initialView = calendarEl.dataset.initialView || 'timeGridWeek';
   const timeZone = calendarEl.dataset.timeZone || 'America/Chicago';
   const firstDayStr = calendarEl.dataset.firstDay;
-  const firstDay = (firstDayStr !== undefined && firstDayStr !== '') ? parseInt(firstDayStr, 10) : 1;
+  const firstDay =
+    firstDayStr !== undefined && firstDayStr !== ''
+      ? parseInt(firstDayStr, 10)
+      : 0;
   const heightVal = calendarEl.dataset.height || 'auto';
   const eventColor = calendarEl.dataset.eventColor || '';
   const eventsUrl = calendarEl.dataset.eventsUrl;
   const showNav = calendarEl.dataset.showNav !== 'false';
   const showToday = calendarEl.dataset.showToday !== 'false';
   const showViews = calendarEl.dataset.showViews !== 'false';
-  const slotMinTime = calendarEl.dataset.slotMinTime || '07:00:00';
-  const slotMaxTime = calendarEl.dataset.slotMaxTime || '20:00:00';
+  const slotMinTime = calendarEl.dataset.slotMinTime || '08:00:00';
+  const slotMaxTime = calendarEl.dataset.slotMaxTime || '17:00:00';
+
+  let colorMap = {};
+  if (calendarEl.dataset.colorMap) {
+    try {
+      colorMap = JSON.parse(calendarEl.dataset.colorMap);
+    } catch (e) {
+      console.warn('Failed to parse calendar color map:', e);
+    }
+  }
 
   let customOptions = {};
   if (calendarEl.dataset.config) {
@@ -166,20 +315,100 @@ function initCalendar() {
   }
 
   const eventSources = [];
-  const useThemeColor = !eventColor || eventColor === 'theme' || eventColor === 'inherit';
+  const useThemeColor =
+    !eventColor || eventColor === 'theme' || eventColor === 'inherit';
 
-  // Google Calendar event source via @fullcalendar/google-calendar
+  // Google Calendar event source with Google Palette mapping (resolves item.colorId 1-11)
   if (calendarId && apiKey) {
-    const ids = calendarId.split(',').map((id) => id.trim()).filter(Boolean);
+    const ids = calendarId
+      .split(',')
+      .map((id) => id.trim())
+      .filter(Boolean);
     ids.forEach((id) => {
-      const srcObj = {
-        googleCalendarId: id,
-        googleCalendarApiKey: apiKey
-      };
-      if (!useThemeColor) {
-        srcObj.color = eventColor;
-      }
-      eventSources.push(srcObj);
+      eventSources.push({
+        id: `gcal-${id}`,
+        events(fetchInfo, successCallback, failureCallback) {
+          const url = new URL(
+            `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(id)}/events`
+          );
+          url.searchParams.set('key', apiKey);
+          url.searchParams.set('timeMin', fetchInfo.startStr);
+          url.searchParams.set('timeMax', fetchInfo.endStr);
+          url.searchParams.set('singleEvents', 'true');
+          url.searchParams.set('maxResults', '2500');
+          if (timeZone && timeZone !== 'local') {
+            url.searchParams.set('timeZone', timeZone);
+          }
+
+          fetch(url.toString())
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error(
+                  `Google Calendar API HTTP ${res.status}: ${res.statusText}`
+                );
+              }
+              return res.json();
+            })
+            .then((data) => {
+              if (data.error) {
+                throw new Error(
+                  data.error.message || 'Google Calendar API error'
+                );
+              }
+              const rawItems = data.items || [];
+              const parsedEvents = rawItems
+                .map((item) => {
+                  let eventUrl = item.htmlLink || null;
+                  if (eventUrl && timeZone && timeZone !== 'local') {
+                    eventUrl +=
+                      (eventUrl.includes('?') ? '&' : '?') +
+                      'ctz=' +
+                      encodeURIComponent(timeZone);
+                  }
+
+                  // Resolve individual color with smart fallback & colorMap support
+                  const itemColor = resolveEventColor(
+                    item,
+                    colorMap,
+                    useThemeColor,
+                    eventColor
+                  );
+
+                  return {
+                    id: item.id,
+                    title: item.summary || 'Untitled Event',
+                    start: item.start
+                      ? item.start.dateTime || item.start.date
+                      : null,
+                    end: item.end ? item.end.dateTime || item.end.date : null,
+                    url: eventUrl,
+                    ...(itemColor
+                      ? {
+                          color: itemColor,
+                          backgroundColor: itemColor,
+                          borderColor: itemColor,
+                          textColor: '#ffffff'
+                        }
+                      : {}),
+                    extendedProps: {
+                      location: item.location || '',
+                      description: item.description || '',
+                      colorId: item.colorId || null,
+                      color: itemColor || null,
+                      attachments: item.attachments || []
+                    }
+                  };
+                })
+                .filter((ev) => ev.start != null);
+
+              successCallback(parsedEvents);
+            })
+            .catch((err) => {
+              console.error(`Google Calendar [${id}] fetch failure:`, err);
+              failureCallback(err);
+            });
+        }
+      });
     });
   }
 
@@ -217,18 +446,27 @@ function initCalendar() {
     right: showViews ? 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' : ''
   };
 
-  const getThemeScheme = () => (document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  const getThemeScheme = () =>
+    document.documentElement.getAttribute('data-theme') === 'dark'
+      ? 'dark'
+      : 'light';
 
-  const calendar = new Calendar(calendarEl, {
+  const calendarOptions = {
     plugins: [classicThemePlugin, googleCalendarPlugin],
     googleCalendarApiKey: apiKey,
     headerToolbarClass: 'calendar-header-toolbar',
     initialView,
     timeZone,
-    firstDay: isNaN(firstDay) ? 1 : firstDay,
-    height: heightVal === 'auto' ? 'auto' : (isNaN(heightVal) ? heightVal : parseInt(heightVal, 10)),
+    firstDay: isNaN(firstDay) ? 0 : firstDay,
+    height:
+      heightVal === 'auto'
+        ? 'auto'
+        : isNaN(heightVal)
+          ? heightVal
+          : parseInt(heightVal, 10),
     slotMinTime,
     slotMaxTime,
+    scrollTime: slotMinTime,
     expandRows: true,
     headerToolbar,
     eventSources,
@@ -242,16 +480,16 @@ function initCalendar() {
       minute: '2-digit',
       meridiem: 'short'
     },
-    eventSourceFailure: function(error) {
+    eventSourceFailure(error) {
       console.error('FullCalendar Event Source Error:', error);
     },
-    eventMouseEnter: function(info) {
+    eventMouseEnter(info) {
       showEventPopover(info.event, info.el);
     },
-    eventMouseLeave: function() {
+    eventMouseLeave() {
       hideEventPopover();
     },
-    eventClick: function(info) {
+    eventClick(info) {
       hideEventPopover();
       if (info.event.url) {
         info.jsEvent.preventDefault();
@@ -259,13 +497,18 @@ function initCalendar() {
       }
     },
     ...customOptions
-  });
+  };
 
+  const calendar = new Calendar(calendarEl, calendarOptions);
   calendar.render();
 
   // Responsive view adjustment for smaller mobile screens
   const adjustViewForScreen = () => {
-    if (window.innerWidth < 768 && calendar.view && calendar.view.type.startsWith('timeGrid')) {
+    if (
+      window.innerWidth < 768 &&
+      calendar.view &&
+      calendar.view.type.startsWith('timeGrid')
+    ) {
       calendar.changeView('listWeek');
     }
   };
@@ -286,7 +529,10 @@ function initCalendar() {
   // Dynamically sync theme changes with FullCalendar colorScheme
   const themeObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+      if (
+        mutation.type === 'attributes' &&
+        mutation.attributeName === 'data-theme'
+      ) {
         calendar.setOption('colorScheme', getThemeScheme());
         break;
       }
