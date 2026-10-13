@@ -2,6 +2,16 @@ import * as params from '@params'
 
 const userOptions = params.math?.mathjax || {}
 
+const cleanUserTex = { ...(userOptions.tex || {}) }
+if (cleanUserTex.inlinemath) {
+  if (!cleanUserTex.inlineMath) cleanUserTex.inlineMath = cleanUserTex.inlinemath
+  delete cleanUserTex.inlinemath
+}
+if (cleanUserTex.displaymath) {
+  if (!cleanUserTex.displayMath) cleanUserTex.displayMath = cleanUserTex.displaymath
+  delete cleanUserTex.displaymath
+}
+
 const defaultTex = {
   inlineMath: [
     ['$', '$'],
@@ -16,6 +26,9 @@ const defaultTex = {
 }
 
 const defaultOptions = {
+  enableSpeech: false,
+  enableEnrichment: false,
+  enableComplexity: false,
   skipHtmlTags: [
     'script',
     'noscript',
@@ -29,8 +42,7 @@ const defaultOptions = {
 }
 
 const defaultChtml = {
-  fontURL:
-    'https://cdn.jsdelivr.net/npm/@mathjax/mathjax-newcm-font@4/chtml/woff2'
+  fontURL: '/fonts/mathjax'
 }
 
 const existingMathJax = window.MathJax || {}
@@ -41,7 +53,7 @@ window.MathJax = {
   tex: {
     ...defaultTex,
     ...(existingMathJax.tex || {}),
-    ...(userOptions.tex || {})
+    ...cleanUserTex
   },
   options: {
     ...defaultOptions,
@@ -52,5 +64,10 @@ window.MathJax = {
     ...defaultChtml,
     ...(existingMathJax.chtml || {}),
     ...(userOptions.chtml || {})
+  },
+  startup: {
+    typeset: true,
+    ...(existingMathJax.startup || {}),
+    ...(userOptions.startup || {})
   }
 }
