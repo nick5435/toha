@@ -10,7 +10,7 @@ run = "npm install"
 [tasks.update]
 description = "Update node dependencies and regenerate Hugo modules"
 # AI Note: This is a destructive action (rm file). Good to keep, but Agents should rely on 'install' mostly.
-run = ["npm update", "rm package.hugo.json", "hugo mod npm pack"]
+run = ["npm update", "hugo mod npm pack"]
 
 [tasks.install-example-deps]
 description = "Install example site dependencies (including Hugo modules)"
