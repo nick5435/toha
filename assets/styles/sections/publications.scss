@@ -11,6 +11,8 @@
         @include academic-card("light");
 
         .card-header {
+            padding-bottom: 0.5rem;
+
             .sub-title {
                 margin-top: 0.25rem;
                 display: flex;
@@ -25,7 +27,7 @@
             .authors {
                 font-size: 0.875rem;
                 color: get-light-color("muted-text-color");
-                margin-top: 0.25rem;
+                margin-top: 0.35rem;
 
                 .current-author {
                     color: get-light-color("heading-color");
@@ -45,6 +47,12 @@
 
         .card-body {
             .abstract {
+                line-height: 1.6;
+
+                p:last-child {
+                    margin-bottom: 0;
+                }
+
                 a {
                     @include themed-link("light");
                 }

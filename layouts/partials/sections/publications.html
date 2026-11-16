@@ -16,6 +16,16 @@
   </div>
   {{ end }}
 
+  {{ if .tags }}
+  <div class="container text-center {{ if .section.filter }}mb-3{{ else }}mb-4{{ end }}">
+    <div class="d-inline-flex flex-wrap justify-content-center gap-1">
+      {{ range .tags }}
+      <span class="badge activity-badge">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
   {{ if .section.filter }}
   <div class="container ms-auto text-center mb-4">
     <div class="btn-group flex-wrap justify-content-center gap-1" role="group" aria-label="Filter publications by category" id="pub-filter-buttons">
@@ -26,16 +36,6 @@
       {{ end }}
     </div>
   </div>
-  {{ else }}
-  {{ if .tags }}
-  <div class="container text-center mb-4">
-    <div class="d-inline-flex flex-wrap justify-content-center gap-1">
-      {{ range .tags }}
-      <span class="badge activity-badge">{{ . }}</span>
-      {{ end }}
-    </div>
-  </div>
-  {{ end }}
   {{ end }}
 
   <div class="container filtr-publications">

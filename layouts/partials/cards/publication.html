@@ -25,22 +25,22 @@
       </div>
       {{ if .authors }}
       <div class="authors mt-1">
-        {{ $len := len .authors }}
-        {{ range $index, $author := .authors }}
-          {{ if $author.url }}
+        {{- $len := len .authors -}}
+        {{- range $index, $author := .authors -}}
+          {{- if $author.url -}}
             <a href="{{ $author.url }}" target="_blank" rel="noopener" class="{{ if eq $author.name "Nicholas Meyer" }}fw-semibold current-author{{ end }}">{{ $author.name }}</a>
-          {{ else }}
+          {{- else -}}
             <span class="{{ if eq $author.name "Nicholas Meyer" }}fw-semibold current-author{{ end }}">{{ $author.name }}</span>
-          {{ end }}
-          {{ if lt (add $index 1) $len }}<span class="author-separator text-muted">, </span>{{ end }}
-        {{ end }}
+          {{- end -}}
+          {{- if lt (add $index 1) $len -}}<span class="author-separator text-muted">, </span>{{- end -}}
+        {{- end -}}
       </div>
       {{ end }}
     </div>
     <div class="card-body">
       {{ if .paper.summary }}
       <div class="abstract mb-3">
-        <p class="mb-0">{{ .paper.summary | markdownify }}</p>
+        {{ .paper.summary | markdownify }}
       </div>
       {{ end }}
     </div>
