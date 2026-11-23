@@ -51,7 +51,8 @@
     "core-js@3.51.0": true
   },
   "overrides": {
-    "minimatch": "^11.0.5"
+    "minimatch": "^11.0.5",
+    "picomatch": "npm:minimatch@^11.0.5"
   },
   "workspaces": [
     "packages/hugoautogen"
